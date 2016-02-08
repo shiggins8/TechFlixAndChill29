@@ -1,5 +1,6 @@
 package edu.gatech.snickers.techflixandchill;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -35,14 +36,18 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.bRegister:
-                String name = etName.getText().toString();
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                int age = Integer.parseInt(etAge.getText().toString());
+                if (etName.getText().toString().equals("") | etUsername.getText().toString().equals("") | etPassword.getText().toString().equals("") | etAge.getText().toString().equals("")) {
+                    new AlertDialog.Builder(this).setTitle("Oops!").setMessage("Must fill in all fields above!").setNeutralButton("Close", null).show();
+                } else {
+                    String name = etName.getText().toString();
+                    String username = etUsername.getText().toString();
+                    String password = etPassword.getText().toString();
+                    int age = Integer.parseInt(etAge.getText().toString());
 
-                User newUser1 = new User(name, age, username, password);
+                    User newUser1 = new User(name, age, username, password);
 
-                startActivity(new Intent(this, MainApp.class));
+                    startActivity(new Intent(this, MainApp.class));
+                }
 
                 break;
         }

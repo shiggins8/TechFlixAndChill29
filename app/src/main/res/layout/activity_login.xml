@@ -43,6 +43,13 @@
         android:text="Register Here"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
         android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="361dp"
+        android:layout_height="36dp"
+        android:id="@+id/bCancel"
+        android:text="Return to Welcome Page"/>
 
 </LinearLayout>

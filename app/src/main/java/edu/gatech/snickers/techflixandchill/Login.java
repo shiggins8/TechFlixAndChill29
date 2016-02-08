@@ -13,6 +13,7 @@ import android.widget.*;
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
     Button bLogin;
+    Button bCancel;
     EditText etUsername, etPassword;
     TextView tvRegisterLink;
 
@@ -33,9 +34,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         bLogin.setOnClickListener(this);
         tvRegisterLink.setOnClickListener(this);
 
-        //userLocalStore = new UserLocalStore(this);
+        bCancel = (Button) findViewById(R.id.bCancel);
+        bCancel.setOnClickListener(this);
 
-        //TODO add a way to cancel login and return to welcome screen
+        //userLocalStore = new UserLocalStore(this);
     }
 
     @Override
@@ -43,7 +45,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.bLogin:
 
-                if (etUsername.getText().toString().equals("scotthiggins") && etPassword.getText().toString().equals("password")) {
+                if (etUsername.getText().toString().equals("user") && etPassword.getText().toString().equals("password")) {
                     //User user = new User(null, null);
                     //userLocalStore.storeUserData(user);
 
@@ -58,6 +60,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 startActivity(new Intent(this, Register.class));
                 break;
+
+            case R.id.bCancel:
+                startActivity(new Intent(this, Welcome.class));
         }
     }
 }
