@@ -1,5 +1,6 @@
 package edu.gatech.snickers.techflixandchill;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -39,8 +40,9 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 String password = etPassword.getText().toString();
                 int age = Integer.parseInt(etAge.getText().toString());
 
-                //User registeredData = new User(name, age, username, password);
+                User newUser1 = new User(name, age, username, password);
 
+                startActivity(new Intent(this, MainApp.class));
 
                 break;
         }
