@@ -20,6 +20,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.age = 21;
-        this.name = "John Doe";
+        this.name = "Niraj Suresh";
     }
 }
