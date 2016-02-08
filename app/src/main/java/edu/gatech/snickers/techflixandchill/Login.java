@@ -43,7 +43,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.bLogin:
 
-                if (etUsername.getText().toString().equals("user") && etPassword.getText().toString().equals("password")) {
+                if (etUsername.getText().toString().equals("scotthiggins") && etPassword.getText().toString().equals("password")) {
                     //User user = new User(null, null);
                     //userLocalStore.storeUserData(user);
 
