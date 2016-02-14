@@ -33,7 +33,6 @@ public class Registration extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-// TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
 
@@ -54,8 +53,6 @@ public class Registration extends Activity{
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-// TODO Auto-generated method stub
-
                 if(!isChecked)
                 {
                     password.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -71,7 +68,6 @@ public class Registration extends Activity{
 
             @Override
             public void onClick(View v) {
-// TODO Auto-generated method stub
 
                 String Pass = password.getText().toString();
                 String Secu = securityhint.getText().toString();
@@ -114,7 +110,6 @@ public class Registration extends Activity{
         cancel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-// TODO Auto-generated method stub
                 Intent ii=new Intent(Registration.this,MainActivity.class);
                 startActivity(ii);
             }
