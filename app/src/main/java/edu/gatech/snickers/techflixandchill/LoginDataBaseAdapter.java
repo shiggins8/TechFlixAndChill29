@@ -18,12 +18,20 @@ public class LoginDataBaseAdapter {
     static final int DATABASE_VERSION = 1;
     public static final int NAME_COLUMN = 3;
 
-    /*
-    Niraj has the files on his version that would include correct column numbers
-    //TODO re-implement this with correct stuff
+    /**
+     * From T-Square Wiki: To use the site, a student must be a registered user. To register, a student
+     * must enter their email, name, login/user name.
      */
-    static final String DATABASE_CREATE = "create table "+"LOGIN"+
-            "( " +"ID integer primary key autoincrement,"+ "PASSWORD text,"+"REPASSWORD text,"+ "SECURITYHINT text) ";
+    static final String DATABASE_CREATE = "create table "+
+            "LOGIN"+
+            "( " +
+            "ID integer primary key autoincrement,"+
+            "Username text" +
+            "PASSWORD text," +
+            "REPASSWORD text," +
+            "EMAIL text" +
+            "SECURITYHINT text," +
+            "Major text) ";
 
     public SQLiteDatabase db;
     private final Context context;
@@ -50,12 +58,16 @@ public class LoginDataBaseAdapter {
         return db;
     }
 
-    public void insertEntry(String password,String repassword,String securityhint)
+    public void insertEntry(String username, String password,String repassword,String securityhint, String major,
+                            String email)
     {
         ContentValues newValues = new ContentValues();
+        newValues.put("USERNAME", username);
         newValues.put("PASSWORD", password);
         newValues.put("REPASSWORD",repassword);
         newValues.put("SECURITYHINT",securityhint);
+        newValues.put("MAJOR", major);
+        newValues.put("EMAIL", email);
 
         db.insert("LOGIN", null, newValues);
     }
@@ -65,6 +77,19 @@ public class LoginDataBaseAdapter {
         String where="PASSWORD=?";
         int numberOFEntriesDeleted= db.delete("LOGIN", where, new String[]{password}) ;
         return numberOFEntriesDeleted;
+    }
+
+    /**
+     * Method to get the password for a specific user. Useful in checking password once a
+     * user is known.
+     * @param username username associated with a password
+     * @return the String version of the password
+     */
+    public String getPassword(String username) {
+        Cursor cursor = db.query("LOGIN", null, username, null, null, null, null, null);
+        String userPassword = cursor.getString(cursor.getColumnIndex("PASSWORD"));
+        cursor.close();
+        return userPassword;
     }
 
     public String getSinlgeEntry(String password)

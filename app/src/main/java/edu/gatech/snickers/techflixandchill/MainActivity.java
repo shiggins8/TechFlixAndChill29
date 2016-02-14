@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
     LoginDataBaseAdapter loginDataBaseAdapter;
     Button login;
     Button registerr;
-    EditText enterpassword;
+    EditText enterpassword, username;
     TextView forgetpass;
 
     @Override
@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
 
         login=(Button)findViewById(R.id.login_btn);
         registerr=(Button)findViewById(R.id.register_btn);
+        username = (EditText) findViewById(R.id.edt_username);
         enterpassword=(EditText)findViewById(R.id.password_edt);
         forgetpass=(TextView)findViewById(R.id.textView2);
 
@@ -56,8 +57,9 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 // TODO Auto-generated method stub
                 String Password = enterpassword.getText().toString();
+                String Username = username.getText().toString();
 
-                String storedPassword = loginDataBaseAdapter.getSinlgeEntry(Password);
+                String storedPassword = loginDataBaseAdapter.getPassword(Username);
 
                 if(Password.equals(storedPassword))
                 {

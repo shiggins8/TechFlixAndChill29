@@ -9,7 +9,7 @@ import android.util.Log;
 /**
  * Created by Scottie on 2/13/16.
  *
- * Class to enable us to be able to utilize the SQLite datbase on the
+ * Class to enable us to be able to utilize the SQLite database on the
  * Android device itself.
  */
 public class DataBaseHelper extends SQLiteOpenHelper {

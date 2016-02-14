@@ -27,7 +27,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 public class Registration extends Activity{
 
     LoginDataBaseAdapter loginDataBaseAdapter;
-    EditText password,repassword,securityhint;
+    EditText password,repassword,securityhint,username,email,major;
     Button register,cancel;
     CheckBox check;
 
@@ -38,14 +38,18 @@ public class Registration extends Activity{
         setContentView(R.layout.registration);
 
         loginDataBaseAdapter = new LoginDataBaseAdapter(this);
-        loginDataBaseAdapter=loginDataBaseAdapter.open();
-        password=(EditText)findViewById(R.id.password_edt);
-        repassword=(EditText)findViewById(R.id.repassword_edt);
-        securityhint=(EditText)findViewById(R.id.securityhint_edt);
-        register=(Button)findViewById(R.id.register_btn);
-        cancel=(Button)findViewById(R.id.cancel_btn);
-        check=(CheckBox)findViewById(R.id.checkBox1);
+        loginDataBaseAdapter = loginDataBaseAdapter.open();
+        password = (EditText)findViewById(R.id.password_edt);
+        repassword = (EditText)findViewById(R.id.repassword_edt);
+        securityhint = (EditText)findViewById(R.id.securityhint_edt);
+        username = (EditText) findViewById(R.id.username_edt);
+        email = (EditText) findViewById(R.id.email_edt);
+        major = (EditText) findViewById(R.id.major_edt);
+        register = (Button)findViewById(R.id.register_btn);
+        cancel = (Button)findViewById(R.id.cancel_btn);
+        check = (CheckBox)findViewById(R.id.checkBox1);
 
+        //code to add functionality to the checkbox
         check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
             @Override
@@ -69,25 +73,33 @@ public class Registration extends Activity{
             public void onClick(View v) {
 // TODO Auto-generated method stub
 
-                String Pass=password.getText().toString();
-                String Secu=securityhint.getText().toString();
-                String Repass=repassword.getText().toString();
+                String Pass = password.getText().toString();
+                String Secu = securityhint.getText().toString();
+                String Repass = repassword.getText().toString();
+                String user = username.getText().toString();
+                String mail = email.getText().toString();
+                String umajor = major.getText().toString();
 
-                if(Pass.equals("")||Repass.equals("")||Secu.equals(""))
+                //check to see if registration form is incomplete
+                if(Pass.equals("")||Repass.equals("")||Secu.equals("") || user.equals("")
+                        || mail.equals("") || umajor.equals(""))
                 {
                     Toast.makeText(getApplicationContext(), "Fill All Fields", Toast.LENGTH_LONG).show();
                     return;
                 }
 
+                //if re-entered password doesn't match original password
                 if(!Pass.equals(Repass))
                 {
                     Toast.makeText(getApplicationContext(), "Password does not match", Toast.LENGTH_LONG).show();
                     return;
                 }
+
+                //successful registration
                 else
                 {
-// Save the Data in Database
-                    loginDataBaseAdapter.insertEntry(Pass, Repass,Secu);
+                    // Save the Data in Database
+                    loginDataBaseAdapter.insertEntry(user, Pass, Repass,Secu, umajor, mail);
 
 // reg_btn.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
