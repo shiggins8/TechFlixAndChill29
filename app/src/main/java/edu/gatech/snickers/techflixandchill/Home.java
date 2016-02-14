@@ -9,15 +9,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /**
- * Created by Scottie on 2/13/16.
+ * Created by Snickers on 2/13/16.
  *
- * Home screen of our app itself
+ * Home screen of our app itself. Currently allows users to view their profile or logout of the app.
+ *
+ * @author Snickers
+ * @version 1.1
  */
 public class Home extends Activity{
 
     Button logoutButton, viewProfileButton;
     TextView usernameTextView;
-    EditText usernameEntered;
 
 
     @Override
@@ -36,6 +38,14 @@ public class Home extends Activity{
         String password = bundle.getString("PASSWORD");
 
         usernameTextView.setText("Welcome: " + username);
+
+        viewProfileButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //TODO implement view profile method here
+            }
+        });
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
