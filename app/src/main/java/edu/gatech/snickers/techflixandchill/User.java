@@ -8,6 +8,7 @@ package edu.gatech.snickers.techflixandchill;
 public class User {
     String name, username, password;
     int age;
+    String major;
 
     public User (String name, int age, String username, String password) {
         this.name = name;
@@ -20,6 +21,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.age = 21;
-        this.name = "Niraj Suresh";
+        this.name = "John Doe";
     }
 }
