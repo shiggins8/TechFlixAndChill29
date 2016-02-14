@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8D8D8" >
+    android:background="@drawable/blue_clouds" >
 
     <TextView
         android:id="@+id/textView1"
@@ -10,8 +10,34 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="139dp"
-        android:text="Welcome"
+        android:layout_marginTop="50dp"
+        android:text="Welcome to TechFlix and Chill!"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Profile"
+        android:id="@+id/viewProfileButton"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/textView1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/logoutButton"
+        android:layout_alignBottom="@+id/viewProfileButton"
+        android:layout_alignEnd="@+id/textView1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/usernameTextView"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textSize="@dimen/abc_text_size_display_1_material" />
 
 </RelativeLayout> 

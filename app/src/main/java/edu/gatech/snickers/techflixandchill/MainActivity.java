@@ -53,6 +53,7 @@ public class MainActivity extends Activity {
             }
         });
 
+        //contains logic for login operation
         login.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -60,21 +61,37 @@ public class MainActivity extends Activity {
                 String Password = enterpassword.getText().toString();
                 String Username = username.getText().toString();
 
-                String storedPassword = loginDataBaseAdapter.getPassword(Username);
+                //check to see if user actually exists, proceed if they do
+                if (!loginDataBaseAdapter.checkForUser(Username)) {
+                    Toast.makeText(MainActivity.this, "Username does not exist within app", Toast.LENGTH_LONG).show();
+                } else {
+                    String storedPassword = loginDataBaseAdapter.getPassword(Username);
 
-                if(Password.equals(storedPassword))
-                {
-                    Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
-                    Intent ii=new Intent(MainActivity.this,Home.class);
-                    startActivity(ii);
-                }
-                else
-                if(Password.equals("")){
-                    Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-                    Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
+                    if(Password.equals(storedPassword))
+                    {
+                        Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
+                        Intent ii=new Intent(MainActivity.this,Home.class);
+                        //create bundle to pass along user data
+                        String nextUsername = Username;
+                        String nextPassword = Password;
+                        //Create the bundle
+                        Bundle bundle = new Bundle();
+                        //Add the data to the bundle
+                        bundle.putString("USERNAME", nextUsername);
+                        bundle.putString("PASSWORD", nextPassword);
+                        //Add the bundle to the intent
+                        ii.putExtras(bundle);
+                        //start the activity
+                        startActivity(ii);
+                    }
+                    else
+                    if(Password.equals("")){
+                        Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });

@@ -72,10 +72,16 @@ public class LoginDataBaseAdapter {
         db.insert("LOGIN", null, newValues);
     }
 
-    public int deleteEntry(String password)
+    /**
+     * Will delete a row from the database, called when a user opts to delete their account
+     *
+     * @param _username username corresponding with target row
+     * @return the number of accounts deleted, should always be 1
+     */
+    public int deleteEntry(String _username)
     {
-        String where="PASSWORD=?";
-        int numberOFEntriesDeleted= db.delete("LOGIN", where, new String[]{password}) ;
+        String where="USERNAME=?";
+        int numberOFEntriesDeleted= db.delete("LOGIN", where, new String[]{_username}) ;
         return numberOFEntriesDeleted;
     }
 
@@ -93,9 +99,15 @@ public class LoginDataBaseAdapter {
         return userPassword;
     }
 
-    public String getSinlgeEntry(String password)
+    /**
+     * Currently, as coded, returns the password for a specific user.
+     *
+     * @param username the app account username
+     * @return password for particular user, alert if user does not exist
+     */
+    public String getSinlgeEntry(String username)
     {
-        Cursor cursor = db.query("LOGIN", null, " PASSWORD=?", new String[]{password}, null, null, null);
+        Cursor cursor = db.query("LOGIN", null, " USERNAME=?", new String[]{username}, null, null, null);
         if(cursor.getCount()<1) // UserName Not Exist
         {
             cursor.close();
@@ -105,6 +117,23 @@ public class LoginDataBaseAdapter {
         String repassword= cursor.getString(cursor.getColumnIndex("REPASSWORD"));
         cursor.close();
         return repassword;
+    }
+
+    /**
+     * Quick method that can be called to check to see if a username exists in the database
+     *
+     * @param username username to be checked for in database
+     * @return boolean value of whether or not said username exists
+     */
+    public Boolean checkForUser(String username) {
+        Cursor cursor = db.query("LOGIN", null, "USERNAME=?", new String[]{username}, null, null, null);
+        if (cursor.getCount() < 1)//Username doesn't exist
+        {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
     }
 
     public String getAllTags(String a) {
@@ -119,15 +148,29 @@ public class LoginDataBaseAdapter {
         return str;
     }
 
-    public void updateEntry(String password,String repassword)
+    /**
+     * Method to update a row in the database. Allows a user to update their information via simply
+     * updating the row in the database.
+     *
+     * @param username original user account username
+     * @param newPassword new password, same if unchanged
+     * @param newEmail new email, same if unchanged
+     * @param newMajor new major, same if unchanged
+     * @param newSecuHint new security hint, same if unchanged
+     */
+    public void updateEntry(String username, String newPassword, String newEmail, String newMajor,
+                            String newSecuHint)
     {
         ContentValues updatedValues = new ContentValues();
-        updatedValues.put("PASSWORD", password);
-        updatedValues.put("REPASSWORD",repassword);
-        updatedValues.put("SECURITYHINT",repassword);
+        updatedValues.put("USERNAME", username);
+        updatedValues.put("PASSWORD", newPassword);
+        updatedValues.put("REPASSWORD",newPassword);
+        updatedValues.put("SECURITYHINT",newSecuHint);
+        updatedValues.put("EMAIL", newEmail);
+        updatedValues.put("MAJOR", newMajor);
 
         String where="USERNAME = ?";
-        db.update("LOGIN",updatedValues, where, new String[]{password});
+        db.update("LOGIN",updatedValues, where, new String[]{username});
     }
 
     public HashMap<String, String> getAnimalInfo(String id) {
