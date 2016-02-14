@@ -60,8 +60,6 @@
             android:ems="10"
             android:inputType="textPassword"
             android:padding="5dp" >
-
-            <requestFocus />
         </EditText>
     </RelativeLayout>
 
