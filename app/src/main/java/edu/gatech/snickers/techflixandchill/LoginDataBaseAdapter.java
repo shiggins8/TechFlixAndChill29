@@ -15,8 +15,8 @@ import android.database.sqlite.SQLiteDatabase;
 public class LoginDataBaseAdapter {
 
     static final String DATABASE_NAME = "login.db";
-    static final int DATABASE_VERSION = 1;
-    public static final int NAME_COLUMN = 3;
+    static final int DATABASE_VERSION = 5;
+    public static final int NAME_COLUMN = 7;
 
     /**
      * From T-Square Wiki: To use the site, a student must be a registered user. To register, a student
@@ -26,10 +26,10 @@ public class LoginDataBaseAdapter {
             "LOGIN"+
             "( " +
             "ID integer primary key autoincrement,"+
-            "Username text" +
+            "Username text," +
             "PASSWORD text," +
             "REPASSWORD text," +
-            "EMAIL text" +
+            "EMAIL text," +
             "SECURITYHINT text," +
             "Major text) ";
 
@@ -86,7 +86,8 @@ public class LoginDataBaseAdapter {
      * @return the String version of the password
      */
     public String getPassword(String username) {
-        Cursor cursor = db.query("LOGIN", null, username, null, null, null, null, null);
+        Cursor cursor = db.query("LOGIN", new String[]{"PASSWORD"}, "USERNAME=?", new String[]{username}, null, null, null, null);
+        cursor.moveToFirst();
         String userPassword = cursor.getString(cursor.getColumnIndex("PASSWORD"));
         cursor.close();
         return userPassword;

@@ -40,12 +40,14 @@ public class MainActivity extends Activity {
 
         loginDataBaseAdapter = new LoginDataBaseAdapter(getApplicationContext());
         loginDataBaseAdapter.open();
+        //THIS IS JUST FOR TESTING PURPOSES TO START WITH A HARD CODED ROW IN DATABASE
+        //TODO remove this block of code, no longer needed, code works and passes test
+        //loginDataBaseAdapter.insertEntry("tester", "tester", "tester", "tester", "tester", "tester");
 
         registerr.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-// TODO Auto-generated method stub
                 Intent i=new Intent(MainActivity.this,Registration.class);
                 startActivity(i);
             }
@@ -55,7 +57,6 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-// TODO Auto-generated method stub
                 String Password = enterpassword.getText().toString();
                 String Username = username.getText().toString();
 
@@ -82,7 +83,6 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-// TODO Auto-generated method stub
 
                 final Dialog dialog = new Dialog(MainActivity.this);
                 dialog.getWindow();
@@ -122,7 +122,6 @@ public class MainActivity extends Activity {
 
                     @Override
                     public void onClick(View v) {
-// TODO Auto-generated method stub
                         dialog.dismiss();
                     }
                 });
@@ -135,7 +134,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-// Close The Database
+        // Close The Database
         loginDataBaseAdapter.close();
     }
 
