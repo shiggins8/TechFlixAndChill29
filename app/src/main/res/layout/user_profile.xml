@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8D8D8"
+    android:background="@drawable/pink_purple"
     android:orientation="vertical" >
 
     <ScrollView
@@ -28,8 +28,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="User Details"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/abc_text_size_large_material" />
 
             </LinearLayout>
 
@@ -46,35 +46,45 @@
                     android:id="@+id/userProfileUsernameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Username:" />
+                    android:text="Username:"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/abc_text_size_medium_material" />
 
                 <TextView
                     android:id="@+id/userProfilePasswordTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Password:" />
+                    android:layout_marginTop="20dp"
+                    android:text="Password:"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/abc_text_size_medium_material" />
 
                 <TextView
                     android:id="@+id/userProfileEmailTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Email:" />
+                    android:layout_marginTop="20dp"
+                    android:text="Email:"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/abc_text_size_medium_material" />
 
                 <TextView
                     android:id="@+id/userProfileSecuHintTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Security Hint:" />
+                    android:layout_marginTop="20dp"
+                    android:text="Security Hint:"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/abc_text_size_medium_material" />
 
                 <TextView
                     android:id="@+id/userProfileMajorTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Major:" />
+                    android:layout_marginTop="20dp"
+                    android:text="Major:"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/abc_text_size_medium_material" />
 
             </LinearLayout>
 
@@ -94,7 +104,8 @@
                     android:background="@drawable/background_round_corner_button"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Edit Profile" />
+                    android:text="Edit Profile"
+                    android:textStyle="italic" />
 
                 <Button
                     android:id="@+id/goHomeButton"
@@ -106,7 +117,8 @@
                     android:background="@drawable/background_round_corner_button"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Return to Home" />
+                    android:text="Return to Home"
+                    android:textStyle="italic" />
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

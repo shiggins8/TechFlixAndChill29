@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8D8D8"
+    android:background="@drawable/pink_purple"
     tools:context=".MainActivity" >
 
     <RelativeLayout
@@ -17,7 +17,9 @@
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username:" />
+            android:text="Username:"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edt_username"
@@ -28,7 +30,7 @@
             android:background="@drawable/background_round_corner_edittext"
             android:ems="10"
             android:inputType="text"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <requestFocus />
         </EditText>
@@ -48,7 +50,9 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/password" />
+            android:text="@string/password"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/password_edt"
@@ -80,7 +84,8 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/Login" />
+            android:text="@string/Login"
+            android:textStyle="italic" />
 
         <Button
             android:id="@+id/register_btn"
@@ -92,7 +97,8 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/register" />
+            android:text="@string/register"
+            android:textStyle="italic" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -109,7 +115,8 @@
             android:layout_height="wrap_content"
             android:text="@string/forgetpassword"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </RelativeLayout>

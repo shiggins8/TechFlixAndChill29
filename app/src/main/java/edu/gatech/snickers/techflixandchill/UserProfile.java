@@ -69,7 +69,7 @@ public class UserProfile extends Activity {
                 dialog.show();
 
                 //set up all editable fields, populate with current values
-                final EditText newUsername = (EditText) dialog.findViewById(R.id.editUsernameET);
+                final TextView newUsername = (TextView) dialog.findViewById(R.id.editUsernameET);
                 newUsername.setText(username);
                 final EditText newPassword = (EditText) dialog.findViewById(R.id.editPasswordET);
                 newPassword.setText(password);
