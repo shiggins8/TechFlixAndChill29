@@ -5,11 +5,12 @@
     <string name="entersecurityhint">Please enter your security hint:</string>
     <string name="yourpassword">Your password here</string>
     <string name="getpassword">Get password</string>
-    <string name="cancel">Click here to cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="Login">Login</string>
     <string name="register">Register</string>
     <string name="forgetpassword">Forgot your password?</string>
     <string name="repassword">Re-enter your password:</string>
     <string name="showpassword">Show password:</string>
     <string name="securityhint">Security hint:</string>
+    <string name="title_activity_user_profile">UserProfile</string>
 </resources>

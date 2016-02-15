@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D8D8D8"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/editUsernameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username:" />
+
+            <EditText
+                android:id="@+id/editUsernameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editUsernameTV"
+                android:background="@drawable/background_round_corner_edittext"
+                android:ems="10"
+                android:padding="5dp"
+                android:text="">
+            </EditText>
+
+            <TextView
+                android:id="@+id/editPasswordTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editUsernameET"
+                android:text="Password:" />
+
+            <EditText
+                android:id="@+id/editPasswordET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editPasswordTV"
+                android:background="@drawable/background_round_corner_edittext"
+                android:ems="10"
+                android:padding="5dp"
+                android:text="">
+            </EditText>
+
+            <TextView
+                android:id="@+id/editEmailTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editPasswordET"
+                android:text="Email:" />
+
+            <EditText
+                android:id="@+id/editEmailET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editEmailTV"
+                android:background="@drawable/background_round_corner_edittext"
+                android:ems="10"
+                android:padding="5dp"
+                android:text="">
+            </EditText>
+
+            <TextView
+                android:id="@+id/userProfileSecuHintTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editEmailET"
+                android:text="Security Hint:" />
+
+            <EditText
+                android:id="@+id/editSecuHintET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/userProfileSecuHintTV"
+                android:background="@drawable/background_round_corner_edittext"
+                android:ems="10"
+                android:padding="5dp"
+                android:text="">
+            </EditText>
+
+            <TextView
+                android:id="@+id/editMajorTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editSecuHintET"
+                android:text="Major:" />
+
+            <EditText
+                android:id="@+id/editMajorET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editMajorTV"
+                android:background="@drawable/background_round_corner_edittext"
+                android:ems="10"
+                android:padding="5dp"
+                android:text="">
+            </EditText>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayout1"
+            android:layout_marginTop="15dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <Button
+                android:id="@+id/save_changes_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/background_round_corner_button"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Save Changes" />
+
+            <Button
+                android:id="@+id/cancel_changes_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/background_round_corner_button"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Cancel" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

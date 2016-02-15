@@ -32,7 +32,8 @@ public class Home extends Activity{
         usernameTextView = (TextView) findViewById(R.id.usernameTextView);
 
         //get the bundle created in MainActivity
-        Bundle bundle = getIntent().getExtras();
+        final Bundle bundle;
+        bundle = getIntent().getExtras();
         //Extract the data
         String username = bundle.getString("USERNAME");
         String password = bundle.getString("PASSWORD");
@@ -40,10 +41,12 @@ public class Home extends Activity{
         usernameTextView.setText("Welcome: " + username);
 
         viewProfileButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 //TODO implement view profile method here
+                Intent i = new Intent(Home.this, UserProfile.class);
+                i.putExtras(bundle);
+                startActivity(i);
             }
         });
 

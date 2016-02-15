@@ -100,23 +100,34 @@ public class LoginDataBaseAdapter {
     }
 
     /**
-     * Currently, as coded, returns the password for a specific user.
+     * Currently, as coded, returns the details for a single user.
      *
      * @param username the app account username
-     * @return password for particular user, alert if user does not exist
+     * @return ContentValues containing all info for a specific user
      */
-    public String getSinlgeEntry(String username)
+    public ContentValues getSinlgeEntry(String username)
     {
         Cursor cursor = db.query("LOGIN", null, " USERNAME=?", new String[]{username}, null, null, null);
-        if(cursor.getCount()<1) // UserName Not Exist
-        {
+        ContentValues userDetails = new ContentValues();
+        //username does not exist
+        if(cursor.getCount()<1) {
+            userDetails.put("STATUS", "DOES NOT EXIST");
             cursor.close();
-            return "NOT EXIST";
+            return userDetails;
         }
         cursor.moveToFirst();
-        String repassword= cursor.getString(cursor.getColumnIndex("REPASSWORD"));
+        //String repassword= cursor.getString(cursor.getColumnIndex("REPASSWORD"));
+        userDetails.put("USERNAME", username);
+        cursor.moveToFirst();
+        userDetails.put("PASSWORD", cursor.getString(cursor.getColumnIndex("PASSWORD")));
+        cursor.moveToFirst();
+        userDetails.put("EMAIL", cursor.getString(cursor.getColumnIndex("EMAIL")));
+        cursor.moveToFirst();
+        userDetails.put("MAJOR", cursor.getString(cursor.getColumnIndex("Major")));
+        cursor.moveToFirst();
+        userDetails.put("SECURITYHINT", cursor.getString(cursor.getColumnIndex("SECURITYHINT")));
         cursor.close();
-        return repassword;
+        return userDetails;
     }
 
     /**
@@ -138,7 +149,7 @@ public class LoginDataBaseAdapter {
 
     public String getAllTags(String a) {
 
-        Cursor c = db.rawQuery("SELECT * FROM " + "LOGIN" + " where SECURITYHINT = '" +a + "'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + "LOGIN" + " where SECURITYHINT = '" + a + "'", null);
         String str = null;
         if (c.moveToFirst()) {
             do {
