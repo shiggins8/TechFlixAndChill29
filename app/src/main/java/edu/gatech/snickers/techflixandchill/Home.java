@@ -12,6 +12,7 @@ import android.widget.TextView;
  * Created by Snickers on 2/13/16.
  *
  * Home screen of our app itself. Currently allows users to view their profile or logout of the app.
+ * Accessing the view profile option will allow users to edit their profile information.
  *
  * @author Snickers
  * @version 1.1
@@ -43,8 +44,9 @@ public class Home extends Activity{
         viewProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO implement view profile method here
+
                 Intent i = new Intent(Home.this, UserProfile.class);
+                //pass along bundled username and password
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -53,6 +55,7 @@ public class Home extends Activity{
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //return to the MainActivity
                 Intent i = new Intent(Home.this, MainActivity.class);
                 startActivity(i);
             }

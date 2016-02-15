@@ -16,12 +16,15 @@ import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 /**
- * Created by Scottie on 2/13/16.
+ * Created by Snickers on 2/13/16.
  *
  * Screen that allows users to register an account with the app. They fill out
  * the appropriate fields and will be notified if the account is created
  * successfully. Incorrectly or incompletely filling out the form will display a
  * Toast error message instructing the user how to register properly.
+ *
+ * @author Snickers
+ * @version 1.0
  *
  */
 public class Registration extends Activity{
@@ -97,7 +100,7 @@ public class Registration extends Activity{
                     // Save the Data in Database
                     loginDataBaseAdapter.insertEntry(user, Pass, Repass,Secu, umajor, mail);
 
-// reg_btn.setVisibility(View.GONE);
+                    // reg_btn.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
                     Log.d("PASSWORD",Pass);
                     Log.d("RE PASSWORD",Repass);

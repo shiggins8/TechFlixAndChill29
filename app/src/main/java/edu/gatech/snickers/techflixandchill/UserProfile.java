@@ -13,6 +13,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Created by Snickers on 2/14/16.
+ *
+ * This class provides the users with a way to view their profile, as well as provides the option
+ * to edit and save changes to their profile information.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class UserProfile extends Activity {
 
     LoginDataBaseAdapter loginDataBaseAdapter;

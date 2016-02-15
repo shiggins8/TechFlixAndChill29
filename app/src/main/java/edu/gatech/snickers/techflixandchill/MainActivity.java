@@ -14,10 +14,15 @@ import android.content.Intent;
 import android.os.Bundle;
 
 /**
- * Created on 2/12/16. Last modified on 2/13/16.
+ * Created on 2/12/16.
  *
- * Main activity of our application. Allows users to choose
- * between logging in and registering an account with the app.
+ * Main activity of our application. Allows users to choose between logging in and registering an
+ * account with the app. If the user has forgotten their password, there is a link they can select
+ * that will provide them with their password, given their security hint is entered correctly.
+ * Provides functionality and logic for entering the app.
+ *
+ * @author Snickers
+ * @version 1.0
  */
 public class MainActivity extends Activity {
 
@@ -40,9 +45,6 @@ public class MainActivity extends Activity {
 
         loginDataBaseAdapter = new LoginDataBaseAdapter(getApplicationContext());
         loginDataBaseAdapter.open();
-        //THIS IS JUST FOR TESTING PURPOSES TO START WITH A HARD CODED ROW IN DATABASE
-        //TODO remove this block of code, no longer needed, code works and passes test
-        //loginDataBaseAdapter.insertEntry("tester", "tester", "tester", "tester", "tester", "tester");
 
         registerr.setOnClickListener(new OnClickListener() {
 
@@ -72,13 +74,10 @@ public class MainActivity extends Activity {
                         Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
                         Intent ii=new Intent(MainActivity.this,Home.class);
                         //create bundle to pass along user data
-                        String nextUsername = Username;
-                        String nextPassword = Password;
-                        //Create the bundle
                         Bundle bundle = new Bundle();
                         //Add the data to the bundle
-                        bundle.putString("USERNAME", nextUsername);
-                        bundle.putString("PASSWORD", nextPassword);
+                        bundle.putString("USERNAME", Username);
+                        bundle.putString("PASSWORD", Password);
                         //Add the bundle to the intent
                         ii.putExtras(bundle);
                         //start the activity
@@ -107,34 +106,36 @@ public class MainActivity extends Activity {
                 dialog.setContentView(R.layout.forget_search);
                 dialog.show();
 
-                final EditText security=(EditText)dialog.findViewById(R.id.securityhint_edt);
+                final EditText security = (EditText) dialog.findViewById(R.id.securityhint_edt);
                 final TextView getpass=(TextView)dialog.findViewById(R.id.textView3);
 
-                Button ok=(Button)dialog.findViewById(R.id.getpassword_btn);
-                Button cancel=(Button)dialog.findViewById(R.id.cancel_btn);
+                Button ok = (Button) dialog.findViewById(R.id.getpassword_btn);
+                Button cancel = (Button) dialog.findViewById(R.id.cancel_btn);
 
                 ok.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
 
-                        String userName=security.getText().toString();
+                        String userName = security.getText().toString();
                         if(userName.equals(""))
                         {
-                            Toast.makeText(getApplicationContext(), "Please enter your securityhint", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Please enter your username", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
-                            String storedPassword=loginDataBaseAdapter.getAllTags(userName);
-                            if(storedPassword==null)
+                            String storedHint = loginDataBaseAdapter.getHint(userName);
+                            if(storedHint==null)
                             {
-                                Toast.makeText(getApplicationContext(), "Please enter correct securityhint", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Please enter correct username", Toast.LENGTH_SHORT).show();
                             }else{
-                                Log.d("GET PASSWORD",storedPassword);
-                                getpass.setText(storedPassword);
+                                Log.d("GET HINT",storedHint);
+                                getpass.setText(storedHint);
                             }
                         }
                     }
                 });
+
+                //user decides to cancel, dismisses dialog window
                 cancel.setOnClickListener(new OnClickListener() {
 
                     @Override
