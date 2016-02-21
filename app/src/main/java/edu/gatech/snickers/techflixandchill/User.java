@@ -10,11 +10,35 @@ public class User {
     private String securityHint;
     private String major;
 
+    public User() {
+        //empty constructor for Firebase
+    }
+
     public User(String username, String password, String email, String securityHint, String major) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.securityHint = securityHint;
+        this.major = major;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSecurityHint(String securityHint) {
+        this.securityHint = securityHint;
+    }
+
+    public void setMajor(String major) {
         this.major = major;
     }
 
@@ -38,23 +62,4 @@ public class User {
         return major;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setSecurityHint(String securityHint) {
-        this.securityHint = securityHint;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
 }
