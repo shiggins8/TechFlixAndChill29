@@ -19,12 +19,12 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 /**
- * Created on 2/12/16.
+ * Created on 2/12/16. Last modified on 2/21/16.
  *
  * Main activity of our application. Allows users to choose between logging in and registering an
  * account with the app. If the user has forgotten their password, there is a link they can select
  * that will provide them with their password, given their security hint is entered correctly.
- * Provides functionality and logic for entering the app.
+ * Provides functionality and logic for entering the app. Updated with Firebase.
  *
  * @author Snickers
  * @version 2.0
@@ -51,26 +51,6 @@ public class MainActivity extends Activity {
         Firebase.setAndroidContext(this);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
         Firebase nirajref = ref.child("users").child("nirajsuresh");
-        User user = new User("nirajsuresh","waddup","Niraj", "nirajsuresh@gmail.com",
-        Firebase nirajref = ref.child("users").child("nirajsuresh");
-        User user = new User("nirajsuresh","waddup","nirajsuresh@gmail.com",
-                "cool word", "Aerospace Engineering with a side of computer science");
-        nirajref.setValue(user);
-
-        Firebase scottref = ref.child("users").child("scotthiggins");
-        User user2 = new User("scotthiggins","baller","shiggins@gmail.com",
-        Firebase scottref = ref.child("users").child("scotthiggins");
-        User user2 = new User("scotthiggins","baller","Scottie", "shiggins@gmail.com",
-                "cooler word", "Computer Science with a side of baller");
-        scottref.setValue(user2);
-
-        Firebase samiref = ref.child("users").child("samihogenson");
-        User user3 = new User("samihogenson", "password", "Samantha", "samihogenson@gmoo.com", "coolest word",
-                "Early childhood education");
-        samiref.setValue(user3);
-
-        loginDataBaseAdapter = new LoginDataBaseAdapter(getApplicationContext());
-        loginDataBaseAdapter.open();
 
         registerr.setOnClickListener(new OnClickListener() {
 
@@ -211,7 +191,12 @@ public class MainActivity extends Activity {
                     Bundle bundle = new Bundle();
                     //Add data to bundle
                     bundle.putString("USERNAME", user.getUsername());
-                    //Add bundle to pintent
+                    bundle.putString("PASSWORD", user.getPassword());
+                    bundle.putString("NAME", user.getName());
+                    bundle.putString("MAJOR", user.getMajor());
+                    bundle.putString("SECURITYHINT", user.getSecurityHint());
+                    bundle.putString("EMAIL", user.getEmail());
+                    //Add bundle to intent
                     ii.putExtras(bundle);
                     //start activity
                     startActivity(ii);

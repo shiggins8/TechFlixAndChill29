@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -38,8 +37,11 @@ public class Home extends Activity{
         //Extract the data
         String username = bundle.getString("USERNAME");
         String password = bundle.getString("PASSWORD");
+        String theName = bundle.getString("NAME");
 
-        usernameTextView.setText("Welcome: " + username);
+        String message = "Welcome: " + theName;
+
+        usernameTextView.setText(message);
 
         viewProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override

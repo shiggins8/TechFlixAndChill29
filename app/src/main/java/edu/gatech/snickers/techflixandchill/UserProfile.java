@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -13,51 +12,77 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 /**
  * Created by Snickers on 2/14/16.
  *
+ * Last modified on 2/21/16.
+ *
  * This class provides the users with a way to view their profile, as well as provides the option
- * to edit and save changes to their profile information.
+ * to edit and save changes to their profile information. Updated to integrate Firebase database.
  *
  * @author Snickers
- * @version 1.0
+ * @version 1.1
  */
 public class UserProfile extends Activity {
 
-    LoginDataBaseAdapter loginDataBaseAdapter;
-    TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV, userProfileMajorTV;
+    TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV,
+            userProfileNameTV, userProfileMajorTV;
     Button editProfileButton, goHomeButton;
+    private Firebase ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
 
-        loginDataBaseAdapter = new LoginDataBaseAdapter(getApplicationContext());
-        loginDataBaseAdapter.open();
-
         userProfileUsernameTV = (TextView) findViewById(R.id.userProfileUsernameTV);
         userProfilePasswordTV = (TextView) findViewById(R.id.userProfilePasswordTV);
         userProfileEmailTV = (TextView) findViewById(R.id.userProfileEmailTV);
         userProfileSecuHintTV = (TextView) findViewById(R.id.userProfileSecuHintTV);
         userProfileMajorTV = (TextView) findViewById(R.id.userProfileMajorTV);
+        userProfileNameTV = (TextView) findViewById(R.id.userProfileNameTV);
 
         editProfileButton = (Button) findViewById(R.id.editProfileButton);
         goHomeButton = (Button) findViewById(R.id.goHomeButton);
 
+        Firebase.setAndroidContext(this);
+        ref = new Firebase("https://techflixandchill.firebaseio.com");
+
         final Bundle bundle;
         bundle = getIntent().getExtras();
         //Extract the data
+        final String name = bundle.getString("NAME");
         final String username = bundle.getString("USERNAME");
         final String password = bundle.getString("PASSWORD");
+        final String major = bundle.getString("MAJOR");
+        final String email = bundle.getString("EMAIL");
+        final String securityHint = bundle.getString("SECURITYHINT");
 
-        final ContentValues userDetails = loginDataBaseAdapter.getSinlgeEntry(username);
+        Firebase editRef = ref.child("users").child(username);
+        editRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                userProfileNameTV.setText("Name: " + user.getName());
+                userProfileUsernameTV.setText("Username: " + user.getUsername());
+                userProfilePasswordTV.setText("Password: " + user.getPassword());
+                userProfileEmailTV.setText("Email: " + user.getEmail());
+                userProfileSecuHintTV.setText("Security Hint: " + user.getSecurityHint());
+                userProfileMajorTV.setText("Major: " + user.getMajor());
+            }
 
-        userProfileUsernameTV.setText("Username: " + userDetails.get("USERNAME").toString());
-        userProfilePasswordTV.setText("Password: " + password);
-        userProfileEmailTV.setText("Email: " + userDetails.get("EMAIL").toString());
-        userProfileSecuHintTV.setText("Security Hint: " + userDetails.get("SECURITYHINT").toString());
-        userProfileMajorTV.setText("Major: " + userDetails.get("MAJOR").toString());
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                //do nothing
+            }
+        });
+
+
 
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,37 +99,49 @@ public class UserProfile extends Activity {
                 final EditText newPassword = (EditText) dialog.findViewById(R.id.editPasswordET);
                 newPassword.setText(password);
                 final EditText newEmail = (EditText) dialog.findViewById(R.id.editEmailET);
-                newEmail.setText(userDetails.get("EMAIL").toString());
+                newEmail.setText(email);
                 final EditText newSecuHint = (EditText) dialog.findViewById(R.id.editSecuHintET);
-                newSecuHint.setText(userDetails.get("SECURITYHINT").toString());
+                newSecuHint.setText(securityHint);
                 final EditText newMajor = (EditText) dialog.findViewById(R.id.editMajorET);
-                newMajor.setText(userDetails.get("MAJOR").toString());
+                newMajor.setText(major);
+                final EditText newName = (EditText) dialog.findViewById(R.id.editNameET);
+                newName.setText(name);
 
                 Button saveChanges = (Button) dialog.findViewById(R.id.save_changes_btn);
                 Button cancel = (Button) dialog.findViewById(R.id.cancel_changes_btn);
 
                 saveChanges.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-                        String updatedUsername = newUsername.getText().toString();
-                        String updatedPassword = newPassword.getText().toString();
-                        String updatedEmail = newEmail.getText().toString();
-                        String updatedSecuHint = newSecuHint.getText().toString();
-                        String updatedMajor = newMajor.getText().toString();
+                        ref = new Firebase("https://techflixandchill.firebaseio.com");
 
-                        //update the database with updated info
-                        loginDataBaseAdapter.updateEntry(updatedUsername, updatedPassword, updatedEmail,
-                                updatedMajor, updatedSecuHint);
+                        final String updatedUsername = newUsername.getText().toString();
+                        final String updatedPassword = newPassword.getText().toString();
+                        final String updatedEmail = newEmail.getText().toString();
+                        final String updatedSecuHint = newSecuHint.getText().toString();
+                        final String updatedMajor = newMajor.getText().toString();
+                        final String updatedName = newName.getText().toString();
+
+                        //update database with new info
+                        final Firebase editRef = ref.child("users").child(username);
+                        editRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                editRef.child("password").setValue(updatedPassword);
+                                editRef.child("email").setValue(updatedEmail);
+                                editRef.child("securityHint").setValue(updatedSecuHint);
+                                editRef.child("major").setValue(updatedMajor);
+                                editRef.child("name").setValue(updatedName);
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
 
                         Intent iii = getIntent();
                         finish();
                         startActivity(iii);
-
-                        /*Intent i = new Intent(UserProfile.this, Home.class);
-                        i.putExtras(bundle);
-
-                        dialog.dismiss();
-
-                        startActivity(i);*/
                     }
                 });
 

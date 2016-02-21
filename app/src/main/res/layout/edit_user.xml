@@ -35,10 +35,30 @@
             </TextView>
 
             <TextView
-                android:id="@+id/editPasswordTV"
+                android:id="@+id/editNameTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/editUsernameET"
+                android:layout_marginTop="10dp"
+                android:text="Name:" />
+
+            <EditText
+                android:id="@+id/editNameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editNameTV"
+                android:background="@drawable/background_round_corner_edittext"
+                android:ems="10"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:text="">
+            </EditText>
+
+            <TextView
+                android:id="@+id/editPasswordTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editNameET"
                 android:layout_marginTop="10dp"
                 android:text="Password:" />
 

@@ -2,6 +2,9 @@ package edu.gatech.snickers.techflixandchill;
 
 /**
  * Created by nirajsuresh on 2/21/16.
+ *
+ * @author Snickers
+ * @Version 1.1
  */
 public class User {
     private String username;
