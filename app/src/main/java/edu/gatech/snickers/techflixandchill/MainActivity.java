@@ -15,6 +15,8 @@ import android.os.Bundle;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 /**
  * Created on 2/12/16.
@@ -50,9 +52,13 @@ public class MainActivity extends Activity {
         ref = new Firebase("https://techflixandchill.firebaseio.com");
         Firebase nirajref = ref.child("users").child("nirajsuresh");
         User user = new User("nirajsuresh","waddup","Niraj", "nirajsuresh@gmail.com",
+        Firebase nirajref = ref.child("users").child("nirajsuresh");
+        User user = new User("nirajsuresh","waddup","nirajsuresh@gmail.com",
                 "cool word", "Aerospace Engineering with a side of computer science");
         nirajref.setValue(user);
 
+        Firebase scottref = ref.child("users").child("scotthiggins");
+        User user2 = new User("scotthiggins","baller","shiggins@gmail.com",
         Firebase scottref = ref.child("users").child("scotthiggins");
         User user2 = new User("scotthiggins","baller","Scottie", "shiggins@gmail.com",
                 "cooler word", "Computer Science with a side of baller");
@@ -83,35 +89,35 @@ public class MainActivity extends Activity {
                 String Password = enterpassword.getText().toString();
                 String Username = username.getText().toString();
                 //check to see if user actually exists, proceed if they do
-                // if (checkUser(Username)
-                if (loginDataBaseAdapter.checkForUser(Username)) {
-                    Toast.makeText(MainActivity.this, "Username does not exist within app", Toast.LENGTH_LONG).show();
-                } else {
-                    String storedPassword = loginDataBaseAdapter.getPassword(Username);
-
-                    if(Password.equals(storedPassword))
-                    {
-                        Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
-                        Intent ii=new Intent(MainActivity.this,Home.class);
-                        //create bundle to pass along user data
-                        Bundle bundle = new Bundle();
-                        //Add the data to the bundle
-                        bundle.putString("USERNAME", Username);
-                        bundle.putString("PASSWORD", Password);
-                        //Add the bundle to the intent
-                        ii.putExtras(bundle);
-                        //start the activity
-                        startActivity(ii);
-                    }
-                    else
-                    if(Password.equals("")){
-                        Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
-                    }
-                }
+                checkUser(Username, Password, ref.child("users"));
+//                if (loginDataBaseAdapter.checkForUser(Username)) {
+//                    Toast.makeText(MainActivity.this, "Username does not exist within app", Toast.LENGTH_LONG).show();
+//                } else {
+//                    String storedPassword = loginDataBaseAdapter.getPassword(Username);
+//
+//                    if(Password.equals(storedPassword))
+//                    {
+//                        Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
+//                        Intent ii=new Intent(MainActivity.this,Home.class);
+//                        //create bundle to pass along user data
+//                        Bundle bundle = new Bundle();
+//                        //Add the data to the bundle
+//                        bundle.putString("USERNAME", Username);
+//                        bundle.putString("PASSWORD", Password);
+//                        //Add the bundle to the intent
+//                        ii.putExtras(bundle);
+//                        //start the activity
+//                        startActivity(ii);
+//                    }
+//                    else
+//                    if(Password.equals("")){
+//                        Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
+//                    }
+//                    else
+//                    {
+//                        Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
+//                    }
+//                }
             }
         });
 
@@ -127,7 +133,7 @@ public class MainActivity extends Activity {
                 dialog.show();
 
                 final EditText security = (EditText) dialog.findViewById(R.id.securityhint_edt);
-                final TextView getpass = (TextView) dialog.findViewById(R.id.textView3);
+                final TextView getpass=(TextView)dialog.findViewById(R.id.textView3);
 
                 Button ok = (Button) dialog.findViewById(R.id.getpassword_btn);
                 Button cancel = (Button) dialog.findViewById(R.id.cancel_btn);
@@ -167,12 +173,86 @@ public class MainActivity extends Activity {
                 dialog.show();
             }
         });
+    };
+
+    public void checkUser(String username, String password, Firebase ref) {
+        final String userName = username;
+        final String passWord = password;
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+//                User user = snapshot.getValue(User.class);
+                if (snapshot.hasChild(userName)) {
+                    performLogin(userName, passWord);
+                    Toast.makeText(MainActivity.this, "User does exist", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "User does NOT exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError arg0) {
+            }
+        });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Close The Database
-        loginDataBaseAdapter.close();
+    public void performLogin(String userName, String passWord) {
+        final String password = passWord;
+        Firebase loginRef = ref.child("users").child(userName);
+        loginRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                String storedPassword = user.getPassword();
+                if (storedPassword.equals(password)) {
+                    Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
+                    Intent ii = new Intent(MainActivity.this, Home.class);
+                    //create a bundle to pass along user data
+                    Bundle bundle = new Bundle();
+                    //Add data to bundle
+                    bundle.putString("USERNAME", user.getUsername());
+                    //Add bundle to pintent
+                    ii.putExtras(bundle);
+                    //start activity
+                    startActivity(ii);
+                } else {
+                    if (password.equals("")) {
+                        Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+//        String storedPassword = loginDataBaseAdapter.getPassword(Username);
+//
+//                    if(Password.equals(storedPassword))
+//                    {
+//                        Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
+//                        Intent ii=new Intent(MainActivity.this,Home.class);
+//                      //create bundle to pass along user data
+//                        Bundle bundle = new Bundle();
+//                        //Add the data to the bundle
+//                        bundle.putString("USERNAME", Username);
+//                        bundle.putString("PASSWORD", Password);
+//                        //Add the bundle to the intent
+//                        ii.putExtras(bundle);
+//                        //start the activity
+//                        startActivity(ii);
+//                    }
+//                    else
+//                    if(Password.equals("")){
+//                        Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
+//                    }
+//                    else
+//                    {
+//                        Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
+//                    }
     }
 }

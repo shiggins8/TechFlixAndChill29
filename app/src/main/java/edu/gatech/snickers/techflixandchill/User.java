@@ -11,7 +11,11 @@ public class User {
     private String securityHint;
     private String major;
 
-    public User(String username, String password, String name, String email, String securityHint, String major) {
+    public User() {
+        //empty constructor for Firebase
+    }
+    
+    public User(String name, String username, String password, String email, String securityHint, String major) {
         this.username = username;
         this.password = password;
         this.name = name;
@@ -43,6 +47,10 @@ public class User {
     public String getMajor() {
         return major;
     }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -50,10 +58,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setEmail(String email) {
