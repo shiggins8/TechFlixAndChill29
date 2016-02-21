@@ -7,9 +7,9 @@ package edu.gatech.snickers.techflixandchill;
  * @Version 1.1
  */
 public class User {
+    private String name;
     private String username;
     private String password;
-    private String name;
     private String email;
     private String securityHint;
     private String major;
@@ -17,40 +17,16 @@ public class User {
     public User() {
         //empty constructor for Firebase
     }
-    
+
     public User(String name, String username, String password, String email, String securityHint, String major) {
+        this.name = name;
         this.username = username;
         this.password = password;
-        this.name = name;
         this.email = email;
         this.securityHint = securityHint;
         this.major = major;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getSecurityHint() {
-        return securityHint;
-    }
-
-    public String getMajor() {
-        return major;
-    }
-    
     public void setName(String name) {
         this.name = name;
     }
@@ -74,4 +50,29 @@ public class User {
     public void setMajor(String major) {
         this.major = major;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getSecurityHint() {
+        return securityHint;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
 }

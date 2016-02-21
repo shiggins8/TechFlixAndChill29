@@ -19,12 +19,12 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 /**
- * Created on 2/12/16. Last modified on 2/21/16.
+ * Created on 2/12/16.
  *
  * Main activity of our application. Allows users to choose between logging in and registering an
  * account with the app. If the user has forgotten their password, there is a link they can select
  * that will provide them with their password, given their security hint is entered correctly.
- * Provides functionality and logic for entering the app. Updated with Firebase.
+ * Provides functionality and logic for entering the app.
  *
  * @author Snickers
  * @version 2.0
@@ -51,6 +51,7 @@ public class MainActivity extends Activity {
         Firebase.setAndroidContext(this);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
         Firebase nirajref = ref.child("users").child("nirajsuresh");
+
 
         registerr.setOnClickListener(new OnClickListener() {
 
