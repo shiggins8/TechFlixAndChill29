@@ -25,7 +25,7 @@ import com.firebase.client.Firebase;
  * Provides functionality and logic for entering the app.
  *
  * @author Snickers
- * @version 1.0
+ * @version 2.0
  */
 public class MainActivity extends Activity {
 
@@ -45,17 +45,23 @@ public class MainActivity extends Activity {
         username = (EditText) findViewById(R.id.edt_username);
         enterpassword = (EditText) findViewById(R.id.password_edt);
         forgetpass = (TextView) findViewById(R.id.textView2);
+
         Firebase.setAndroidContext(this);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
-        Firebase nirajref = ref.child("users").child("Niraj Suresh");
-        User user = new User("nirajsuresh","waddup","nirajsuresh@gmail.com",
+        Firebase nirajref = ref.child("users").child("nirajsuresh");
+        User user = new User("nirajsuresh","waddup","Niraj", "nirajsuresh@gmail.com",
                 "cool word", "Aerospace Engineering with a side of computer science");
         nirajref.setValue(user);
 
-        Firebase scottref = ref.child("users").child("Scott Higgins");
-        User user2 = new User("scotthiggins","baller","shiggins@gmail.com",
+        Firebase scottref = ref.child("users").child("scotthiggins");
+        User user2 = new User("scotthiggins","baller","Scottie", "shiggins@gmail.com",
                 "cooler word", "Computer Science with a side of baller");
         scottref.setValue(user2);
+
+        Firebase samiref = ref.child("users").child("samihogenson");
+        User user3 = new User("samihogenson", "password", "Samantha", "samihogenson@gmoo.com", "coolest word",
+                "Early childhood education");
+        samiref.setValue(user3);
 
         loginDataBaseAdapter = new LoginDataBaseAdapter(getApplicationContext());
         loginDataBaseAdapter.open();
@@ -77,6 +83,7 @@ public class MainActivity extends Activity {
                 String Password = enterpassword.getText().toString();
                 String Username = username.getText().toString();
                 //check to see if user actually exists, proceed if they do
+                // if (checkUser(Username)
                 if (loginDataBaseAdapter.checkForUser(Username)) {
                     Toast.makeText(MainActivity.this, "Username does not exist within app", Toast.LENGTH_LONG).show();
                 } else {
@@ -120,7 +127,7 @@ public class MainActivity extends Activity {
                 dialog.show();
 
                 final EditText security = (EditText) dialog.findViewById(R.id.securityhint_edt);
-                final TextView getpass=(TextView)dialog.findViewById(R.id.textView3);
+                final TextView getpass = (TextView) dialog.findViewById(R.id.textView3);
 
                 Button ok = (Button) dialog.findViewById(R.id.getpassword_btn);
                 Button cancel = (Button) dialog.findViewById(R.id.cancel_btn);
