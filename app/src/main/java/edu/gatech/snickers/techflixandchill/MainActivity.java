@@ -49,18 +49,6 @@ public class MainActivity extends Activity {
         forgetpass = (TextView) findViewById(R.id.textView2);
         Firebase.setAndroidContext(this);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
-        Firebase nirajref = ref.child("users").child("nirajsuresh");
-        User user = new User("nirajsuresh","waddup","nirajsuresh@gmail.com",
-                "cool word", "Aerospace Engineering with a side of computer science");
-        nirajref.setValue(user);
-
-        Firebase scottref = ref.child("users").child("scotthiggins");
-        User user2 = new User("scotthiggins","baller","shiggins@gmail.com",
-                "cooler word", "Computer Science with a side of baller");
-        scottref.setValue(user2);
-
-        loginDataBaseAdapter = new LoginDataBaseAdapter(getApplicationContext());
-        loginDataBaseAdapter.open();
 
         registerr.setOnClickListener(new OnClickListener() {
 

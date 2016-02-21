@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
+import com.firebase.client.Firebase;
+
 /**
  * Created by Snickers on 2/13/16.
  *
@@ -29,27 +31,27 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
  */
 public class Registration extends Activity{
 
-    LoginDataBaseAdapter loginDataBaseAdapter;
-    EditText password,repassword,securityhint,username,email,major;
+    EditText password, repassword, securityhint, username, email, major, name;
     Button register,cancel;
     CheckBox check;
+    Firebase ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
 
-        loginDataBaseAdapter = new LoginDataBaseAdapter(this);
-        loginDataBaseAdapter = loginDataBaseAdapter.open();
-        password = (EditText)findViewById(R.id.password_edt);
-        repassword = (EditText)findViewById(R.id.repassword_edt);
-        securityhint = (EditText)findViewById(R.id.securityhint_edt);
+        name = (EditText) findViewById(R.id.name_edt);
+        password = (EditText) findViewById(R.id.password_edt);
+        repassword = (EditText) findViewById(R.id.repassword_edt);
+        securityhint = (EditText) findViewById(R.id.securityhint_edt);
         username = (EditText) findViewById(R.id.username_edt);
         email = (EditText) findViewById(R.id.email_edt);
         major = (EditText) findViewById(R.id.major_edt);
-        register = (Button)findViewById(R.id.register_btn);
-        cancel = (Button)findViewById(R.id.cancel_btn);
-        check = (CheckBox)findViewById(R.id.checkBox1);
+        register = (Button) findViewById(R.id.register_btn);
+        cancel = (Button) findViewById(R.id.cancel_btn);
+        check = (CheckBox) findViewById(R.id.checkBox1);
+        ref = new Firebase("https://techflixandchill.firebaseio.com");
 
         //code to add functionality to the checkbox
         check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -72,12 +74,14 @@ public class Registration extends Activity{
             @Override
             public void onClick(View v) {
 
+                String Name = name.getText().toString();
                 String Pass = password.getText().toString();
                 String Secu = securityhint.getText().toString();
                 String Repass = repassword.getText().toString();
                 String user = username.getText().toString();
                 String mail = email.getText().toString();
                 String umajor = major.getText().toString();
+                Firebase userRef = ref.child("users");
 
                 //check to see if registration form is incomplete
                 if(Pass.equals("")||Repass.equals("")||Secu.equals("") || user.equals("")
@@ -98,13 +102,14 @@ public class Registration extends Activity{
                 else
                 {
                     // Save the Data in Database
-                    loginDataBaseAdapter.insertEntry(user, Pass, Repass,Secu, umajor, mail);
-
+                    // Create new user with attributes entered
+                    User newUser = new User(Name, user, Pass, mail, Secu, umajor);
+                    // Create new child in users database
+                    Firebase newref = userRef.child(user);
+                    // Set value of child to user object
+                    newref.setValue(newUser);
                     // reg_btn.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
-                    Log.d("PASSWORD",Pass);
-                    Log.d("RE PASSWORD",Repass);
-                    Log.d("SECURITY HINT",Secu);
                     Intent i=new Intent(Registration.this,MainActivity.class);
                     startActivity(i);
                 }
