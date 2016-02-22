@@ -2,7 +2,6 @@ package edu.gatech.snickers.techflixandchill;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -82,8 +81,6 @@ public class UserProfile extends Activity {
             }
         });
 
-
-
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +111,8 @@ public class UserProfile extends Activity {
                     public void onClick(View v) {
                         ref = new Firebase("https://techflixandchill.firebaseio.com");
 
-                        final String updatedUsername = newUsername.getText().toString();
+                        //note: we don't allow users to change usernames at this time
+                        //final String updatedUsername = newUsername.getText().toString();
                         final String updatedPassword = newPassword.getText().toString();
                         final String updatedEmail = newEmail.getText().toString();
                         final String updatedSecuHint = newSecuHint.getText().toString();
@@ -131,6 +129,13 @@ public class UserProfile extends Activity {
                                 editRef.child("securityHint").setValue(updatedSecuHint);
                                 editRef.child("major").setValue(updatedMajor);
                                 editRef.child("name").setValue(updatedName);
+                                userProfileNameTV.setText("Name: " + updatedName);
+                                userProfilePasswordTV.setText("Password: " + updatedPassword);
+                                userProfileEmailTV.setText("Email: " + updatedEmail);
+                                userProfileSecuHintTV.setText("Security Hint: " + updatedSecuHint);
+                                userProfileMajorTV.setText("Major: " + updatedMajor);
+
+
                             }
 
                             @Override
@@ -139,7 +144,13 @@ public class UserProfile extends Activity {
                             }
                         });
 
-                        Intent iii = getIntent();
+                        Intent iii = new Intent(UserProfile.this, Home.class);
+                        bundle.putString("PASSWORD", updatedPassword);
+                        bundle.putString("NAME", updatedName);
+                        bundle.putString("MAJOR", updatedMajor);
+                        bundle.putString("SECURITYHINT", updatedSecuHint);
+                        bundle.putString("EMAIL", updatedEmail);
+                        iii.putExtras(bundle);
                         finish();
                         startActivity(iii);
                     }

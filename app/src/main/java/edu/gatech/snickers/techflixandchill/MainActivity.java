@@ -165,7 +165,7 @@ public class MainActivity extends Activity {
 //                User user = snapshot.getValue(User.class);
                 if (snapshot.hasChild(userName)) {
                     performLogin(userName, passWord);
-                    Toast.makeText(MainActivity.this, "User does exist", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "User does exist", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "User does NOT exist", Toast.LENGTH_SHORT).show();
                 }
