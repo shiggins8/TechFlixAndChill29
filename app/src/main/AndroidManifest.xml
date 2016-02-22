@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.gatech.snickers.techflixandchill">
+
     <uses-sdk android:minSdkVersion="21" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/tflix_launcher"
@@ -17,11 +24,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Home"></activity>
-        <activity android:name=".Registration"></activity>
+        <activity android:name=".Home" />
+        <activity android:name=".Registration" />
         <activity
             android:name=".UserProfile"
             android:label="@string/title_activity_user_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SearchMovies"
+            android:label="@string/title_activity_search_movies"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewInTheaters"
+            android:label="@string/title_activity_new_in_theaters"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewOnDvd"
+            android:label="@string/title_activity_new_on_dvd"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

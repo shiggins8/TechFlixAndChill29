@@ -17,6 +17,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/usernameTextView"
+        android:layout_marginTop="25dp"
         android:text="View Profile"
         android:id="@+id/viewProfileButton"
         android:layout_centerVertical="true"
@@ -38,7 +40,34 @@
         android:id="@+id/usernameTextView"
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:textSize="@dimen/abc_text_size_display_1_material" />
+        android:layout_marginTop="35dp"
+        android:textSize="@dimen/abc_text_size_large_material" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Movies"
+        android:id="@+id/searchMoviesBtn"
+        android:layout_below="@+id/viewProfileButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New In Theaters"
+        android:id="@+id/newReleasesBtn"
+        android:layout_below="@+id/searchMoviesBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New on DVD"
+        android:id="@+id/newOnDVDBtn"
+        android:layout_below="@+id/newReleasesBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
 
 </RelativeLayout>
