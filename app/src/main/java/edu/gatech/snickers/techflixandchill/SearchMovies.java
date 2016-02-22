@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.firebase.client.snapshot.Index;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +21,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import java.util.Arrays;
 
 /**
  * Created on 2/21/16.
@@ -50,8 +54,17 @@ public class SearchMovies extends Activity {
             @Override
             public void onClick(View v) {
                 String movieName = search.getText().toString();
+                //convert any blank spaces in the movie title entered by user into + signs, which
+                //is what Rotten Tomatoes uses to search
+                char[] noSpaceName = movieName.toCharArray();
+                for (int i = 0; i < noSpaceName.length; i++) {
+                    if (noSpaceName[i] == 32) {
+                        noSpaceName[i] = 43; //+ sign in ASCII
+                    }
+                }
+                String finalMovieName = new String(noSpaceName);
                 new JSONTask().execute("http://api.rottentomatoes.com/api/public/v1.0/movies.json?q=" +
-                        movieName + "&page_limit=10&page=1&apikey=yedukp76ffytfuy24zsqk7f5");
+                         finalMovieName + "&page_limit=10&page=1&apikey=yedukp76ffytfuy24zsqk7f5");
             }
         });
 
@@ -92,11 +105,18 @@ public class SearchMovies extends Activity {
                 JSONObject parentObject = new JSONObject(finalJSON);
                 JSONArray parentArray = parentObject.getJSONArray("movies");
                 for (int i = 0; i < 10; i++) {
-                    JSONObject finalObject = parentArray.getJSONObject(i);
-                    String movieName = finalObject.getString("title");
-                    int year = finalObject.getInt("year");
-                    String newLine = movieName + " - " + year + "\n";
-                    finalBuffer.append(newLine);
+                    try {
+                        JSONObject finalObject = parentArray.getJSONObject(i);
+                        String movieName = finalObject.getString("title");
+                        int year = finalObject.getInt("year");
+                        String newLine = movieName + " - " + year + "\n";
+                        finalBuffer.append(newLine);
+                    } catch (Exception exception) {
+                        //ignore
+                    }
+                }
+                if (finalBuffer.length() == 0) {
+                    return "No Movies Match This Description";
                 }
                 return finalBuffer.toString();
 
