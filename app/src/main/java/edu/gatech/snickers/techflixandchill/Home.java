@@ -8,13 +8,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 /**
- * Created by Snickers on 2/13/16.
+ * Created by Snickers on 2/13/16. Last modified on 2/21/16.
  *
  * Home screen of our app itself. Currently allows users to view their profile or logout of the app.
- * Accessing the view profile option will allow users to edit their profile information.
+ * Accessing the view profile option will allow users to edit their profile information. As of the
+ * last update, allows users to view the newly released movies on DVD, in theaters, and additionally
+ * search for movies by title or keywords. Utilizes the Rotten Tomatoes API and Databases for that
+ * functionality.
  *
  * @author Snickers
- * @version 1.1
+ * @version 1.2
  */
 public class Home extends Activity{
 

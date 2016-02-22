@@ -21,8 +21,9 @@ import java.net.URL;
 
 public class NewOnDvd extends Activity {
 
-    Button newDVDReturnHome;
+    Button newDVDReturnHome, nextPage, previousPage;
     TextView rentalText;
+    static int pagenumber = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class NewOnDvd extends Activity {
         setContentView(R.layout.activity_new_on_dvd);
 
         rentalText = (TextView) findViewById(R.id.rentalText);
+        nextPage = (Button) findViewById(R.id.nextPage);
+        previousPage = (Button) findViewById(R.id.previousPage);
         new JSONTask().execute("http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/" +
                 "new_releases.json?page_limit=10&page=1&country=us&apikey=yedukp76ffytfuy24zsqk7f5");
 
@@ -45,6 +48,27 @@ public class NewOnDvd extends Activity {
                 Intent i = new Intent(NewOnDvd.this, Home.class);
                 i.putExtras(bundle);
                 startActivity(i);
+            }
+        });
+
+        nextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pagenumber++;
+                new JSONTask().execute("http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/" +
+                "new_releases.json?page_limit=10&page=" + pagenumber + "&country=us&apikey=yedukp76ffytfuy24zsqk7f5");
+            }
+        });
+
+        previousPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pagenumber > 1) {
+                    pagenumber--;
+                    new JSONTask().execute("http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/" +
+                            "new_releases.json?page_limit=10&page=" + pagenumber + "&country=us&apikey" +
+                            "=yedukp76ffytfuy24zsqk7f5");
+                }
             }
         });
     }

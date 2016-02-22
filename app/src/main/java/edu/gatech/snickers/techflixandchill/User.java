@@ -1,7 +1,11 @@
 package edu.gatech.snickers.techflixandchill;
 
 /**
- * Created by nirajsuresh on 2/21/16.
+ * Created on 2/21/16.
+ *
+ * The user object of the app. Allows the Firebase to be utilized fully through it's JSON
+ * integration. Provides a blank constructor for Firebase integration, and a full constructor
+ * in cases of more normal use within the app.
  *
  * @author Snickers
  * @Version 1.1

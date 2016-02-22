@@ -81,6 +81,7 @@ public class UserProfile extends Activity {
             }
         });
 
+        //allows the user to edit their profile and save those changes
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,8 +135,6 @@ public class UserProfile extends Activity {
                                 userProfileEmailTV.setText("Email: " + updatedEmail);
                                 userProfileSecuHintTV.setText("Security Hint: " + updatedSecuHint);
                                 userProfileMajorTV.setText("Major: " + updatedMajor);
-
-
                             }
 
                             @Override

@@ -20,6 +20,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Created on 2/21/16.
+ *
+ * This page controls the "search for a movie" functionality of the application. Allows the users to
+ * enter a title or keyword of a movie, and then returns a list of movies matching those terms.
+ * Utilizes the Rotten Tomatoes API for this functionality.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class SearchMovies extends Activity {
 
     Button searchReturnToHome, searchButton;

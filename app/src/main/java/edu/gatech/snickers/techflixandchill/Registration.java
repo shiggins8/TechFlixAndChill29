@@ -18,15 +18,16 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import com.firebase.client.Firebase;
 
 /**
- * Created by Snickers on 2/13/16.
+ * Created by Snickers on 2/13/16. Last modified on 2/21/16.
  *
  * Screen that allows users to register an account with the app. They fill out
  * the appropriate fields and will be notified if the account is created
  * successfully. Incorrectly or incompletely filling out the form will display a
- * Toast error message instructing the user how to register properly.
+ * Toast error message instructing the user how to register properly. A completed registration
+ * form will then enter and save the information within the Firebase database.
  *
  * @author Snickers
- * @version 1.0
+ * @version 1.1
  *
  */
 public class Registration extends Activity{

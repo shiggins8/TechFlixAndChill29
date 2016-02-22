@@ -23,8 +23,8 @@ import com.firebase.client.ValueEventListener;
  *
  * Main activity of our application. Allows users to choose between logging in and registering an
  * account with the app. If the user has forgotten their password, there is a link they can select
- * that will provide them with their password, given their security hint is entered correctly.
- * Provides functionality and logic for entering the app.
+ * that will provide them with their security hint.Provides functionality and logic for entering
+ * the app. Registered user data is stored in a Firebase database online, using JSON structure.
  *
  * @author Snickers
  * @version 2.0

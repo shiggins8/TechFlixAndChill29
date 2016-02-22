@@ -19,6 +19,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Created on 2/21/16.
+ *
+ * This class controls the list of newly released movies that are still in theaters. Uses the Rotten
+ * Tomatoes API to execute a JSON query and pull back a list of movies still in theaters. Allows the
+ * user to scroll through multiple pages of movies, and then return to the home page of the app when
+ * they are done viewing movies.
+ *
+ * @author Snickers
+ * @version 1.1
+ */
 public class NewInTheaters extends Activity {
 
     Button newInTheatersReturnHome, nextPage, previousPage;
