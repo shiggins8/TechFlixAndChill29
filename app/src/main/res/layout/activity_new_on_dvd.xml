@@ -28,9 +28,10 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/rentalText"
+        android:textSize="@dimen/abc_text_size_large_material"
         android:layout_below="@+id/textView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:textSize="@dimen/abc_text_size_large_material" />
+        android:layout_alignStart="@+id/textView1"
+        android:layout_above="@+id/newDVDReturnToHome"
+        android:layout_alignEnd="@+id/textView1" />
 
 </RelativeLayout> 
