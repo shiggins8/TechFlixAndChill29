@@ -2,10 +2,23 @@ package edu.gatech.snickers.techflixandchill;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.Buffer;
 
 /**
  * Created by Snickers on 2/13/16.
@@ -18,8 +31,8 @@ import android.widget.TextView;
  */
 public class Home extends Activity{
 
-    Button logoutButton, viewProfileButton;
-    TextView usernameTextView;
+    Button logoutButton, viewProfileButton, topRentals;
+    TextView usernameTextView, rentalText;
 
 
     @Override
@@ -30,6 +43,8 @@ public class Home extends Activity{
         logoutButton = (Button) findViewById(R.id.logoutButton);
         viewProfileButton = (Button) findViewById(R.id.viewProfileButton);
         usernameTextView = (TextView) findViewById(R.id.usernameTextView);
+        topRentals = (Button) findViewById(R.id.viewTopRentals);
+        rentalText = (TextView) findViewById(R.id.rentalText);
 
         //get the bundle created in MainActivity
         final Bundle bundle;
@@ -62,5 +77,7 @@ public class Home extends Activity{
                 startActivity(i);
             }
         });
+
     }
+
 }
