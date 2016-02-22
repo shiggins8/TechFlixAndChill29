@@ -13,4 +13,7 @@
     <string name="showpassword">Show password:</string>
     <string name="securityhint">Security hint:</string>
     <string name="title_activity_user_profile">UserProfile</string>
+    <string name="title_activity_search_movies">SearchMovies</string>
+    <string name="title_activity_new_in_theaters">NewInTheaters</string>
+    <string name="title_activity_new_on_dvd">NewOnDvd</string>
 </resources>

@@ -18,7 +18,7 @@ import android.widget.TextView;
  */
 public class Home extends Activity{
 
-    Button logoutButton, viewProfileButton;
+    Button logoutButton, viewProfileButton, searchMoviesBtn, newReleasesBtn, newOnDVDBtn;
     TextView usernameTextView;
 
 
@@ -29,6 +29,9 @@ public class Home extends Activity{
 
         logoutButton = (Button) findViewById(R.id.logoutButton);
         viewProfileButton = (Button) findViewById(R.id.viewProfileButton);
+        searchMoviesBtn = (Button) findViewById(R.id.searchMoviesBtn);
+        newReleasesBtn = (Button) findViewById(R.id.newReleasesBtn);
+        newOnDVDBtn = (Button) findViewById(R.id.newOnDVDBtn);
         usernameTextView = (TextView) findViewById(R.id.usernameTextView);
 
         //get the bundle created in MainActivity
@@ -59,6 +62,36 @@ public class Home extends Activity{
             public void onClick(View v) {
                 //return to the MainActivity
                 Intent i = new Intent(Home.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        searchMoviesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //go to the page to search for movies and display results
+                Intent i = new Intent(Home.this, SearchMovies.class);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+        });
+
+        newReleasesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //go to page to view and display movies newly released to theaters
+                Intent i = new Intent(Home.this, NewInTheaters.class);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+        });
+
+        newOnDVDBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //go to page to view and display movies newly released to DVD
+                Intent i = new Intent(Home.this, NewOnDvd.class);
+                i.putExtras(bundle);
                 startActivity(i);
             }
         });
