@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,8 +102,15 @@ public class UserProfile extends Activity {
                 newEmail.setText(email);
                 final EditText newSecuHint = (EditText) dialog.findViewById(R.id.editSecuHintET);
                 newSecuHint.setText(securityHint);
-                final EditText newMajor = (EditText) dialog.findViewById(R.id.editMajorET);
-                newMajor.setText(major);
+                final Spinner newMajor = (Spinner) dialog.findViewById(R.id.editMajorSpinner);
+                String[] items = getResources().getStringArray(R.array.majors_array);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(UserProfile.this, android.R.layout.simple_spinner_dropdown_item, items);
+                //make sure that spinner initially starts on their original major selection
+                int i = adapter.getPosition(major);
+                System.out.println(i);
+                newMajor.setAdapter(adapter);
+                newMajor.setSelection(i, true);
+
                 final EditText newName = (EditText) dialog.findViewById(R.id.editNameET);
                 newName.setText(name);
 
@@ -117,7 +126,7 @@ public class UserProfile extends Activity {
                         final String updatedPassword = newPassword.getText().toString();
                         final String updatedEmail = newEmail.getText().toString();
                         final String updatedSecuHint = newSecuHint.getText().toString();
-                        final String updatedMajor = newMajor.getText().toString();
+                        final String updatedMajor = newMajor.getSelectedItem().toString();
                         final String updatedName = newName.getText().toString();
 
                         //update database with new info
