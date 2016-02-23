@@ -143,15 +143,12 @@
                     android:layout_marginTop="10dp"
                     android:text="Major:" />
 
-                <EditText
-                    android:id="@+id/major_edt"
+                <Spinner
+                    android:id="@+id/majorSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/background_round_corner_edittext"
-                    android:ems="10"
-                    android:padding="5dp" >
-                </EditText>
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
             <RelativeLayout

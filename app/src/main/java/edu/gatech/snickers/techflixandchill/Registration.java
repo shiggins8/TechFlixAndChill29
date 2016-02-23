@@ -8,12 +8,14 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Spinner;
 
 import com.firebase.client.Firebase;
 
@@ -34,6 +36,7 @@ public class Registration extends Activity{
 
     EditText password, repassword, securityhint, username, email, major, name;
     Button register,cancel;
+    Spinner majorSpinner;
     CheckBox check;
     Firebase ref;
 
@@ -48,11 +51,16 @@ public class Registration extends Activity{
         securityhint = (EditText) findViewById(R.id.securityhint_edt);
         username = (EditText) findViewById(R.id.username_edt);
         email = (EditText) findViewById(R.id.email_edt);
-        major = (EditText) findViewById(R.id.major_edt);
+        //major = (EditText) findViewById(R.id.major_edt); //removed to add the spinner instead
         register = (Button) findViewById(R.id.register_btn);
         cancel = (Button) findViewById(R.id.cancel_btn);
         check = (CheckBox) findViewById(R.id.checkBox1);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
+
+        majorSpinner = (Spinner) findViewById(R.id.majorSpinner);
+        String[] items = getResources().getStringArray(R.array.majors_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        majorSpinner.setAdapter(adapter);
 
         //code to add functionality to the checkbox
         check.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -81,7 +89,7 @@ public class Registration extends Activity{
                 String Repass = repassword.getText().toString();
                 String user = username.getText().toString();
                 String mail = email.getText().toString();
-                String umajor = major.getText().toString();
+                String umajor = majorSpinner.getSelectedItem().toString();
                 Firebase userRef = ref.child("users");
 
                 //check to see if registration form is incomplete
