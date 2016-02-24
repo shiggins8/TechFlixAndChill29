@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 /**
- * Created by Snickers on 2/13/16. Last modified on 2/21/16.
+ * Created by Snickers on 2/13/16.
+ *
+ * Last modified on 2/21/16.
  *
  * Home screen of our app itself. Currently allows users to view their profile or logout of the app.
  * Accessing the view profile option will allow users to edit their profile information. As of the

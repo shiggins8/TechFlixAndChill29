@@ -19,6 +19,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Created on 2/21/16.
+ *
+ * This page controls the "view movies that are new on DVD" functionality of the application. The
+ * activity will have an ability to progress and go back through pages of newly-released DVDs, and
+ * it gives the user the option to return to the home screen.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class NewOnDvd extends Activity {
 
     Button newDVDReturnHome, nextPage, previousPage;

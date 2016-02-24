@@ -45,6 +45,8 @@ public class Registration extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
 
+        //TODO Make sure that the user isn't creating with a username that has already been used
+
         name = (EditText) findViewById(R.id.name_edt);
         password = (EditText) findViewById(R.id.password_edt);
         repassword = (EditText) findViewById(R.id.repassword_edt);
