@@ -31,7 +31,6 @@ import com.firebase.client.ValueEventListener;
  */
 public class MainActivity extends Activity {
 
-    LoginDataBaseAdapter loginDataBaseAdapter;
     Button login;
     Button registerr;
     EditText enterpassword, username;
@@ -128,16 +127,8 @@ public class MainActivity extends Activity {
                         {
                             Toast.makeText(getApplicationContext(), "Please enter your username", Toast.LENGTH_SHORT).show();
                         }
-                        else
-                        {
-                            String storedHint = loginDataBaseAdapter.getHint(userName);
-                            if(storedHint==null)
-                            {
-                                Toast.makeText(getApplicationContext(), "Please enter correct username", Toast.LENGTH_SHORT).show();
-                            }else{
-                                Log.d("GET HINT",storedHint);
-                                getpass.setText(storedHint);
-                            }
+                        else {
+                            checkSecuHint(userName, getpass, ref.child("users"));
                         }
                     }
                 });
@@ -165,6 +156,28 @@ public class MainActivity extends Activity {
 //                User user = snapshot.getValue(User.class);
                 if (snapshot.hasChild(userName)) {
                     performLogin(userName, passWord);
+                    //Toast.makeText(MainActivity.this, "User does exist", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "User does NOT exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError arg0) {
+            }
+        });
+    }
+
+    public void checkSecuHint(String username, TextView getpass, Firebase ref) {
+        final String userName = username;
+        final TextView getPass = getpass;
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+//                User user = snapshot.getValue(User.class);
+                if (snapshot.hasChild(userName)) {
+                    User temp = snapshot.child(userName).getValue(User.class);
+                    getPass.setText(temp.getSecurityHint());
                     //Toast.makeText(MainActivity.this, "User does exist", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "User does NOT exist", Toast.LENGTH_SHORT).show();

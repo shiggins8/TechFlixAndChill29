@@ -109,6 +109,8 @@ public class Registration extends Activity{
                     return;
                 }
 
+
+
                 //successful registration
                 else
                 {
