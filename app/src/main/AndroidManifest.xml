@@ -45,6 +45,10 @@
         <activity
             android:name=".BoxOfficeActivity"
             android:label="@string/title_activity_box_office"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BoxOfficeDetailActivity"
+            android:label="@string/title_activity_box_office_detail"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

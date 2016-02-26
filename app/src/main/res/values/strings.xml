@@ -53,4 +53,5 @@
         <item>Public Policy</item>
     </string-array>
     <string name="title_activity_box_office">BoxOfficeActivity</string>
+    <string name="title_activity_box_office_detail">BoxOfficeDetailActivity</string>
 </resources>

@@ -1,7 +1,10 @@
 package edu.gatech.snickers.techflixandchill;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -19,6 +22,8 @@ public class BoxOfficeActivity extends Activity {
     private ListView lvMovies;
     private BoxOfficeMoviesAdapter adapterMovies;
 
+    public static final String MOVIE_DETAIL_KEY = "movie";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,7 @@ public class BoxOfficeActivity extends Activity {
         adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
         lvMovies.setAdapter(adapterMovies);
         fetchBoxOfficeMovies();
+        setupMovieSelectedListener();
     }
 
     // Executes an API call to the box office endpoint, parses the results
@@ -51,6 +57,18 @@ public class BoxOfficeActivity extends Activity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+    }
+
+    public void setupMovieSelectedListener() {
+        lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
+                // Launch the detail view passing movie as an extra
+                Intent i = new Intent(BoxOfficeActivity.this, BoxOfficeDetailActivity.class);
+                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                startActivity(i);
             }
         });
     }
