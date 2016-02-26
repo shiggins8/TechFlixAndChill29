@@ -52,4 +52,5 @@
         <item>Psychology</item>
         <item>Public Policy</item>
     </string-array>
+    <string name="title_activity_box_office">BoxOfficeActivity</string>
 </resources>

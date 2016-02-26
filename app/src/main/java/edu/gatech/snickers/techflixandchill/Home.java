@@ -23,7 +23,7 @@ import android.widget.TextView;
  */
 public class Home extends Activity{
 
-    Button logoutButton, viewProfileButton, searchMoviesBtn, newReleasesBtn, newOnDVDBtn;
+    Button logoutButton, viewProfileButton, searchMoviesBtn, newReleasesBtn, newOnDVDBtn, boxOfficeBtn;
     TextView usernameTextView;
 
 
@@ -37,6 +37,7 @@ public class Home extends Activity{
         searchMoviesBtn = (Button) findViewById(R.id.searchMoviesBtn);
         newReleasesBtn = (Button) findViewById(R.id.newReleasesBtn);
         newOnDVDBtn = (Button) findViewById(R.id.newOnDVDBtn);
+        boxOfficeBtn = (Button) findViewById(R.id.boxOfficeBtn);
         usernameTextView = (TextView) findViewById(R.id.usernameTextView);
 
         //get the bundle created in MainActivity
@@ -96,6 +97,16 @@ public class Home extends Activity{
             public void onClick(View v) {
                 //go to page to view and display movies newly released to DVD
                 Intent i = new Intent(Home.this, NewOnDvd.class);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+        });
+
+        boxOfficeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //go to page to view and display movies newly released to DVD
+                Intent i = new Intent(Home.this, BoxOfficeActivity.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }

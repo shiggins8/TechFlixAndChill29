@@ -70,34 +70,6 @@ public class MainActivity extends Activity {
                 String Username = username.getText().toString();
                 //check to see if user actually exists, proceed if they do
                 checkUser(Username, Password, ref.child("users"));
-//                if (loginDataBaseAdapter.checkForUser(Username)) {
-//                    Toast.makeText(MainActivity.this, "Username does not exist within app", Toast.LENGTH_LONG).show();
-//                } else {
-//                    String storedPassword = loginDataBaseAdapter.getPassword(Username);
-//
-//                    if(Password.equals(storedPassword))
-//                    {
-//                        Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
-//                        Intent ii=new Intent(MainActivity.this,Home.class);
-//                        //create bundle to pass along user data
-//                        Bundle bundle = new Bundle();
-//                        //Add the data to the bundle
-//                        bundle.putString("USERNAME", Username);
-//                        bundle.putString("PASSWORD", Password);
-//                        //Add the bundle to the intent
-//                        ii.putExtras(bundle);
-//                        //start the activity
-//                        startActivity(ii);
-//                    }
-//                    else
-//                    if(Password.equals("")){
-//                        Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
-//                    }
-//                    else
-//                    {
-//                        Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
-//                    }
-//                }
             }
         });
 
@@ -228,30 +200,5 @@ public class MainActivity extends Activity {
 
             }
         });
-
-//        String storedPassword = loginDataBaseAdapter.getPassword(Username);
-//
-//                    if(Password.equals(storedPassword))
-//                    {
-//                        Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
-//                        Intent ii=new Intent(MainActivity.this,Home.class);
-//                      //create bundle to pass along user data
-//                        Bundle bundle = new Bundle();
-//                        //Add the data to the bundle
-//                        bundle.putString("USERNAME", Username);
-//                        bundle.putString("PASSWORD", Password);
-//                        //Add the bundle to the intent
-//                        ii.putExtras(bundle);
-//                        //start the activity
-//                        startActivity(ii);
-//                    }
-//                    else
-//                    if(Password.equals("")){
-//                        Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
-//                    }
-//                    else
-//                    {
-//                        Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
-//                    }
     }
 }
