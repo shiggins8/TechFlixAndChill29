@@ -58,4 +58,5 @@
     <string name="title_activity_new_movies_in_theaters">NewMoviesInTheatersActivity</string>
     <string name="title_activity_movie_search">MovieSearchActivity</string>
     <string name="title_activity_movie_rating">MovieRatingActivity</string>
+    <string name="title_activity_view_my_ratings">ViewMyRatingsActivity</string>
 </resources>

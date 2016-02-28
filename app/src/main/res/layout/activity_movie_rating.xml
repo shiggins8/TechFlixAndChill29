@@ -37,16 +37,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/movieRatingBar"
+        android:stepSize=".25"
+        android:rating="2.5"
         android:layout_below="@+id/ratingMovieTitleTV"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp" />
+        android:layout_marginTop="80dp"
+        android:progressBackgroundTint="#ffffff"
+        android:backgroundTint="#ffffff" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:hint="Type your rating here:"
-        android:id="@+id/userWordsRatingTV"
+        android:id="@+id/userWordsRatingET"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 

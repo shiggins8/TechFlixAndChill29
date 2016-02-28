@@ -12,16 +12,20 @@ package edu.gatech.snickers.techflixandchill;
  * @version 1.0
  */
 public class Rating {
+    private String titleOfMovie;
+
     private float numericalRating;
     private String commentRating;
     private String majorOfRater;
+    private String usernameOfRater;
 
     public Rating() {
         //empty constructor for Firebase purposes
     }
 
-    public Rating(float numericalRating, String commentRating, String majorOfRater,
+    public Rating(String titleOfMovie, float numericalRating, String commentRating, String majorOfRater,
                   String usernameOfRater) {
+        this.titleOfMovie = titleOfMovie;
         this.numericalRating = numericalRating;
         this.commentRating = commentRating;
         this.majorOfRater = majorOfRater;
@@ -36,6 +40,14 @@ public class Rating {
         this.numericalRating = numericalRating;
     }
 
+    public String getTitleOfMovie() {
+        return titleOfMovie;
+    }
+
+    public void setTitleOfMovie(String titleOfMovie) {
+        this.titleOfMovie = titleOfMovie;
+    }
+
     public void setCommentRating(String commentRating) {
         this.commentRating = commentRating;
     }
@@ -43,8 +55,6 @@ public class Rating {
     public void setMajorOfRater(String majorOfRater) {
         this.majorOfRater = majorOfRater;
     }
-
-    private String usernameOfRater;
 
     public String getUsernameOfRater() {
         return usernameOfRater;

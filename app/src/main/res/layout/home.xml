@@ -73,10 +73,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Box Office Hits"
-        android:id="@+id/boxOfficeBtn"
-        android:layout_below="@+id/newOnDVDBtn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+        android:text="View My Ratings"
+        android:id="@+id/viewMyRatingsBtn"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/newOnDVDBtn"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
