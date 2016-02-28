@@ -8,7 +8,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by Scottie on 2/26/16.
+ * Essentially just the Movie class for the application. Has several fields for details or data
+ * about a movie that can be pulled and requested from Rotten Tomatoes. Compatible with Firebase.
+ *
+ * Created on 2/26/16.
+ *
+ * @author Snickers
+ * @version 1.1
  */
 public class BoxOfficeMovie implements Serializable {
     private static final long serialVersionUID = -8959832007991513854L;

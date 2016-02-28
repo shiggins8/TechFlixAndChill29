@@ -11,6 +11,16 @@ import android.widget.TextView;
 //3rd party libraries
 import com.squareup.picasso.Picasso;
 
+/**
+ * Detailed view of a movie, once it has been selected from a ListView on a movie results page.
+ * Displays more information about the movie than the simplified view, then gives users an option to
+ * rate the movie
+ *
+ * Created on 2/27/16.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class BoxOfficeDetailActivity extends Activity {
     private ImageView ivPosterImage;
     private TextView tvTitle;

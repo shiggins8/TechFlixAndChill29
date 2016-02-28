@@ -11,7 +11,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
+ * Essential adapter class that extends the ArrayAdapter class. Utilized to set up a listView row
+ * by adapting an array of movie objects and then translating a specific movie into the list given
+ * a position into a relevant row within the list view.
+ *
  * Created by Scottie on 2/26/16.
+ *
+ * @author Snickers
+ * @version 1.0
  */
 public class BoxOfficeMoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
     public BoxOfficeMoviesAdapter(Context context, ArrayList<BoxOfficeMovie> aMovies) {

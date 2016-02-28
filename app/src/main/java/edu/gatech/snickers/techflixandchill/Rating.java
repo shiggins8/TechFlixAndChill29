@@ -1,7 +1,15 @@
 package edu.gatech.snickers.techflixandchill;
 
 /**
- * Created by Scottie on 2/27/16.
+ * Basic class for creating movie rating objects within the app. Firebase compatible. Allows for
+ * a numerical rating to be stored, as well as a text-based comment or review from the user.
+ * Stores the username as well as user's major for identification purposes and storing within the
+ * databases.
+ *
+ * Created on 2/27/16.
+ *
+ * @author Snickers
+ * @version 1.0
  */
 public class Rating {
     private float numericalRating;

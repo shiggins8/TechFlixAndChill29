@@ -13,6 +13,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Provides the functionality for users to view movies recently released on DVD. Displays the
+ * results in a list view, with selectable rows. Search calls are made using the Rotten Tomatoes
+ * API.
+ *
+ * Created on 2/27/16.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class NewMoviesOnDvdActivity extends Activity {
     RottenTomatoesClient client;
     private ListView lvMovies;
@@ -22,18 +32,6 @@ public class NewMoviesOnDvdActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_box_office);
-        lvMovies = (ListView) findViewById(R.id.lvMovies);
-        ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
-        adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
-        lvMovies.setAdapter(adapterMovies);
-        final Bundle bundle = getIntent().getExtras();
-        fetchNewOnDvd();
-        setupMovieSelectedListener();
-    }
-
-    public void onNewInstance(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_office);
         lvMovies = (ListView) findViewById(R.id.lvMovies);
@@ -83,9 +81,7 @@ public class NewMoviesOnDvdActivity extends Activity {
                 //i.putExtra("MAJOR", major);
                 i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
                 String title = adapterMovies.getItem(position).getTitle();
-                System.out.println("movie position: " + position);
                 i.putExtra("movieTitle", title);
-                System.out.println("newmoviesactivity says clicked title = " + title);
                 i.putExtras(bundle2);
                 finish();
                 startActivity(i);

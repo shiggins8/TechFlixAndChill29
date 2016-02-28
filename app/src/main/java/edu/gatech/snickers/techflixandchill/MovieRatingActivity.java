@@ -7,9 +7,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
-
 import com.firebase.client.Firebase;
 
+/**
+ * Rating functionality of the app. Users can cancel to decide to not rate the movie, or they can
+ * give the movie a rating based on a 1-5 star rating scale (in 0.5 star increments) and leave a
+ * text comment for their rating. Ratings are saved based on user that submitted the rating as well
+ * as the major of said user.
+ *
+ * Created on 2/27/16
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class MovieRatingActivity extends Activity {
     TextView ratingMovieTitleTV, userWordsRatingTV;
     RatingBar movieRatingBar;

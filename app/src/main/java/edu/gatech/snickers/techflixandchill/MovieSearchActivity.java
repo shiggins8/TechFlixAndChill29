@@ -15,6 +15,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Provides the functionality for users to search for movies within the app. Displays the results in
+ * a list view, with selectable rows. Search calls are made using the Rotten Tomatoes API.
+ *
+ * Created on 2/27/16.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class MovieSearchActivity extends Activity {
     RottenTomatoesClient client;
     private ListView lvMovies;
@@ -80,7 +89,12 @@ public class MovieSearchActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Launch the detail view passing movie as an extra
                 Intent i = new Intent(MovieSearchActivity.this, BoxOfficeDetailActivity.class);
+                Bundle bundle2 = MovieSearchActivity.this.getIntent().getExtras();
                 i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                String title = adapterMovies.getItem(position).getTitle();
+                i.putExtra("movieTitle", title);
+                i.putExtras(bundle2);
+                finish();
                 startActivity(i);
             }
         });

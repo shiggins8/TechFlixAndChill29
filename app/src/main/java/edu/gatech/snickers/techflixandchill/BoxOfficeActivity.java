@@ -13,6 +13,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Basic class for the displaying of the movies. Creates an ArrayList of movie objects utilizing
+ * the adapter class that we created, sets up a dynamic ListView, and then populates the ListView
+ * with the movies from the ArrayList. Creates and sets up clickable logic for individual items
+ * within the ListView - clicking a movie will take the user to a more detailed view of the movie.
+ *
+ * Created on 2/26/16.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class BoxOfficeActivity extends Activity {
     RottenTomatoesClient client;
     private ListView lvMovies;

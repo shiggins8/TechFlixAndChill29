@@ -5,7 +5,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 /**
- * Created by Scottie on 2/26/16.
+ * Basic client adapter file we created to hold all of the url's for our Rotten Tomatoes calls.
+ * Key is stored as a final String variable, and the base api url is stored, whereupon it can be
+ * appended depending on the specific search call that a user makes.
+ *
+ * Created on 2/26/16.
+ *
+ * @author Snickers
+ * @version 1.0
  */
 public class RottenTomatoesClient {
     private final String API_KEY = "yedukp76ffytfuy24zsqk7f5";

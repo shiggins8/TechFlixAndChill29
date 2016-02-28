@@ -41,15 +41,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Insert Text Rating Here"
+        android:hint="Type your rating here:"
         android:id="@+id/userWordsRatingTV"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:editable="true" />
-
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
