@@ -1,11 +1,9 @@
 package edu.gatech.snickers.techflixandchill;
 
 import android.text.TextUtils;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -19,11 +17,12 @@ public class BoxOfficeMovie implements Serializable {
     private String synopsis;
     private String posterUrl;
     private int criticsScore;
+    private String critics_Rating;
     private ArrayList<String> castList;
 
     private String largePosterUrl;
-    private String criticsConsensus;
     private int audienceScore;
+    private String audience_Rating;
 
     public String getTitle() {
         return title;
@@ -49,6 +48,14 @@ public class BoxOfficeMovie implements Serializable {
         return TextUtils.join(", ", castList);
     }
 
+    public String getCriticsRating() {
+        return critics_Rating;
+    }
+
+    public String getAudienceRating() {
+        return audience_Rating;
+    }
+
     // Returns a BoxOfficeMovie given the expected JSON
     // BoxOfficeMovie.fromJson(movieJsonDictionary)
     // Stores the `title`, `year`, `synopsis`, `poster` and `criticsScore`
@@ -58,12 +65,35 @@ public class BoxOfficeMovie implements Serializable {
             // Deserialize json into object fields
             b.title = jsonObject.getString("title");
             b.year = jsonObject.getInt("year");
-            b.synopsis = jsonObject.getString("synopsis");
+            if (jsonObject.getString("synopsis").equals("")) {
+                b.synopsis = "No synopsis available.";
+            } else {
+                b.synopsis = jsonObject.getString("synopsis");
+            }
             b.posterUrl = jsonObject.getJSONObject("posters").getString("thumbnail");
             b.largePosterUrl = jsonObject.getJSONObject("posters").getString("detailed");
-            b.criticsConsensus = jsonObject.getString("critics_consensus");
-            b.audienceScore = jsonObject.getJSONObject("ratings").getInt("audience_score");
-            b.criticsScore = jsonObject.getJSONObject("ratings").getInt("critics_score");
+            //int audienceScoreValue = jsonObject.getJSONObject("ratings").getInt("audience_score");
+            try {
+                b.audienceScore = jsonObject.getJSONObject("ratings").getInt("audience_score");
+            } catch (Exception e) {
+                //do nothing
+            }
+            try {
+                b.criticsScore = jsonObject.getJSONObject("ratings").getInt("critics_score");
+            } catch (Exception e) {
+                //do nothing
+            }
+            try {
+                b.audience_Rating = jsonObject.getJSONObject("ratings").getString("critics_rating");
+            } catch (Exception e) {
+                //do nothing
+            }
+            try {
+                b.audience_Rating = jsonObject.getJSONObject("ratings").getString("audience_rating");
+            } catch (Exception e) {
+                //do nothing
+            }
+
             // Construct simple array of cast names
             b.castList = new ArrayList<String>();
             JSONArray abridgedCast = jsonObject.getJSONArray("abridged_cast");
@@ -104,10 +134,6 @@ public class BoxOfficeMovie implements Serializable {
 
     public String getLargePosterUrl() {
         return largePosterUrl;
-    }
-
-    public String getCriticsConsensus() {
-        return criticsConsensus;
     }
 
     public int getAudienceScore() {

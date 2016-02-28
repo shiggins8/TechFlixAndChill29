@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
-public class BoxOfficeActivity extends Activity {
+public class NewMoviesOnDvdActivity extends Activity {
     RottenTomatoesClient client;
     private ListView lvMovies;
     private BoxOfficeMoviesAdapter adapterMovies;
@@ -28,15 +28,15 @@ public class BoxOfficeActivity extends Activity {
         ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
         adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
         lvMovies.setAdapter(adapterMovies);
-        fetchBoxOfficeMovies();
+        fetchNewOnDvd();
         setupMovieSelectedListener();
     }
 
     // Executes an API call to the box office endpoint, parses the results
     // Converts them into an array of movie objects and adds them to the adapter
-    private void fetchBoxOfficeMovies() {
+    private void fetchNewOnDvd() {
         client = new RottenTomatoesClient();
-        client.getBoxOfficeMovies(new JsonHttpResponseHandler() {
+        client.getNewOnDvdMovies(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
                 JSONArray items = null;
@@ -62,7 +62,7 @@ public class BoxOfficeActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Launch the detail view passing movie as an extra
-                Intent i = new Intent(BoxOfficeActivity.this, BoxOfficeDetailActivity.class);
+                Intent i = new Intent(NewMoviesOnDvdActivity.this, BoxOfficeDetailActivity.class);
                 i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
                 startActivity(i);
             }

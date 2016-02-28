@@ -76,7 +76,7 @@ public class Home extends Activity{
             @Override
             public void onClick(View v) {
                 //go to the page to search for movies and display results
-                Intent i = new Intent(Home.this, SearchMovies.class);
+                Intent i = new Intent(Home.this, MovieSearchActivity.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -86,7 +86,7 @@ public class Home extends Activity{
             @Override
             public void onClick(View v) {
                 //go to page to view and display movies newly released to theaters
-                Intent i = new Intent(Home.this, NewInTheaters.class);
+                Intent i = new Intent(Home.this, NewMoviesInTheatersActivity.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -96,7 +96,7 @@ public class Home extends Activity{
             @Override
             public void onClick(View v) {
                 //go to page to view and display movies newly released to DVD
-                Intent i = new Intent(Home.this, NewOnDvd.class);
+                Intent i = new Intent(Home.this, NewMoviesOnDvdActivity.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }

@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 /**
@@ -38,7 +36,7 @@ public class BoxOfficeMoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
         ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImage);
         // Populate the data into the template view using the data object
         tvTitle.setText(movie.getTitle());
-        tvCriticsScore.setText("Score: " + movie.getCriticsScore() + "%");
+        tvCriticsScore.setText("Score: " + movie.getAudienceScore() + "%");
         tvCast.setText(movie.getCastList());
         Picasso.with(getContext()).load(movie.getPosterUrl()).into(ivPosterImage);
         // Return the completed view to render on screen

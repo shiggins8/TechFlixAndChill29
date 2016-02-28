@@ -31,24 +31,24 @@
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SearchMovies"
-            android:label="@string/title_activity_search_movies"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".NewInTheaters"
-            android:label="@string/title_activity_new_in_theaters"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".NewOnDvd"
-            android:label="@string/title_activity_new_on_dvd"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".BoxOfficeActivity"
             android:label="@string/title_activity_box_office"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BoxOfficeDetailActivity"
             android:label="@string/title_activity_box_office_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewMoviesOnDvdActivity"
+            android:label="@string/title_activity_new_movies_on_dvd"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewMoviesInTheatersActivity"
+            android:label="@string/title_activity_new_movies_in_theaters"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MovieSearchActivity"
+            android:label="@string/title_activity_movie_search"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

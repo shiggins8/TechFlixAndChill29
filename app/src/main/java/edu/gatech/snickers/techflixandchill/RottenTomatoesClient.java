@@ -23,6 +23,25 @@ public class RottenTomatoesClient {
         client.get(url, params, handler);
     }
 
+    public void getNewOnDvdMovies(JsonHttpResponseHandler handler) {
+        String url = getApiUrl("lists/dvds/new_releases.json");
+        RequestParams params = new RequestParams("apikey", API_KEY);
+        client.get(url, params, handler);
+    }
+
+    public void getNewInTheaterMovies(JsonHttpResponseHandler handler) {
+        String url = getApiUrl("lists/movies/in_theaters.json");
+        RequestParams params = new RequestParams("apikey", API_KEY);
+        client.get(url, params, handler);
+    }
+
+    public void getMovieSearch(String movieTitle, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("movies.json");
+        url = url + "?q=" + movieTitle + "&page_limit=10&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
+        RequestParams params = new RequestParams();
+        client.get(url, params, handler);
+    }
+
     //TODO set up our client to handle all of the different types of calls
 
     private String getApiUrl(String relativeUrl) {

@@ -9,8 +9,8 @@
          http://content8.flixster.com/movie/11/15/86/11158674_pro.jpg -->
     <ImageView
         android:id="@+id/ivPosterImage"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
+        android:layout_width="90dp"
+        android:layout_height="120dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:maxHeight="500dp"
@@ -59,11 +59,24 @@
         android:text="Christian Bale, Joseph-Gordon Levitt"
         android:textSize="12sp" />
 
-    <ScrollView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Rate This Movie"
+        android:id="@+id/rateBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/svLayout"
         android:layout_below="@+id/ivPosterImage"
-        android:layout_margin="10dp" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/rateBtn">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,15 +84,9 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tvCriticsConsensus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="This is an excellent movie that has action and romance" />
-
-            <TextView
                 android:id="@+id/tvSynopsis"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:text="This is a story about a protagonist defeating an antagonist" />
         </LinearLayout>
