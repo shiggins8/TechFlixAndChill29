@@ -57,4 +57,5 @@
     <string name="title_activity_new_movies_on_dvd">NewMoviesOnDvdActivity</string>
     <string name="title_activity_new_movies_in_theaters">NewMoviesInTheatersActivity</string>
     <string name="title_activity_movie_search">MovieSearchActivity</string>
+    <string name="title_activity_movie_rating">MovieRatingActivity</string>
 </resources>

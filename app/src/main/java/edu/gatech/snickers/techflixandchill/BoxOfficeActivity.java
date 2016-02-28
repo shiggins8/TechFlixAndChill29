@@ -28,7 +28,22 @@ public class BoxOfficeActivity extends Activity {
         ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
         adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
         lvMovies.setAdapter(adapterMovies);
+        System.out.println("fetching movies");
         fetchBoxOfficeMovies();
+        System.out.println("set up click listener in boxofficeactivity");
+        setupMovieSelectedListener();
+    }
+
+    public void onNewInstance(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_box_office);
+        lvMovies = (ListView) findViewById(R.id.lvMovies);
+        ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
+        adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
+        lvMovies.setAdapter(adapterMovies);
+        System.out.println("fetching movies");
+        fetchBoxOfficeMovies();
+        System.out.println("set up click listener in boxofficeactivity");
         setupMovieSelectedListener();
     }
 
@@ -64,6 +79,7 @@ public class BoxOfficeActivity extends Activity {
                 // Launch the detail view passing movie as an extra
                 Intent i = new Intent(BoxOfficeActivity.this, BoxOfficeDetailActivity.class);
                 i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                finish();
                 startActivity(i);
             }
         });

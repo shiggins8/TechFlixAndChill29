@@ -28,6 +28,19 @@ public class NewMoviesOnDvdActivity extends Activity {
         ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
         adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
         lvMovies.setAdapter(adapterMovies);
+        final Bundle bundle = getIntent().getExtras();
+        fetchNewOnDvd();
+        setupMovieSelectedListener();
+    }
+
+    public void onNewInstance(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_box_office);
+        lvMovies = (ListView) findViewById(R.id.lvMovies);
+        ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
+        adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
+        lvMovies.setAdapter(adapterMovies);
+        final Bundle bundle = getIntent().getExtras();
         fetchNewOnDvd();
         setupMovieSelectedListener();
     }
@@ -63,7 +76,18 @@ public class NewMoviesOnDvdActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Launch the detail view passing movie as an extra
                 Intent i = new Intent(NewMoviesOnDvdActivity.this, BoxOfficeDetailActivity.class);
+                Bundle bundle2 = NewMoviesOnDvdActivity.this.getIntent().getExtras();
+                //String username = bundle.getString("USERNAME");
+                //String major = bundle.getString("MAJOR");
+                //i.putExtra("USERNAME", username);
+                //i.putExtra("MAJOR", major);
                 i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                String title = adapterMovies.getItem(position).getTitle();
+                System.out.println("movie position: " + position);
+                i.putExtra("movieTitle", title);
+                System.out.println("newmoviesactivity says clicked title = " + title);
+                i.putExtras(bundle2);
+                finish();
                 startActivity(i);
             }
         });

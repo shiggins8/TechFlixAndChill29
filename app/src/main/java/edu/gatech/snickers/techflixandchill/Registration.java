@@ -44,7 +44,7 @@ public class Registration extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
-
+        Firebase.setAndroidContext(this);
         //TODO Make sure that the user isn't creating with a username that has already been used
 
         name = (EditText) findViewById(R.id.name_edt);
