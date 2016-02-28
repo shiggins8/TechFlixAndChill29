@@ -42,8 +42,6 @@ public class RottenTomatoesClient {
         client.get(url, params, handler);
     }
 
-    //TODO set up our client to handle all of the different types of calls
-
     private String getApiUrl(String relativeUrl) {
         return API_BASE_URL + relativeUrl;
     }

@@ -24,7 +24,6 @@ public class MovieRatingActivity extends Activity {
         Firebase.setAndroidContext(this);
         Bundle bundle = getIntent().getExtras();
         String title = bundle.getString("movieTitle");
-        System.out.println("title" + title);
         ratingMovieTitleTV = (TextView) findViewById(R.id.ratingMovieTitleTV);
         userWordsRatingTV = (TextView) findViewById(R.id.userWordsRatingTV);
         movieRatingBar = (RatingBar) findViewById(R.id.movieRatingBar);

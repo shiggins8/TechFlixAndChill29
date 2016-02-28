@@ -28,22 +28,7 @@ public class BoxOfficeActivity extends Activity {
         ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
         adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
         lvMovies.setAdapter(adapterMovies);
-        System.out.println("fetching movies");
         fetchBoxOfficeMovies();
-        System.out.println("set up click listener in boxofficeactivity");
-        setupMovieSelectedListener();
-    }
-
-    public void onNewInstance(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_box_office);
-        lvMovies = (ListView) findViewById(R.id.lvMovies);
-        ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
-        adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
-        lvMovies.setAdapter(adapterMovies);
-        System.out.println("fetching movies");
-        fetchBoxOfficeMovies();
-        System.out.println("set up click listener in boxofficeactivity");
         setupMovieSelectedListener();
     }
 

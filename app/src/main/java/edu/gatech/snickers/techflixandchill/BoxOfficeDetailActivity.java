@@ -20,8 +20,6 @@ public class BoxOfficeDetailActivity extends Activity {
     private TextView tvCriticsScore;
     Button rateBtn;
 
-    //TODO fix the xml file to set the correct dimensions for the poster, go back and get the movie url
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +65,7 @@ public class BoxOfficeDetailActivity extends Activity {
         tvAudienceScore =  (TextView) findViewById(R.id.tvAudienceScore);
         tvCriticsScore = (TextView) findViewById(R.id.tvCriticsScore);
         // Use the movie to populate the data into our views
-        System.out.println("from on create in detail activity movie title = " + (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY));
         BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY);
-        System.out.println("from on create in detail activity movie object: " + movie.getTitle());
         loadMovie(movie);
 
         rateBtn.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +87,6 @@ public class BoxOfficeDetailActivity extends Activity {
     public void loadMovie(BoxOfficeMovie movie) {
         // Populate data
         tvTitle.setText(movie.getTitle());
-        //TODO is this where the error is - YES YES YES
-        System.out.println("detail activity says title is: " + movie.getTitle());
         tvCriticsScore.setText(Html.fromHtml("<b>Critics Score:</b> " + movie.getCriticsScore() + "%"));
         tvAudienceScore.setText(Html.fromHtml("<b>Audience Score:</b> " + movie.getAudienceScore() + "%"));
         tvCast.setText(movie.getCastList());
