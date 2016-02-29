@@ -10,6 +10,16 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
+/**
+ * ArrayAdapter extension class that sets up the dynamic list view for the Ratings objects. As it
+ * is currently coded, it will load one standard image into the ImageView. Will be updated in the
+ * future to get the corresponding URL for thumbnail image based on movie that is being rated.
+ *
+ * Created 2/27/16.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class RatingsAdapter extends ArrayAdapter<Rating> {
     public RatingsAdapter(Context context, ArrayList<Rating> aMovies) {
         super(context, 0, aMovies);
@@ -36,7 +46,7 @@ public class RatingsAdapter extends ArrayAdapter<Rating> {
         tvCriticsScore.setText("Rating: " + rating.getNumericalRating() + " stars");
         tvCast.setText(rating.getCommentRating());
         //TODO remove Schmidt picture url, even if it is hilarious
-        Picasso.with(getContext()).load("https://s-media-cache-ak0.pinimg.com/236x/01/a6/7e/01a67e0bc3ef04860142e8c54920d3e7.jpg").into(ivPosterImage);
+        Picasso.with(getContext()).load("http://www.i2clipart.com/cliparts/3/1/2/c/clipart-movie-popcorn-bag-312c.png").into(ivPosterImage);
         // Return the completed view to render on screen
         return convertView;
     }
