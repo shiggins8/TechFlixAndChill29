@@ -41,12 +41,13 @@ public class RatingsAdapter extends ArrayAdapter<Rating> {
         TextView tvCriticsScore = (TextView) convertView.findViewById(R.id.tvCriticsScore);
         TextView tvCast = (TextView) convertView.findViewById(R.id.tvCast);
         ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImage);
+
         // Populate the data into the template view using the data object
-        tvTitle.setText(rating.getTitleOfMovie());
+        tvTitle.setText(rating.getMovie().getTitle());
         tvCriticsScore.setText("Rating: " + rating.getNumericalRating() + " stars");
         tvCast.setText(rating.getCommentRating());
         //TODO remove Schmidt picture url, even if it is hilarious
-        Picasso.with(getContext()).load("http://www.i2clipart.com/cliparts/3/1/2/c/clipart-movie-popcorn-bag-312c.png").into(ivPosterImage);
+        Picasso.with(getContext()).load(rating.getMovie().getPosterUrl()).into(ivPosterImage);
         // Return the completed view to render on screen
         return convertView;
     }

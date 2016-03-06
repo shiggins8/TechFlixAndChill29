@@ -78,7 +78,7 @@ public class ViewMyRatingsActivity extends Activity {
         lvRatings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
-                //right now, do nothing
+                System.out.println(adapterRatings.getItem(position).getMovie().getSynopsis());//right now, do nothing
                 // Launch the detail view passing movie as an extra
 //                Intent i = new Intent(BoxOfficeActivity.this, BoxOfficeDetailActivity.class);
 //                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));

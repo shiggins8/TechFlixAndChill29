@@ -85,10 +85,11 @@ public class MovieRatingActivity extends Activity {
                 final String major = MovieRatingActivity.this.getIntent().getStringExtra("MAJOR");
                 final String username = MovieRatingActivity.this.getIntent().getStringExtra("USERNAME");
                 final String title = MovieRatingActivity.this.getIntent().getStringExtra("movieTitle");
+                BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY);
                 String userWordsRating = userWordsRatingET.getText().toString();
                 Firebase userRateRef = ref.child("ratingsByUser");
                 Firebase majorRateRef = ref.child("ratingsByMajor");
-                Rating theRating = new Rating(title, movieRating, userWordsRating, major, username);
+                Rating theRating = new Rating(movie, movieRating, userWordsRating, major, username);
                 Firebase theUserRateRef = userRateRef.child(username);
                 Firebase theMajorRateRef = majorRateRef.child(major);
                 theUserRateRef = theUserRateRef.child(title);

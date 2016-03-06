@@ -23,43 +23,94 @@ public class BoxOfficeMovie implements Serializable {
     private String synopsis;
     private String posterUrl;
     private int criticsScore;
-    private String critics_Rating;
-    private ArrayList<String> castList;
-
+    private String criticsRating;
+    private String castList;
     private String largePosterUrl;
     private int audienceScore;
-    private String audience_Rating;
+    private String audienceRating;
+
+    public BoxOfficeMovie() {
+        //empty constructor for firebase
+    }
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getYear() {
         return year;
     }
 
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     public String getSynopsis() {
         return synopsis;
+    }
+
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
     }
 
     public String getPosterUrl() {
         return posterUrl;
     }
 
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
+    }
+
     public int getCriticsScore() {
         return criticsScore;
     }
 
-    public String getCastList() {
-        return TextUtils.join(", ", castList);
+    public void setCriticsScore(int criticsScore) {
+        this.criticsScore = criticsScore;
     }
 
     public String getCriticsRating() {
-        return critics_Rating;
+        return criticsRating;
+    }
+
+    public void setCriticsRating(String criticsRating) {
+        this.criticsRating = criticsRating;
+    }
+
+    public String getCastList() {
+        return castList;
+    }
+
+    public void setCastList(String castList) {
+        this.castList = castList;
+    }
+
+    public String getLargePosterUrl() {
+        return largePosterUrl;
+    }
+
+    public void setLargePosterUrl(String largePosterUrl) {
+        this.largePosterUrl = largePosterUrl;
+    }
+
+    public int getAudienceScore() {
+        return audienceScore;
+    }
+
+    public void setAudienceScore(int audienceScore) {
+        this.audienceScore = audienceScore;
     }
 
     public String getAudienceRating() {
-        return audience_Rating;
+        return audienceRating;
+    }
+
+    public void setAudienceRating(String audienceRating) {
+        this.audienceRating = audienceRating;
     }
 
     // Returns a BoxOfficeMovie given the expected JSON
@@ -90,22 +141,25 @@ public class BoxOfficeMovie implements Serializable {
                 //do nothing
             }
             try {
-                b.audience_Rating = jsonObject.getJSONObject("ratings").getString("critics_rating");
+                b.criticsRating = jsonObject.getJSONObject("ratings").getString("critics_rating");
             } catch (Exception e) {
                 //do nothing
             }
             try {
-                b.audience_Rating = jsonObject.getJSONObject("ratings").getString("audience_rating");
+                b.audienceRating = jsonObject.getJSONObject("ratings").getString("audience_rating");
             } catch (Exception e) {
                 //do nothing
             }
 
             // Construct simple array of cast names
-            b.castList = new ArrayList<String>();
+            ArrayList<Object> theCastList = new ArrayList<Object>();
             JSONArray abridgedCast = jsonObject.getJSONArray("abridged_cast");
             for (int i = 0; i < abridgedCast.length(); i++) {
-                b.castList.add(abridgedCast.getJSONObject(i).getString("name"));
+                theCastList.add(abridgedCast.getJSONObject(i).getString("name"));
             }
+            String tempList = theCastList.toString();
+            int n = tempList.length();
+            b.castList=tempList.substring(1,n-1);
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -134,15 +188,6 @@ public class BoxOfficeMovie implements Serializable {
                 movies.add(movie);
             }
         }
-
         return movies;
-    }
-
-    public String getLargePosterUrl() {
-        return largePosterUrl;
-    }
-
-    public int getAudienceScore() {
-        return audienceScore;
     }
 }

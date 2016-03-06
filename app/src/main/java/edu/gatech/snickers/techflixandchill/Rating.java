@@ -12,44 +12,39 @@ package edu.gatech.snickers.techflixandchill;
  * @version 1.0
  */
 public class Rating {
-    private String titleOfMovie;
+    private BoxOfficeMovie movie;
 
     private float numericalRating;
     private String commentRating;
     private String majorOfRater;
     private String usernameOfRater;
 
-    public Rating() {
-        //empty constructor for Firebase purposes
+    public BoxOfficeMovie getMovie() {
+        return movie;
     }
 
-    public Rating(String titleOfMovie, float numericalRating, String commentRating, String majorOfRater,
-                  String usernameOfRater) {
-        this.titleOfMovie = titleOfMovie;
-        this.numericalRating = numericalRating;
-        this.commentRating = commentRating;
-        this.majorOfRater = majorOfRater;
-        this.usernameOfRater = usernameOfRater;
+    public void setMovie(BoxOfficeMovie movie) {
+        this.movie = movie;
     }
 
-    public void setUsernameOfRater(String usernameOfRater) {
-        this.usernameOfRater = usernameOfRater;
+    public float getNumericalRating() {
+        return numericalRating;
     }
 
     public void setNumericalRating(float numericalRating) {
         this.numericalRating = numericalRating;
     }
 
-    public String getTitleOfMovie() {
-        return titleOfMovie;
-    }
-
-    public void setTitleOfMovie(String titleOfMovie) {
-        this.titleOfMovie = titleOfMovie;
+    public String getCommentRating() {
+        return commentRating;
     }
 
     public void setCommentRating(String commentRating) {
         this.commentRating = commentRating;
+    }
+
+    public String getMajorOfRater() {
+        return majorOfRater;
     }
 
     public void setMajorOfRater(String majorOfRater) {
@@ -60,15 +55,22 @@ public class Rating {
         return usernameOfRater;
     }
 
-    public float getNumericalRating() {
-        return numericalRating;
+    public void setUsernameOfRater(String usernameOfRater) {
+        this.usernameOfRater = usernameOfRater;
     }
 
-    public String getCommentRating() {
-        return commentRating;
+    public Rating() {
+        //empty constructor for Firebase purposes
     }
 
-    public String getMajorOfRater() {
-        return majorOfRater;
+    public Rating(BoxOfficeMovie movie, float numericalRating, String commentRating, String majorOfRater,
+                  String usernameOfRater) {
+        this.movie = movie;
+        this.numericalRating = numericalRating;
+        this.commentRating = commentRating;
+        this.majorOfRater = majorOfRater;
+        this.usernameOfRater = usernameOfRater;
     }
+
+
 }
