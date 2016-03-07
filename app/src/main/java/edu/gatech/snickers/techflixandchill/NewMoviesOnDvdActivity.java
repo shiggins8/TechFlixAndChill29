@@ -83,7 +83,7 @@ public class NewMoviesOnDvdActivity extends Activity {
                 String title = adapterMovies.getItem(position).getTitle();
                 i.putExtra("movieTitle", title);
                 i.putExtras(bundle2);
-                finish();
+                //finish();
                 startActivity(i);
             }
         });

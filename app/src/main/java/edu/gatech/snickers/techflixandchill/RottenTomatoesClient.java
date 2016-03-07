@@ -49,6 +49,17 @@ public class RottenTomatoesClient {
         client.get(url, params, handler);
     }
 
+    public void getRecommendations(int movieId, JsonHttpResponseHandler handler) {
+        String url = getApiUrl("movies/" + movieId + "/similar.json?limit=5&apikey=" + API_KEY);
+        RequestParams params = new RequestParams();
+        client.get(url, params, handler);
+
+        //http://api.rottentomatoes.com/api/public/v1.0/movies/10143/similar.json?limit=5&apikey=yedukp76ffytfuy24zsqk7f5
+        //?limit=5&apikey=yedukp76ffytfuy24zsqk7f5
+
+
+    }
+
     private String getApiUrl(String relativeUrl) {
         return API_BASE_URL + relativeUrl;
     }

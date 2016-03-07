@@ -80,10 +80,10 @@ public class ViewMyRatingsActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 System.out.println(adapterRatings.getItem(position).getMovie().getSynopsis());//right now, do nothing
                 // Launch the detail view passing movie as an extra
-//                Intent i = new Intent(BoxOfficeActivity.this, BoxOfficeDetailActivity.class);
-//                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
-//                finish();
-//                startActivity(i);
+                Intent i = new Intent(ViewMyRatingsActivity.this, BoxOfficeDetailActivity.class);
+                i.putExtra("movie", adapterRatings.getItem(position).getMovie());
+                //finish();
+                startActivity(i);
             }
         });
     }

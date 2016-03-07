@@ -28,6 +28,15 @@ public class BoxOfficeMovie implements Serializable {
     private String largePosterUrl;
     private int audienceScore;
     private String audienceRating;
+    private int movieID;
+
+    public int getMovieID() {
+        return movieID;
+    }
+
+    public void setMovieID(int movieID) {
+        this.movieID = movieID;
+    }
 
     public BoxOfficeMovie() {
         //empty constructor for firebase
@@ -120,6 +129,7 @@ public class BoxOfficeMovie implements Serializable {
         BoxOfficeMovie b = new BoxOfficeMovie();
         try {
             // Deserialize json into object fields
+            b.movieID= jsonObject.getInt("id");
             b.title = jsonObject.getString("title");
             b.year = jsonObject.getInt("year");
             if (jsonObject.getString("synopsis").equals("")) {

@@ -57,6 +57,10 @@
         <activity
             android:name=".ViewMyRatingsActivity"
             android:label="@string/title_activity_view_my_ratings"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GetRecommendationsActivity"
+            android:label="@string/title_activity_get_recommendations"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

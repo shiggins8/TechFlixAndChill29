@@ -81,21 +81,48 @@ public class MovieRatingActivity extends Activity {
         ratingSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float movieRating = movieRatingBar.getRating();
+                final float movieRating = movieRatingBar.getRating();
                 final String major = MovieRatingActivity.this.getIntent().getStringExtra("MAJOR");
                 final String username = MovieRatingActivity.this.getIntent().getStringExtra("USERNAME");
                 final String title = MovieRatingActivity.this.getIntent().getStringExtra("movieTitle");
-                BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY);
-                String userWordsRating = userWordsRatingET.getText().toString();
+                final BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY);
+                final String userWordsRating = userWordsRatingET.getText().toString();
                 Firebase userRateRef = ref.child("ratingsByUser");
                 Firebase majorRateRef = ref.child("ratingsByMajor");
-                Rating theRating = new Rating(movie, movieRating, userWordsRating, major, username);
+                final Rating theRating = new Rating(movie, movieRating, userWordsRating, major, username);
+                //set up Firebase references
                 Firebase theUserRateRef = userRateRef.child(username);
-                Firebase theMajorRateRef = majorRateRef.child(major);
+                final Firebase theMajorRateRef = majorRateRef.child(major);
                 theUserRateRef = theUserRateRef.child(title);
                 theUserRateRef.setValue(theRating);
-                theMajorRateRef = theMajorRateRef.child(title);
-                theMajorRateRef.setValue(theRating);
+
+                Firebase checkMajorRating = new Firebase("https://techflixandchill.firebaseio.com/ratingsByMajor/" + major + "/" + title);
+                checkMajorRating.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        Firebase addToMajorRef = theMajorRateRef.child(title);
+                        if (snapshot.exists()) {
+                            //deal with the program needing to adjust rating for major
+                            DataSnapshot previousRating = snapshot.child("numericalRating");
+                            double prevRating = (double) previousRating.getValue();
+                            float workingRating = (float) prevRating;
+                            workingRating = workingRating * 25;
+                            workingRating = workingRating + movieRating;
+                            workingRating = workingRating / 26;
+                            Rating updatedMajorRating = new Rating(movie, workingRating, userWordsRating, major, username);
+                            addToMajorRef.setValue(updatedMajorRating);
+                        } else {
+                            addToMajorRef.setValue(theRating);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+                        System.out.println("The read failed: " + firebaseError.getMessage());
+                    }
+                });
+
 //Note: i had to go through some debugging to get the rating to save and close and then go home fine
                 //leave this code here for now, just in case
 //                Bundle returnBundle = MovieRatingActivity.this.getIntent().getExtras();
