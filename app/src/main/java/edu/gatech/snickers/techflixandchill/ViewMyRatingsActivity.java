@@ -14,6 +14,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class ViewMyRatingsActivity extends Activity {
     private ListView lvRatings;
     private RatingsAdapter adapterRatings;

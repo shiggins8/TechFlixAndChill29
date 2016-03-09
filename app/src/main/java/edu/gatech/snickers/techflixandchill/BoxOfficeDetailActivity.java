@@ -63,6 +63,10 @@ public class BoxOfficeDetailActivity extends Activity {
         });
     }
 
+    /**
+     * Replicate code for the android lifestyle cycling
+     * @param savedInstanceState bundles saved state
+     */
     public void onNewInstance(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_office_detail);

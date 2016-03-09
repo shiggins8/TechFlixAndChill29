@@ -68,6 +68,10 @@ public class NewMoviesOnDvdActivity extends Activity {
         });
     }
 
+    /**
+     * Selecting a row on the list view will allow the user to view the detailed view of the
+     * movie itself.
+     */
     public void setupMovieSelectedListener() {
         lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

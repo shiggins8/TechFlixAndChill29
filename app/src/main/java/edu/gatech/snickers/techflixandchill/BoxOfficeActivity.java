@@ -68,6 +68,9 @@ public class BoxOfficeActivity extends Activity {
         });
     }
 
+    /**
+     * Selecting a movie (row in the list view) will open up the detailed view of that activity.
+     */
     public void setupMovieSelectedListener() {
         lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

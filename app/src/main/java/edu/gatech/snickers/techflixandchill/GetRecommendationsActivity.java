@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -20,19 +24,24 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 /**
- * Provides the functionality for users to view movies recently released in theaters. Displays
- * the results in a list view, with selectable rows. Search calls are made using the Rotten
- * Tomatoes API.
+ * Provides the user with an option to request recommendations based upon a specific major. That is
+ * the current functionality, eventually it will work so that they can request recommendations
+ * based on a range of criteria. Further functionality will allow the user to have a menu of
+ * selection criteria, to give them recommendations based upon different parameters (recency, the
+ * movies they have rated, etc.)
  *
- * Created on 2/27/16.
+ * Created on 3/6/16. Last modified on 3/7/16
  *
  * @author Snickers
- * @version 1.0
+ * @version 2.0
  */
 public class GetRecommendationsActivity extends Activity {
     RottenTomatoesClient client;
     private ListView lvRecommendations;
     private BoxOfficeMoviesAdapter adapterMovies;
+    private Spinner selectMajor;
+    private Button majorRecommendationsBtn;
+    private TextView noMoviesMessage;
 
     public static final String MOVIE_DETAIL_KEY = "movie";
 
@@ -45,20 +54,56 @@ public class GetRecommendationsActivity extends Activity {
         ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
         adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
         lvRecommendations.setAdapter(adapterMovies);
-        fetchRecommendationsByMajor();
-        setupMovieSelectedListener();
+        noMoviesMessage = (TextView) findViewById(R.id.noMoviesTextView);
+
+        Bundle bundle = GetRecommendationsActivity.this.getIntent().getExtras();
+        String major = bundle.getString("MAJOR");
+        selectMajor = (Spinner) findViewById(R.id.chooseMajorSpinner);
+        String[] items = getResources().getStringArray(R.array.majors_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        //make sure that spinner initially starts on their original major selection
+        int i = adapter.getPosition(major);
+        System.out.println(i);
+        selectMajor.setAdapter(adapter);
+        selectMajor.setSelection(i, true);
+
+        majorRecommendationsBtn = (Button) findViewById(R.id.majorRecommendationsBtn);
+        majorRecommendationsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                noMoviesMessage.setText("");
+                lvRecommendations.clearAnimation();
+                String selectedMajor = selectMajor.getSelectedItem().toString();
+                System.out.println("selected major:" + selectedMajor);
+                clearListView();
+                fetchRecommendationsByMajor(selectedMajor);
+                setupMovieSelectedListener();
+                //TODO figure out how to display instructions if there are no items in list view
+                //System.out.println("lv count = " + adapterMovies.getCount());
+            }
+        });
+
+        //fetchRecommendationsByMajor();   should be doing this after a major is selected
+        //setupMovieSelectedListener();
+    }
+
+    /**
+     * Clear the list view and allow for the user to make a new request on a blank view.
+     */
+    private void clearListView() {
+        adapterMovies.clear();
+        noMoviesMessage.setText("");
     }
 
     // Executes an API call to the box office endpoint, parses the results
     // Converts them into an array of movie objects and adds them to the adapter
-    private void fetchRecommendationsByMajor() {
+    private void fetchRecommendationsByMajor(String major) {
         client = new RottenTomatoesClient();
+        final String messageMajor = major;
         Bundle bundle = GetRecommendationsActivity.this.getIntent().getExtras();
-        String major = bundle.getString("MAJOR");
         //set up Firebase reference, pull all the top ratings from Firebase
         final Firebase majorRef = new Firebase("https://techflixandchill.firebaseio.com/ratingsByMajor/" + major);
         //gets the two movies with the highest ratings from that major
-        //TODO handle case where there aren't at least 2 references to go off of
         //TODO handle case where repeates are put into the arraylist
         Query queryRef = majorRef.orderByChild("numericalRating").limitToLast(2);
         //get the movie id's from these first two ratings
@@ -67,30 +112,38 @@ public class GetRecommendationsActivity extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println(dataSnapshot.getChildrenCount());
-                for (DataSnapshot rating : dataSnapshot.getChildren()) {
-                    Rating tempRating = rating.getValue(Rating.class);
-                    movieID1 = tempRating.getMovie().getMovieID();
-                    System.out.println("movie title: " + tempRating.getMovie().getTitle());
-                    client.getRecommendations(movieID1, new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
-                            JSONArray items = null;
-                            try {
-                                // Get the movies json array
-                                System.out.println(responseBody.toString());
-                                items = responseBody.getJSONArray("movies");
-                                // Parse json array into array of model objects
-                                ArrayList<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
-                                // Load model objects into the adapter
-                                for (BoxOfficeMovie movie : movies) {
-                                    adapterMovies.add(movie); // add movie through the adapter
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
+                    for (DataSnapshot rating : dataSnapshot.getChildren()) {
+                        Rating tempRating = rating.getValue(Rating.class);
+                        movieID1 = tempRating.getMovie().getMovieID();
+                        System.out.println("movie title: " + tempRating.getMovie().getTitle());
+                        System.out.println("movie id: " + tempRating.getMovie().getMovieID());
+                        client.getRecommendations(movieID1, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
+                                JSONArray items = null;
+                                try {
+                                    // Get the movies json array
+                                    items = responseBody.getJSONArray("movies");
+                                    // Parse json array into array of model objects
+                                    ArrayList<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
+                                    // Load model objects into the adapter
+                                    for (BoxOfficeMovie movie : movies) {
+                                        adapterMovies.add(movie); // add movie through the adapter
+                                    }
+//                                    System.out.println(adapterMovies.isEmpty() + ": is it empty?");
+//                                    adapterMovies.notifyDataSetChanged();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                                adapterMovies.notifyDataSetChanged();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
-                        }
-                    });
+                        });
+                    }
+                    System.out.println(adapterMovies.isEmpty() + ": is it empty?");
+                    System.out.println(adapterMovies.getCount() + ": count");
+                    adapterMovies.notifyDataSetChanged();
+                } else {
+                    noMoviesMessage.setText("No data for " + messageMajor + ", sorry");
                 }
             }
 
@@ -99,30 +152,12 @@ public class GetRecommendationsActivity extends Activity {
                 //do nothing right now
             }
         });
-
-
-//
-//        client.getRecommendations(new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
-//                JSONArray items = null;
-//                try {
-//                    // Get the movies json array
-//                    items = responseBody.getJSONArray("movies");
-//                    // Parse json array into array of model objects
-//                    ArrayList<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
-//                    // Load model objects into the adapter
-//                    for (BoxOfficeMovie movie : movies) {
-//                        adapterMovies.add(movie); // add movie through the adapter
-//                    }
-//                    adapterMovies.notifyDataSetChanged();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
     }
 
+    /**
+     * Sets up the list view to allow selectability for each of the rows, which equates to movies.
+     * Selecting amovie will open up the detailed view of that movie.
+     */
     public void setupMovieSelectedListener() {
         lvRecommendations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
