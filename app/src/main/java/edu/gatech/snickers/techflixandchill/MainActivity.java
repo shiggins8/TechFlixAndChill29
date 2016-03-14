@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +37,9 @@ public class MainActivity extends Activity {
     Button registerr;
     EditText enterpassword, username;
     TextView forgetpass;
+    CheckBox loginAsAdmin;
     private Firebase ref;
+    boolean checked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,8 @@ public class MainActivity extends Activity {
         username = (EditText) findViewById(R.id.edt_username);
         enterpassword = (EditText) findViewById(R.id.password_edt);
         forgetpass = (TextView) findViewById(R.id.textView2);
+        checked = false;
+        loginAsAdmin = (CheckBox) findViewById(R.id.loginAsAdmin);
         Firebase.setAndroidContext(this);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
 
@@ -68,6 +74,13 @@ public class MainActivity extends Activity {
                 String Username = username.getText().toString();
                 //check to see if user actually exists, proceed if they do
                 checkUser(Username, Password, ref.child("users"));
+            }
+        });
+
+        loginAsAdmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                checked = isChecked;
             }
         });
 
@@ -176,22 +189,31 @@ public class MainActivity extends Activity {
                 } else {
                     String storedPassword = user.getPassword();
                     if (storedPassword.equals(password)) {
-                        Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
-                        user.setIncorrectPasswordCounter(0);
-                        Intent ii = new Intent(MainActivity.this, Home.class);
-                        //create a bundle to pass along user data
-                        Bundle bundle = new Bundle();
-                        //Add data to bundle
-                        bundle.putString("USERNAME", user.getUsername());
-                        bundle.putString("PASSWORD", user.getPassword());
-                        bundle.putString("NAME", user.getName());
-                        bundle.putString("MAJOR", user.getMajor());
-                        bundle.putString("SECURITYHINT", user.getSecurityHint());
-                        bundle.putString("EMAIL", user.getEmail());
-                        //Add bundle to intent
-                        ii.putExtras(bundle);
-                        //start activity
-                        startActivity(ii);
+                        if (checked && !user.isAdmin()) {
+                            Toast.makeText(MainActivity.this, "Cannot login as admin", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
+                            user.setIncorrectPasswordCounter(0);
+                            //create a bundle to pass along user data
+                            Bundle bundle = new Bundle();
+                            //Add data to bundle
+                            bundle.putString("USERNAME", user.getUsername());
+                            bundle.putString("PASSWORD", user.getPassword());
+                            bundle.putString("NAME", user.getName());
+                            bundle.putString("MAJOR", user.getMajor());
+                            bundle.putString("SECURITYHINT", user.getSecurityHint());
+                            bundle.putString("EMAIL", user.getEmail());
+                            Intent ii = new Intent(MainActivity.this, Home.class);
+                            Intent iii = new Intent(MainActivity.this, AdminHome.class);
+                            //Add bundle to intent
+                            ii.putExtras(bundle);
+                            iii.putExtras(bundle);
+                            if (checked && user.isAdmin()) {
+                                startActivity(iii);
+                            } else {
+                                startActivity(ii);
+                            }
+                        }
                     } else {
                         if (password.equals("")) {
                             Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
