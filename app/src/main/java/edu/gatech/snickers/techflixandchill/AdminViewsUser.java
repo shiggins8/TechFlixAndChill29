@@ -18,7 +18,7 @@ public class AdminViewsUser extends AppCompatActivity {
     Firebase ref;
     TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV,
             userProfileNameTV, userProfileMajorTV;
-    Switch lock, block;
+    Switch lock, block, admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class AdminViewsUser extends AppCompatActivity {
         userProfileNameTV = (TextView) findViewById(R.id.userProfileNameTV);
         lock = (Switch) findViewById(R.id.lock);
         block = (Switch) findViewById(R.id.block);
+        admin = (Switch) findViewById(R.id.admin);
 
         Bundle bundle = getIntent().getExtras();
         String username = bundle.getString("username");
@@ -85,6 +86,15 @@ public class AdminViewsUser extends AppCompatActivity {
             }
         });
 
+        admin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ref.child("admin").setValue(true);
+                } else {
+                    ref.child("admin").setValue(false);
+                }
+            }
+        });
 
     }
 
