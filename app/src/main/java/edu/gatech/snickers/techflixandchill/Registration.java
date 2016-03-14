@@ -17,7 +17,10 @@ import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Spinner;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 /**
  * Created by Snickers on 2/13/16. Last modified on 2/21/16.
@@ -45,7 +48,6 @@ public class Registration extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration);
         Firebase.setAndroidContext(this);
-        //TODO Make sure that the user isn't creating with a username that has already been used
 
         name = (EditText) findViewById(R.id.name_edt);
         password = (EditText) findViewById(R.id.password_edt);
@@ -69,63 +71,72 @@ public class Registration extends Activity{
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(!isChecked)
-                {
+                if (!isChecked) {
                     password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
-                else
-                {
+                } else {
                     password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }
             }
         });
 
         register.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
-                String Name = name.getText().toString();
-                String Pass = password.getText().toString();
-                String Secu = securityhint.getText().toString();
-                String Repass = repassword.getText().toString();
-                String user = username.getText().toString();
-                String mail = email.getText().toString();
-                String umajor = majorSpinner.getSelectedItem().toString();
-                Firebase userRef = ref.child("users");
+                final String Name = name.getText().toString();
+                final String Pass = password.getText().toString();
+                final String Secu = securityhint.getText().toString();
+                final String Repass = repassword.getText().toString();
+                final String user = username.getText().toString();
+                final String mail = email.getText().toString();
+                final String umajor = majorSpinner.getSelectedItem().toString();
+                final Firebase userRef = ref.child("users");
+                Firebase temp = userRef.child(user);
 
-                //check to see if registration form is incomplete
-                if(Pass.equals("")||Repass.equals("")||Secu.equals("") || user.equals("")
-                        || mail.equals("") || umajor.equals(""))
-                {
-                    Toast.makeText(getApplicationContext(), "Fill All Fields", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                //if the username the person enters has already been taken
+                temp.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            Toast.makeText(getApplicationContext(), "Username already taken, please choose another", Toast.LENGTH_LONG).show();
+                            return;
+                        } else {
+                            //check to see if registration form is incomplete
+                            if (Pass.equals("") || Repass.equals("") || Secu.equals("") || user.equals("")
+                                    || mail.equals("") || umajor.equals("")) {
+                                Toast.makeText(getApplicationContext(), "Fill All Fields", Toast.LENGTH_LONG).show();
+                                return;
+                            }
 
-                //if re-entered password doesn't match original password
-                if(!Pass.equals(Repass))
-                {
-                    Toast.makeText(getApplicationContext(), "Password does not match", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                            //if re-entered password doesn't match original password
+                            if (!Pass.equals(Repass)) {
+                                Toast.makeText(getApplicationContext(), "Password does not match", Toast.LENGTH_LONG).show();
+                                return;
+                            }
 
+                            //successful registration
+                            else {
+                                // Save the Data in Database
+                                // Create new user with attributes entered
+                                //not admin, 0 on incorrect attempts, not blocked, not locked
+                                User newUser = new User(Name, user, Pass, mail, Secu, umajor, false, 0, false, false);
+                                // Create new child in users database
+                                Firebase newref = userRef.child(user);
+                                // Set value of child to user object
+                                newref.setValue(newUser);
+                                // reg_btn.setVisibility(View.GONE);
+                                Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
+                                Intent i = new Intent(Registration.this, MainActivity.class);
+                                startActivity(i);
+                            }
+                        }
+                    }
 
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
 
-                //successful registration
-                else
-                {
-                    // Save the Data in Database
-                    // Create new user with attributes entered
-                    User newUser = new User(Name, user, Pass, mail, Secu, umajor);
-                    // Create new child in users database
-                    Firebase newref = userRef.child(user);
-                    // Set value of child to user object
-                    newref.setValue(newUser);
-                    // reg_btn.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
-                    Intent i=new Intent(Registration.this,MainActivity.class);
-                    startActivity(i);
-                }
+                    }
+                });
             }
         });
         cancel.setOnClickListener(new OnClickListener() {
