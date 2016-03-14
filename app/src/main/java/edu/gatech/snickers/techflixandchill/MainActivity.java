@@ -46,10 +46,8 @@ public class MainActivity extends Activity {
         username = (EditText) findViewById(R.id.edt_username);
         enterpassword = (EditText) findViewById(R.id.password_edt);
         forgetpass = (TextView) findViewById(R.id.textView2);
-
         Firebase.setAndroidContext(this);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
-        Firebase nirajref = ref.child("users").child("nirajsuresh");
 
 
         registerr.setOnClickListener(new OnClickListener() {
@@ -172,7 +170,7 @@ public class MainActivity extends Activity {
                 String storedPassword = user.getPassword();
                 if (storedPassword.equals(password)) {
                     Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
-                    Intent ii = new Intent(MainActivity.this, Home.class);
+                    Intent ii = new Intent(MainActivity.this, AdminHome.class);
                     //create a bundle to pass along user data
                     Bundle bundle = new Bundle();
                     //Add data to bundle

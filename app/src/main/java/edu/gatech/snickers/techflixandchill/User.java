@@ -79,4 +79,9 @@ public class User {
         return major;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
 }

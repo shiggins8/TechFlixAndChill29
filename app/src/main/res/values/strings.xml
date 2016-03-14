@@ -60,4 +60,9 @@
     <string name="title_activity_movie_rating">MovieRatingActivity</string>
     <string name="title_activity_view_my_ratings">ViewMyRatingsActivity</string>
     <string name="title_activity_get_recommendations">GetRecommendationsActivity</string>
+    <string name="title_activity_admin_profile">AdminProfile</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_admin_home">AdminHome</string>
+    <string name="title_activity_user_list">UserList</string>
 </resources>
