@@ -162,33 +162,55 @@ public class MainActivity extends Activity {
 
     public void performLogin(String userName, String passWord) {
         final String password = passWord;
-        Firebase loginRef = ref.child("users").child(userName);
+        final Firebase loginRef = ref.child("users").child(userName);
         loginRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                String storedPassword = user.getPassword();
-                if (storedPassword.equals(password)) {
-                    Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
-                    Intent ii = new Intent(MainActivity.this, AdminHome.class);
-                    //create a bundle to pass along user data
-                    Bundle bundle = new Bundle();
-                    //Add data to bundle
-                    bundle.putString("USERNAME", user.getUsername());
-                    bundle.putString("PASSWORD", user.getPassword());
-                    bundle.putString("NAME", user.getName());
-                    bundle.putString("MAJOR", user.getMajor());
-                    bundle.putString("SECURITYHINT", user.getSecurityHint());
-                    bundle.putString("EMAIL", user.getEmail());
-                    //Add bundle to intent
-                    ii.putExtras(bundle);
-                    //start activity
-                    startActivity(ii);
+                boolean areTheyBlocked = user.isBlocked();
+                boolean areTheyLocked = user.isLocked();
+                if (areTheyBlocked) {
+                    Toast.makeText(MainActivity.this, "Your account is blocked, please contact an administrator", Toast.LENGTH_LONG).show();
+                } else if (areTheyLocked) {
+                    Toast.makeText(MainActivity.this, "You have entered the wrong password too many times and your account is locked, please contact an administrator", Toast.LENGTH_LONG).show();
                 } else {
-                    if (password.equals("")) {
-                        Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
+                    String storedPassword = user.getPassword();
+                    if (storedPassword.equals(password)) {
+                        Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
+                        user.setIncorrectPasswordCounter(0);
+                        Intent ii = new Intent(MainActivity.this, Home.class);
+                        //create a bundle to pass along user data
+                        Bundle bundle = new Bundle();
+                        //Add data to bundle
+                        bundle.putString("USERNAME", user.getUsername());
+                        bundle.putString("PASSWORD", user.getPassword());
+                        bundle.putString("NAME", user.getName());
+                        bundle.putString("MAJOR", user.getMajor());
+                        bundle.putString("SECURITYHINT", user.getSecurityHint());
+                        bundle.putString("EMAIL", user.getEmail());
+                        //Add bundle to intent
+                        ii.putExtras(bundle);
+                        //start activity
+                        startActivity(ii);
                     } else {
-                        Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
+                        if (password.equals("")) {
+                            Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
+                            long t = (long) dataSnapshot.child("incorrectPasswordCounter").getValue();
+                            int temp = (int) t;
+                            temp++;
+                            System.out.println("incorrect tries: " + temp);
+                            if (temp == 3) {
+                                loginRef.child("locked").setValue(true);
+                                //user.setIsLocked(true);
+                                loginRef.child("incorrectPasswordCounter").setValue(0);
+                                //user.setIncorrectPasswordCounter(0);
+                            } else {
+                                loginRef.child("incorrectPasswordCounter").setValue(temp);
+                            }
+
+                        }
                     }
                 }
             }
