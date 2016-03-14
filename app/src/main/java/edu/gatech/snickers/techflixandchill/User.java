@@ -113,4 +113,8 @@ public class User {
         this.blocked = isBlocked;
     }
 
+    public boolean isLocked() {
+        return locked;
+    }
+
 }

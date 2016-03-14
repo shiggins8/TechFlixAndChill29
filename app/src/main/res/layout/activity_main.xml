@@ -107,16 +107,25 @@
         android:layout_below="@+id/rel2"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="15dp" >
+        android:layout_marginTop="15dp"
+        android:id="@+id/relativeLayout">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/forgetpassword"
+            android:textStyle="bold"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold" />
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login as Admin"
+        android:id="@+id/loginAsAdmin"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
