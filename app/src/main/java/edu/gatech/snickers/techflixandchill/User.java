@@ -93,8 +93,8 @@ public class User {
         return admin;
     }
 
-    public void setIsAdmin(boolean isAdmin) {
-        this.admin = isAdmin;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     public int getIncorrectPasswordCounter() {
@@ -109,12 +109,15 @@ public class User {
         return blocked;
     }
 
-    public void setIsBlocked(boolean isBlocked) {
-        this.blocked = isBlocked;
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     public boolean isLocked() {
         return locked;
     }
 
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
 }

@@ -12,7 +12,6 @@ import android.widget.TextView;
 public class AdminHome extends AppCompatActivity {
 
     Button logoutButton;
-    Button viewProfileButton;
     Button viewUsers;
     TextView usernameTextView;
     @Override
@@ -21,7 +20,6 @@ public class AdminHome extends AppCompatActivity {
         setContentView(R.layout.activity_admin_home);
 
         logoutButton = (Button) findViewById(R.id.logoutButton);
-        viewProfileButton = (Button) findViewById(R.id.viewProfileButton);
         viewUsers = (Button) findViewById(R.id.viewUsers);
         usernameTextView = (TextView) findViewById(R.id.usernameTextView);
 
@@ -34,16 +32,6 @@ public class AdminHome extends AppCompatActivity {
         String message = theName;
         usernameTextView.setText(message);
 
-        viewProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent i = new Intent(AdminHome.this, UserProfile.class);
-                //pass along bundled username and password
-                i.putExtras(bundle);
-                startActivity(i);
-            }
-        });
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
