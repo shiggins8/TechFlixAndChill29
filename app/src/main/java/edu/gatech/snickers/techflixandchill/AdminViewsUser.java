@@ -1,9 +1,12 @@
 package edu.gatech.snickers.techflixandchill;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ public class AdminViewsUser extends AppCompatActivity {
     TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV,
             userProfileNameTV, userProfileMajorTV;
     Switch lock, block, admin;
+    Button returnFromViewsUserBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class AdminViewsUser extends AppCompatActivity {
         lock = (Switch) findViewById(R.id.lock);
         block = (Switch) findViewById(R.id.block);
         admin = (Switch) findViewById(R.id.admin);
+        returnFromViewsUserBtn = (Button) findViewById(R.id.returnFromViewUserBtn);
 
         Bundle bundle = getIntent().getExtras();
         String username = bundle.getString("username");
@@ -93,6 +98,15 @@ public class AdminViewsUser extends AppCompatActivity {
                 } else {
                     ref.child("admin").setValue(false);
                 }
+            }
+        });
+
+        returnFromViewsUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AdminViewsUser.this, UserList.class);
+                //finish();
+                startActivity(i);
             }
         });
 

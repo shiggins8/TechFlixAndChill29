@@ -87,8 +87,8 @@ public class UserList extends AppCompatActivity {
                 String username = userListAdapter.getItem(position).getUsername();
                 i.putExtra("username", username);
                 //i.putExtras(bundle2);
-                //finish();
                 startActivity(i);
+                finish();
             }
         });
     }
