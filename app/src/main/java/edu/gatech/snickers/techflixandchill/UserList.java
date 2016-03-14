@@ -1,9 +1,12 @@
 package edu.gatech.snickers.techflixandchill;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +35,7 @@ public class UserList extends AppCompatActivity {
         userlist = (ListView) findViewById(R.id.lvuserlist);
         userListAdapter= new UserListAdapter(this, users);
         userlist.setAdapter(userListAdapter);
+        setupUserSelectedListener();
         Firebase.setAndroidContext(this);
         ref = new Firebase("https://techflixandchill.firebaseio.com/users/");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -71,5 +75,21 @@ public class UserList extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setupUserSelectedListener() {
+        userlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
+                // Launch the detail view passing movie as an extra
+                Intent i = new Intent(UserList.this, AdminViewsUser.class);
+                //Bundle bundle2 = UserList.this.getIntent().getExtras();
+                String username = userListAdapter.getItem(position).getUsername();
+                i.putExtra("username", username);
+                //i.putExtras(bundle2);
+                //finish();
+                startActivity(i);
+            }
+        });
     }
 }
