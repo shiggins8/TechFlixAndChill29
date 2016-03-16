@@ -21,6 +21,7 @@ public class AdminViewsUser extends AppCompatActivity {
     private Firebase ref;
     private TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV, userProfileNameTV, userProfileMajorTV;
     private Switch lock, block;
+    //TODO add a save button so that the admin has to click it, it will close the activity and prevent weird back arrow functionality
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
