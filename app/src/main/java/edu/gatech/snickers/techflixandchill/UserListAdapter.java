@@ -1,37 +1,45 @@
 package edu.gatech.snickers.techflixandchill;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by nirajsuresh on 3/13/16.
+ * ArrayAdapter extension class that sets up the dynamic list view for the Ratings objects. As it
+ * is currently coded, it will load one standard image into the ImageView. Will be updated in the
+ * future to get the corresponding URL for thumbnail image based on movie that is being rated.
+ *
+ * Created 2/27/16.
+ *
+ * @author Snickers
+ * @version 1.0
  */
 class UserListAdapter extends ArrayAdapter<User> {
-    public UserListAdapter(Context context, ArrayList<User> userArrayList) {
+    public UserListAdapter(Context context, List<User> userArrayList) {
         super(context, R.layout.user_view, userArrayList);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        // Set up a temporary view
+        View tempView = convertView;
         // Get the data item for this position
-        User user = getItem(position);
+        final User user = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.user_view, parent, false);
+        if (tempView == null) {
+            final LayoutInflater inflater = LayoutInflater.from(getContext());
+            tempView = inflater.inflate(R.layout.user_view, parent, false);
         }
         // Lookup views within item layout
-        TextView name = (TextView) convertView.findViewById(R.id.name);
-        TextView username = (TextView) convertView.findViewById(R.id.username);
-        TextView major = (TextView) convertView.findViewById(R.id.major);
-        ImageView status = (ImageView) convertView.findViewById(R.id.status);
+        final TextView name = (TextView) tempView.findViewById(R.id.name);
+        final TextView username = (TextView) tempView.findViewById(R.id.username);
+        final TextView major = (TextView) tempView.findViewById(R.id.major);
+        final ImageView status = (ImageView) tempView.findViewById(R.id.status);
         // Populate the data into the template view using the data object
         name.setText(user.getName());
         username.setText(user.getUsername());
@@ -46,6 +54,6 @@ class UserListAdapter extends ArrayAdapter<User> {
             status.setImageDrawable(getContext().getResources().getDrawable(R.drawable.tick));
         }
         // Return the completed view to render on screen
-        return convertView;
+        return tempView;
     }
 }

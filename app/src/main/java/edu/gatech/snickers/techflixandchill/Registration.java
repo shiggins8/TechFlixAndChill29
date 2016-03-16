@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -37,11 +36,10 @@ import com.firebase.client.ValueEventListener;
  */
 public class Registration extends Activity{
 
-    EditText password, repassword, securityhint, username, email, major, name;
-    Button register,cancel;
-    Spinner majorSpinner;
-    CheckBox check;
-    Firebase ref;
+    private EditText password, repassword, securityhint, username, email, name;
+    private Spinner majorSpinner;
+    private Firebase ref;
+    private static final String NULLSTRING = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,15 +53,14 @@ public class Registration extends Activity{
         securityhint = (EditText) findViewById(R.id.securityhint_edt);
         username = (EditText) findViewById(R.id.username_edt);
         email = (EditText) findViewById(R.id.email_edt);
-        //major = (EditText) findViewById(R.id.major_edt); //removed to add the spinner instead
-        register = (Button) findViewById(R.id.register_btn);
-        cancel = (Button) findViewById(R.id.cancel_btn);
-        check = (CheckBox) findViewById(R.id.checkBox1);
+        final Button register = (Button) findViewById(R.id.register_btn);
+        final Button cancel = (Button) findViewById(R.id.cancel_btn);
+        final CheckBox check = (CheckBox) findViewById(R.id.checkBox1);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
 
         majorSpinner = (Spinner) findViewById(R.id.majorSpinner);
-        String[] items = getResources().getStringArray(R.array.majors_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        final String[] items = getResources().getStringArray(R.array.majors_array);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         majorSpinner.setAdapter(adapter);
 
         //code to add functionality to the checkbox
@@ -83,15 +80,15 @@ public class Registration extends Activity{
             @Override
             public void onClick(View v) {
 
-                final String Name = name.getText().toString();
-                final String Pass = password.getText().toString();
-                final String Secu = securityhint.getText().toString();
-                final String Repass = repassword.getText().toString();
+                final String enteredName = name.getText().toString();
+                final String enteredPassword = password.getText().toString();
+                final String secuHint = securityhint.getText().toString();
+                final String duplicatePassword = repassword.getText().toString();
                 final String user = username.getText().toString();
                 final String mail = email.getText().toString();
                 final String umajor = majorSpinner.getSelectedItem().toString();
                 final Firebase userRef = ref.child("users");
-                Firebase temp = userRef.child(user);
+                final Firebase temp = userRef.child(user);
 
                 //if the username the person enters has already been taken
                 temp.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -102,31 +99,28 @@ public class Registration extends Activity{
                             return;
                         } else {
                             //check to see if registration form is incomplete
-                            if (Pass.equals("") || Repass.equals("") || Secu.equals("") || user.equals("")
-                                    || mail.equals("") || umajor.equals("")) {
+                            if (enteredPassword.equals(NULLSTRING) || duplicatePassword.equals(NULLSTRING) || secuHint.equals(NULLSTRING) || user.equals(NULLSTRING)
+                                    || mail.equals(NULLSTRING) || umajor.equals(NULLSTRING)) {
                                 Toast.makeText(getApplicationContext(), "Fill All Fields", Toast.LENGTH_LONG).show();
                                 return;
                             }
 
                             //if re-entered password doesn't match original password
-                            if (!Pass.equals(Repass)) {
+                            if (!enteredPassword.equals(duplicatePassword)) {
                                 Toast.makeText(getApplicationContext(), "Password does not match", Toast.LENGTH_LONG).show();
                                 return;
-                            }
-
-                            //successful registration
-                            else {
+                            } else { //successful registration
                                 // Save the Data in Database
                                 // Create new user with attributes entered
                                 //not admin, 0 on incorrect attempts, not blocked, not locked
-                                User newUser = new User(Name, user, Pass, mail, Secu, umajor, false, 0, false, false);
+                                final User newUser = new User(enteredName, user, enteredPassword, mail, secuHint, umajor, false, 0, false, false);
                                 // Create new child in users database
-                                Firebase newref = userRef.child(user);
+                                final Firebase newref = userRef.child(user);
                                 // Set value of child to user object
                                 newref.setValue(newUser);
                                 // reg_btn.setVisibility(View.GONE);
                                 Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
-                                Intent i = new Intent(Registration.this, MainActivity.class);
+                                final Intent i = new Intent(Registration.this, MainActivity.class);
                                 startActivity(i);
                             }
                         }
@@ -142,7 +136,7 @@ public class Registration extends Activity{
         cancel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent ii=new Intent(Registration.this,MainActivity.class);
+                final Intent ii=new Intent(Registration.this,MainActivity.class);
                 startActivity(ii);
             }
         });

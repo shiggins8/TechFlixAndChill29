@@ -26,98 +26,98 @@ public class User {
         //empty constructor for Firebase
     }
 
-    public User(String name, String username, String password, String email, String securityHint,
-                String major, boolean admin, int incorrectPasswordCounter, boolean blocked,
-                boolean locked) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.securityHint = securityHint;
-        this.major = major;
-        this.admin = admin;
-        this.incorrectPasswordCounter = incorrectPasswordCounter;
-        this.blocked = blocked;
-        this.locked = locked;
+    public User(String pName, String pUsername, String pPassword, String pEmail, String pSecuHint,
+                String pMajor, boolean pAdmin, int pIncorrectPasswordCounter, boolean pBlocked,
+                boolean pLocked) {
+        this.name = pName;
+        this.username = pUsername;
+        this.password = pPassword;
+        this.email = pEmail;
+        this.securityHint = pSecuHint;
+        this.major = pMajor;
+        this.admin = pAdmin;
+        this.incorrectPasswordCounter = pIncorrectPasswordCounter;
+        this.blocked = pBlocked;
+        this.locked = pLocked;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String pName) {
+        this.name = pName;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String pUsername) {
+        this.username = pUsername;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String pPassword) {
+        this.password = pPassword;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String pEmail) {
+        this.email = pEmail;
     }
 
     public String getSecurityHint() {
         return securityHint;
     }
 
-    public void setSecurityHint(String securityHint) {
-        this.securityHint = securityHint;
+    public void setSecurityHint(String pSecuHint) {
+        this.securityHint = pSecuHint;
     }
 
     public String getMajor() {
         return major;
     }
 
-    public void setMajor(String major) {
-        this.major = major;
+    public void setMajor(String pMajor) {
+        this.major = pMajor;
     }
 
     public boolean isAdmin() {
         return admin;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setAdmin(boolean pAdmin) {
+        this.admin = pAdmin;
     }
 
     public int getIncorrectPasswordCounter() {
         return incorrectPasswordCounter;
     }
 
-    public void setIncorrectPasswordCounter(int incorrectPasswordCounter) {
-        this.incorrectPasswordCounter = incorrectPasswordCounter;
+    public void setIncorrectPasswordCounter(int pIncorrectPasswordCounter) {
+        this.incorrectPasswordCounter = pIncorrectPasswordCounter;
     }
 
     public boolean isBlocked() {
         return blocked;
     }
 
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
+    public void setBlocked(boolean pBlocked) {
+        this.blocked = pBlocked;
     }
 
     public boolean isLocked() {
         return locked;
     }
 
-    public void setLocked(boolean locked) {
-        this.locked = locked;
+    public void setLocked(boolean pLocked) {
+        this.locked = pLocked;
     }
 }

@@ -26,10 +26,9 @@ import com.firebase.client.ValueEventListener;
  * @version 1.0
  */
 public class MovieRatingActivity extends Activity {
-    TextView ratingMovieTitleTV, userWordsRatingET;
-    RatingBar movieRatingBar;
-    Button ratingSaveBtn, cancelRatingBtn;
-    final Firebase ref = new Firebase("https://techflixandchill.firebaseio.com");
+    private TextView userWordsRatingET;
+    private RatingBar movieRatingBar;
+    private final Firebase ref = new Firebase("https://techflixandchill.firebaseio.com");
 
 
     @Override
@@ -37,22 +36,22 @@ public class MovieRatingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_rating);
         Firebase.setAndroidContext(this);
-        Bundle bundle = getIntent().getExtras();
-        String currentUser = bundle.getString("USERNAME");
-        String title = bundle.getString("movieTitle");
-        ratingMovieTitleTV = (TextView) findViewById(R.id.ratingMovieTitleTV);
+        final Bundle bundle = getIntent().getExtras();
+        final String currentUser = bundle.getString("USERNAME");
+        final String title = bundle.getString("movieTitle");
+        final TextView ratingMovieTitleTV = (TextView) findViewById(R.id.ratingMovieTitleTV);
         userWordsRatingET = (EditText) findViewById(R.id.userWordsRatingET);
         movieRatingBar = (RatingBar) findViewById(R.id.movieRatingBar);
-        ratingSaveBtn = (Button) findViewById(R.id.ratingSaveBtn);
-        cancelRatingBtn = (Button) findViewById(R.id.cancelRatingBtn);
+        final Button ratingSaveBtn = (Button) findViewById(R.id.ratingSaveBtn);
+        final Button cancelRatingBtn = (Button) findViewById(R.id.cancelRatingBtn);
 
         //check to see if the current app user has already rated this movie
         //if they have, load that rating up into the rating screen
-        Firebase fetchRef = ref.child("ratingsByUser").child(currentUser).child(title);
+        final Firebase fetchRef = ref.child("ratingsByUser").child(currentUser).child(title);
         fetchRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Rating userRating = dataSnapshot.getValue(Rating.class);
+                final Rating userRating = dataSnapshot.getValue(Rating.class);
                 if (userRating != null) {
                     movieRatingBar.setRating(userRating.getNumericalRating());
                     userWordsRatingET.setText(userRating.getCommentRating());
@@ -71,8 +70,8 @@ public class MovieRatingActivity extends Activity {
         cancelRatingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MovieRatingActivity.this, Home.class);
-                Bundle bundle2 = MovieRatingActivity.this.getIntent().getExtras();
+                final Intent i = new Intent(MovieRatingActivity.this, Home.class);
+                final Bundle bundle2 = MovieRatingActivity.this.getIntent().getExtras();
                 i.putExtras(bundle2);
                 finish();
             }
@@ -87,8 +86,8 @@ public class MovieRatingActivity extends Activity {
                 final String title = MovieRatingActivity.this.getIntent().getStringExtra("movieTitle");
                 final BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY);
                 final String userWordsRating = userWordsRatingET.getText().toString();
-                Firebase userRateRef = ref.child("ratingsByUser");
-                Firebase majorRateRef = ref.child("ratingsByMajor");
+                final Firebase userRateRef = ref.child("ratingsByUser");
+                final Firebase majorRateRef = ref.child("ratingsByMajor");
                 final Rating theRating = new Rating(movie, movieRating, userWordsRating, major, username);
                 //set up Firebase references
                 Firebase theUserRateRef = userRateRef.child(username);
@@ -96,20 +95,20 @@ public class MovieRatingActivity extends Activity {
                 theUserRateRef = theUserRateRef.child(title);
                 theUserRateRef.setValue(theRating);
 
-                Firebase checkMajorRating = new Firebase("https://techflixandchill.firebaseio.com/ratingsByMajor/" + major + "/" + title);
+                final Firebase checkMajorRating = new Firebase("https://techflixandchill.firebaseio.com/ratingsByMajor/" + major + "/" + title);
                 checkMajorRating.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        Firebase addToMajorRef = theMajorRateRef.child(title);
+                        final Firebase addToMajorRef = theMajorRateRef.child(title);
                         if (snapshot.exists()) {
                             //deal with the program needing to adjust rating for major
-                            DataSnapshot previousRating = snapshot.child("numericalRating");
-                            double prevRating = (double) previousRating.getValue();
+                            final DataSnapshot previousRating = snapshot.child("numericalRating");
+                            final double prevRating = (double) previousRating.getValue();
                             float workingRating = (float) prevRating;
                             workingRating = workingRating * 25;
                             workingRating = workingRating + movieRating;
                             workingRating = workingRating / 26;
-                            Rating updatedMajorRating = new Rating(movie, workingRating, userWordsRating, major, username);
+                            final Rating updatedMajorRating = new Rating(movie, workingRating, userWordsRating, major, username);
                             addToMajorRef.setValue(updatedMajorRating);
                         } else {
                             addToMajorRef.setValue(theRating);
@@ -119,7 +118,6 @@ public class MovieRatingActivity extends Activity {
 
                     @Override
                     public void onCancelled(FirebaseError firebaseError) {
-                        System.out.println("The read failed: " + firebaseError.getMessage());
                     }
                 });
 

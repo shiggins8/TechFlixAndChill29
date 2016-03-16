@@ -18,16 +18,16 @@ import com.firebase.client.ValueEventListener;
 
 public class AdminViewsUser extends AppCompatActivity {
 
-    Firebase ref;
-    TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV,
-            userProfileNameTV, userProfileMajorTV;
-    Switch lock, block, admin;
-    Button returnFromViewsUserBtn;
+    private Firebase ref;
+    private TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV, userProfileNameTV, userProfileMajorTV;
+    private Switch lock, block;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_views_user);
+
+        Button returnFromViewsUserBtn;
 
         userProfileUsernameTV = (TextView) findViewById(R.id.userProfileUsernameTV);
         userProfilePasswordTV = (TextView) findViewById(R.id.userProfilePasswordTV);
@@ -37,17 +37,17 @@ public class AdminViewsUser extends AppCompatActivity {
         userProfileNameTV = (TextView) findViewById(R.id.userProfileNameTV);
         lock = (Switch) findViewById(R.id.lock);
         block = (Switch) findViewById(R.id.block);
-        admin = (Switch) findViewById(R.id.admin);
+        final Switch admin = (Switch) findViewById(R.id.admin);
         returnFromViewsUserBtn = (Button) findViewById(R.id.returnFromViewUserBtn);
 
-        Bundle bundle = getIntent().getExtras();
-        String username = bundle.getString("username");
+        final Bundle bundle = getIntent().getExtras();
+        final String username = bundle.getString("username");
         Firebase.setAndroidContext(this);
         ref =  new Firebase("https://techflixandchill.firebaseio.com/users/"+ username);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
+                final User user = snapshot.getValue(User.class);
                 userProfileNameTV.setText("Name: " + user.getName());
                 userProfileUsernameTV.setText("Username: " + user.getUsername());
                 userProfilePasswordTV.setText("Password: " + user.getPassword());
@@ -104,7 +104,7 @@ public class AdminViewsUser extends AppCompatActivity {
         returnFromViewsUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(AdminViewsUser.this, UserList.class);
+                final Intent i = new Intent(AdminViewsUser.this, UserList.class);
                 //finish();
                 startActivity(i);
             }
@@ -124,7 +124,7 @@ public class AdminViewsUser extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {

@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -31,9 +30,7 @@ import com.firebase.client.ValueEventListener;
  */
 public class UserProfile extends Activity {
 
-    TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV,
-            userProfileNameTV, userProfileMajorTV;
-    Button editProfileButton, goHomeButton;
+    private TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV, userProfileNameTV, userProfileMajorTV;
     private Firebase ref;
 
     @Override
@@ -48,8 +45,8 @@ public class UserProfile extends Activity {
         userProfileMajorTV = (TextView) findViewById(R.id.userProfileMajorTV);
         userProfileNameTV = (TextView) findViewById(R.id.userProfileNameTV);
 
-        editProfileButton = (Button) findViewById(R.id.editProfileButton);
-        goHomeButton = (Button) findViewById(R.id.goHomeButton);
+        final Button editProfileButton = (Button) findViewById(R.id.editProfileButton);
+        final Button goHomeButton = (Button) findViewById(R.id.goHomeButton);
 
         Firebase.setAndroidContext(this);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
@@ -64,11 +61,11 @@ public class UserProfile extends Activity {
         final String email = bundle.getString("EMAIL");
         final String securityHint = bundle.getString("SECURITYHINT");
 
-        Firebase editRef = ref.child("users").child(username);
+        final Firebase editRef = ref.child("users").child(username);
         editRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                final User user = dataSnapshot.getValue(User.class);
                 userProfileNameTV.setText("Name: " + user.getName());
                 userProfileUsernameTV.setText("Username: " + user.getUsername());
                 userProfilePasswordTV.setText("Password: " + user.getPassword());
@@ -103,19 +100,18 @@ public class UserProfile extends Activity {
                 final EditText newSecuHint = (EditText) dialog.findViewById(R.id.editSecuHintET);
                 newSecuHint.setText(securityHint);
                 final Spinner newMajor = (Spinner) dialog.findViewById(R.id.editMajorSpinner);
-                String[] items = getResources().getStringArray(R.array.majors_array);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(UserProfile.this, android.R.layout.simple_spinner_dropdown_item, items);
+                final String[] items = getResources().getStringArray(R.array.majors_array);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(UserProfile.this, android.R.layout.simple_spinner_dropdown_item, items);
                 //make sure that spinner initially starts on their original major selection
-                int i = adapter.getPosition(major);
-                System.out.println(i);
+                final int i = adapter.getPosition(major);
                 newMajor.setAdapter(adapter);
                 newMajor.setSelection(i, true);
 
                 final EditText newName = (EditText) dialog.findViewById(R.id.editNameET);
                 newName.setText(name);
 
-                Button saveChanges = (Button) dialog.findViewById(R.id.save_changes_btn);
-                Button cancel = (Button) dialog.findViewById(R.id.cancel_changes_btn);
+                final Button saveChanges = (Button) dialog.findViewById(R.id.save_changes_btn);
+                final Button cancel = (Button) dialog.findViewById(R.id.cancel_changes_btn);
 
                 saveChanges.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
@@ -152,7 +148,7 @@ public class UserProfile extends Activity {
                             }
                         });
 
-                        Intent iii = new Intent(UserProfile.this, Home.class);
+                        final Intent iii = new Intent(UserProfile.this, Home.class);
                         bundle.putString("PASSWORD", updatedPassword);
                         bundle.putString("NAME", updatedName);
                         bundle.putString("MAJOR", updatedMajor);
@@ -178,7 +174,7 @@ public class UserProfile extends Activity {
         goHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(UserProfile.this,Home.class);
+                final Intent i = new Intent(UserProfile.this,Home.class);
                 i.putExtras(bundle);
                 //start the activity
                 startActivity(i);

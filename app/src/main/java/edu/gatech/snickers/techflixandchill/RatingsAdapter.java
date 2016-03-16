@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ArrayAdapter extension class that sets up the dynamic list view for the Ratings objects. As it
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class RatingsAdapter extends ArrayAdapter<Rating> {
-    public RatingsAdapter(Context context, ArrayList<Rating> aMovies) {
+    public RatingsAdapter(Context context, List<Rating> aMovies) {
         super(context, 0, aMovies);
     }
 
@@ -29,26 +29,27 @@ public class RatingsAdapter extends ArrayAdapter<Rating> {
     // into a relevant row within an AdapterView
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        // Set up a temporary view
+        View tempView = convertView;
         // Get the data item for this position
-        Rating rating = getItem(position);
+        final Rating rating = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_rating, parent, false);
+        if (tempView == null) {
+            final LayoutInflater inflater = LayoutInflater.from(getContext());
+            tempView = inflater.inflate(R.layout.item_rating, parent, false);
         }
         // Lookup views within item layout
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-        TextView tvCriticsScore = (TextView) convertView.findViewById(R.id.tvCriticsScore);
-        TextView tvCast = (TextView) convertView.findViewById(R.id.tvCast);
-        ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImage);
+        final TextView tvTitle = (TextView) tempView.findViewById(R.id.tvTitle);
+        final TextView tvCriticsScore = (TextView) tempView.findViewById(R.id.tvCriticsScore);
+        final TextView tvCast = (TextView) tempView.findViewById(R.id.tvCast);
+        final ImageView ivPosterImage = (ImageView) tempView.findViewById(R.id.ivPosterImage);
 
         // Populate the data into the template view using the data object
         tvTitle.setText(rating.getMovie().getTitle());
         tvCriticsScore.setText("Rating: " + rating.getNumericalRating() + " stars");
         tvCast.setText(rating.getCommentRating());
-        //TODO remove Schmidt picture url, even if it is hilarious
         Picasso.with(getContext()).load(rating.getMovie().getPosterUrl()).into(ivPosterImage);
         // Return the completed view to render on screen
-        return convertView;
+        return tempView;
     }
 }

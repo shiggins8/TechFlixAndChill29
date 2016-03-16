@@ -63,6 +63,7 @@
     <string name="title_activity_admin_profile">AdminProfile</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="ratingsVariable">ratings</string>
     <string name="title_activity_admin_home">AdminHome</string>
     <string name="title_activity_user_list">UserList</string>
     <string name="title_activity_admin_views_user">AdminViewsUser</string>

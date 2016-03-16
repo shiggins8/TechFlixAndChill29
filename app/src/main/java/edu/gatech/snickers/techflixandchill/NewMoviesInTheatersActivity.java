@@ -3,6 +3,7 @@ package edu.gatech.snickers.techflixandchill;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.List;
+
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -24,7 +27,7 @@ import cz.msebera.android.httpclient.Header;
  * @version 1.0
  */
 public class NewMoviesInTheatersActivity extends Activity {
-    RottenTomatoesClient client;
+    private RottenTomatoesClient client;
     private ListView lvMovies;
     private BoxOfficeMoviesAdapter adapterMovies;
 
@@ -35,7 +38,7 @@ public class NewMoviesInTheatersActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_office);
         lvMovies = (ListView) findViewById(R.id.lvMovies);
-        ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
+        final ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
         adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
         lvMovies.setAdapter(adapterMovies);
         fetchNewInTheaters();
@@ -54,14 +57,14 @@ public class NewMoviesInTheatersActivity extends Activity {
                     // Get the movies json array
                     items = responseBody.getJSONArray("movies");
                     // Parse json array into array of model objects
-                    ArrayList<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
+                    final List<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
                     // Load model objects into the adapter
-                    for (BoxOfficeMovie movie : movies) {
+                    for (final BoxOfficeMovie movie : movies) {
                         adapterMovies.add(movie); // add movie through the adapter
                     }
                     adapterMovies.notifyDataSetChanged();
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.d("JSON", "onSuccess: found in theaters, couldn't parse RT response");
                 }
             }
         });
@@ -72,10 +75,10 @@ public class NewMoviesInTheatersActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Launch the detail view passing movie as an extra
-                Intent i = new Intent(NewMoviesInTheatersActivity.this, BoxOfficeDetailActivity.class);
-                Bundle bundle2 = NewMoviesInTheatersActivity.this.getIntent().getExtras();
+                final Intent i = new Intent(NewMoviesInTheatersActivity.this, BoxOfficeDetailActivity.class);
+                final Bundle bundle2 = NewMoviesInTheatersActivity.this.getIntent().getExtras();
                 i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
-                String title = adapterMovies.getItem(position).getTitle();
+                final String title = adapterMovies.getItem(position).getTitle();
                 i.putExtra("movieTitle", title);
                 i.putExtras(bundle2);
                 //finish();

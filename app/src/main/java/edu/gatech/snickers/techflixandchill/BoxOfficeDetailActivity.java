@@ -28,7 +28,7 @@ public class BoxOfficeDetailActivity extends Activity {
     private TextView tvCast;
     private TextView tvAudienceScore;
     private TextView tvCriticsScore;
-    Button rateBtn;
+    private Button rateBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,16 +43,14 @@ public class BoxOfficeDetailActivity extends Activity {
         tvAudienceScore =  (TextView) findViewById(R.id.tvAudienceScore);
         tvCriticsScore = (TextView) findViewById(R.id.tvCriticsScore);
         // Use the movie to populate the data into our views
-        System.out.println("from on create in detail activity movie title = " + (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY));
-        BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY);
-        System.out.println("from on create in detail activity movie object: " + movie.getTitle());
+        final BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY);
         loadMovie(movie);
 
         rateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(BoxOfficeDetailActivity.this, MovieRatingActivity.class);
-                Bundle bundle2 = BoxOfficeDetailActivity.this.getIntent().getExtras();
+                final Intent i = new Intent(BoxOfficeDetailActivity.this, MovieRatingActivity.class);
+                final Bundle bundle2 = BoxOfficeDetailActivity.this.getIntent().getExtras();
                 i.putExtras(bundle2);
                 //i.putExtra("movieName", movie.getTitle());
                 //i.putExtra("MAJOR", major);
@@ -79,14 +77,14 @@ public class BoxOfficeDetailActivity extends Activity {
         tvAudienceScore =  (TextView) findViewById(R.id.tvAudienceScore);
         tvCriticsScore = (TextView) findViewById(R.id.tvCriticsScore);
         // Use the movie to populate the data into our views
-        BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY);
+        final BoxOfficeMovie movie = (BoxOfficeMovie) getIntent().getSerializableExtra(BoxOfficeActivity.MOVIE_DETAIL_KEY);
         loadMovie(movie);
 
         rateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(BoxOfficeDetailActivity.this, MovieRatingActivity.class);
-                Bundle bundle2 = BoxOfficeDetailActivity.this.getIntent().getExtras();
+                final Intent i = new Intent(BoxOfficeDetailActivity.this, MovieRatingActivity.class);
+                final Bundle bundle2 = BoxOfficeDetailActivity.this.getIntent().getExtras();
                 i.putExtras(bundle2);
                 //i.putExtra("movieName", movie.getTitle());
                 //i.putExtra("MAJOR", major);

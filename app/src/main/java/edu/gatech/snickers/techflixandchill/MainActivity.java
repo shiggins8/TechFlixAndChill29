@@ -1,6 +1,5 @@
 package edu.gatech.snickers.techflixandchill;
 
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -32,26 +31,21 @@ import com.firebase.client.ValueEventListener;
  * @version 2.0
  */
 public class MainActivity extends Activity {
-
-    Button login;
-    Button registerr;
-    EditText enterpassword, username;
-    TextView forgetpass;
-    CheckBox loginAsAdmin;
+    private EditText enterpassword, username;
     private Firebase ref;
-    boolean checked;
+    private boolean checked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        login = (Button) findViewById(R.id.login_btn);
-        registerr = (Button) findViewById(R.id.register_btn);
+        final Button login = (Button) findViewById(R.id.login_btn);
+        final Button registerr = (Button) findViewById(R.id.register_btn);
         username = (EditText) findViewById(R.id.edt_username);
         enterpassword = (EditText) findViewById(R.id.password_edt);
-        forgetpass = (TextView) findViewById(R.id.textView2);
+        final TextView forgetpass = (TextView) findViewById(R.id.textView2);
         checked = false;
-        loginAsAdmin = (CheckBox) findViewById(R.id.loginAsAdmin);
+        final CheckBox loginAsAdmin = (CheckBox) findViewById(R.id.loginAsAdmin);
         Firebase.setAndroidContext(this);
         ref = new Firebase("https://techflixandchill.firebaseio.com");
 
@@ -60,7 +54,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(MainActivity.this,Registration.class);
+                final Intent i=new Intent(MainActivity.this,Registration.class);
                 startActivity(i);
             }
         });
@@ -70,10 +64,10 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                String Password = enterpassword.getText().toString();
-                String Username = username.getText().toString();
+                final String enteredPassword = enterpassword.getText().toString();
+                final String enteredUsername = username.getText().toString();
                 //check to see if user actually exists, proceed if they do
-                checkUser(Username, Password, ref.child("users"));
+                checkUser(enteredUsername, enteredPassword, ref.child("users"));
             }
         });
 
@@ -98,19 +92,18 @@ public class MainActivity extends Activity {
                 final EditText security = (EditText) dialog.findViewById(R.id.securityhint_edt);
                 final TextView getpass=(TextView)dialog.findViewById(R.id.textView3);
 
-                Button ok = (Button) dialog.findViewById(R.id.getpassword_btn);
-                Button cancel = (Button) dialog.findViewById(R.id.cancel_btn);
+                final Button ok = (Button) dialog.findViewById(R.id.getpassword_btn);
+                final Button cancel = (Button) dialog.findViewById(R.id.cancel_btn);
 
                 ok.setOnClickListener(new View.OnClickListener() {
 
                     public void onClick(View v) {
 
-                        String userName = security.getText().toString();
-                        if(userName.equals(""))
-                        {
+                        final String userName = security.getText().toString();
+                        final String nullstring = "";
+                        if(userName.equals(nullstring)) {
                             Toast.makeText(getApplicationContext(), "Please enter your username", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             checkSecuHint(userName, getpass, ref.child("users"));
                         }
                     }
@@ -130,10 +123,10 @@ public class MainActivity extends Activity {
         });
     };
 
-    public void checkUser(String username, String password, Firebase ref) {
-        final String userName = username;
+    public void checkUser(String enteredUsername, String password, Firebase fireRef) {
+        final String userName = enteredUsername;
         final String passWord = password;
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        fireRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 //                User user = snapshot.getValue(User.class);
@@ -151,15 +144,15 @@ public class MainActivity extends Activity {
         });
     }
 
-    public void checkSecuHint(String username, TextView getpass, Firebase ref) {
-        final String userName = username;
+    public void checkSecuHint(String enteredUsername, TextView getpass, Firebase fireRef) {
+        final String userName = enteredUsername;
         final TextView getPass = getpass;
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        fireRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 //                User user = snapshot.getValue(User.class);
                 if (snapshot.hasChild(userName)) {
-                    User temp = snapshot.child(userName).getValue(User.class);
+                    final User temp = snapshot.child(userName).getValue(User.class);
                     getPass.setText(temp.getSecurityHint());
                     //Toast.makeText(MainActivity.this, "User does exist", Toast.LENGTH_SHORT).show();
                 } else {
@@ -174,20 +167,22 @@ public class MainActivity extends Activity {
     }
 
     public void performLogin(String userName, String passWord) {
+        final int passwordThreshold = 3;
+        final String nullstring = "";
         final String password = passWord;
         final Firebase loginRef = ref.child("users").child(userName);
         loginRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                boolean areTheyBlocked = user.isBlocked();
-                boolean areTheyLocked = user.isLocked();
+                final User user = dataSnapshot.getValue(User.class);
+                final boolean areTheyBlocked = user.isBlocked();
+                final boolean areTheyLocked = user.isLocked();
                 if (areTheyBlocked) {
                     Toast.makeText(MainActivity.this, "Your account is blocked, please contact an administrator", Toast.LENGTH_LONG).show();
                 } else if (areTheyLocked) {
                     Toast.makeText(MainActivity.this, "You have entered the wrong password too many times and your account is locked, please contact an administrator", Toast.LENGTH_LONG).show();
                 } else {
-                    String storedPassword = user.getPassword();
+                    final String storedPassword = user.getPassword();
                     if (storedPassword.equals(password)) {
                         if (checked && !user.isAdmin()) {
                             Toast.makeText(MainActivity.this, "Cannot login as admin", Toast.LENGTH_LONG).show();
@@ -195,7 +190,7 @@ public class MainActivity extends Activity {
                             Toast.makeText(MainActivity.this, "Congrats: Login Successfully", Toast.LENGTH_LONG).show();
                             user.setIncorrectPasswordCounter(0);
                             //create a bundle to pass along user data
-                            Bundle bundle = new Bundle();
+                            final Bundle bundle = new Bundle();
                             //Add data to bundle
                             bundle.putString("USERNAME", user.getUsername());
                             bundle.putString("PASSWORD", user.getPassword());
@@ -203,8 +198,8 @@ public class MainActivity extends Activity {
                             bundle.putString("MAJOR", user.getMajor());
                             bundle.putString("SECURITYHINT", user.getSecurityHint());
                             bundle.putString("EMAIL", user.getEmail());
-                            Intent ii = new Intent(MainActivity.this, Home.class);
-                            Intent iii = new Intent(MainActivity.this, AdminHome.class);
+                            final Intent ii = new Intent(MainActivity.this, Home.class);
+                            final Intent iii = new Intent(MainActivity.this, AdminHome.class);
                             //Add bundle to intent
                             ii.putExtras(bundle);
                             iii.putExtras(bundle);
@@ -215,15 +210,14 @@ public class MainActivity extends Activity {
                             }
                         }
                     } else {
-                        if (password.equals("")) {
+                        if (password.equals(nullstring)) {
                             Toast.makeText(MainActivity.this, "Please Enter Your Password", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(MainActivity.this, "Password Incorrect", Toast.LENGTH_LONG).show();
-                            long t = (long) dataSnapshot.child("incorrectPasswordCounter").getValue();
+                            final long t = (long) dataSnapshot.child("incorrectPasswordCounter").getValue();
                             int temp = (int) t;
                             temp++;
-                            System.out.println("incorrect tries: " + temp);
-                            if (temp == 3) {
+                            if (temp == passwordThreshold) {
                                 loginRef.child("locked").setValue(true);
                                 //user.setIsLocked(true);
                                 loginRef.child("incorrectPasswordCounter").setValue(0);

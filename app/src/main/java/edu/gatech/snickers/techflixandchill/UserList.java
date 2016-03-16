@@ -8,24 +8,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Provides the functionality for users to view movies recently released on DVD. Displays the
+ * results in a list view, with selectable rows. Search calls are made using the Rotten Tomatoes
+ * API.
+ *
+ * Created on 2/27/16.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class UserList extends AppCompatActivity {
 
     private ListView userlist;
     private UserListAdapter userListAdapter;
-    private Firebase ref;
-    public ArrayList<User> users = new ArrayList<User>();
+    private List<User> users = new ArrayList<User>();
 
 
     @Override
@@ -37,15 +43,14 @@ public class UserList extends AppCompatActivity {
         userlist.setAdapter(userListAdapter);
         setupUserSelectedListener();
         Firebase.setAndroidContext(this);
-        ref = new Firebase("https://techflixandchill.firebaseio.com/users/");
+        final Firebase ref = new Firebase("https://techflixandchill.firebaseio.com/users/");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot user : snapshot.getChildren()) {
-                    User toAdd = user.getValue(User.class);
+                for (final DataSnapshot user : snapshot.getChildren()) {
+                    final User toAdd = user.getValue(User.class);
                     userListAdapter.add(toAdd);
                     userListAdapter.notifyDataSetChanged();
-
                 }
             }
 
@@ -67,7 +72,7 @@ public class UserList extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -82,9 +87,9 @@ public class UserList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Launch the detail view passing movie as an extra
-                Intent i = new Intent(UserList.this, AdminViewsUser.class);
+                final Intent i = new Intent(UserList.this, AdminViewsUser.class);
                 //Bundle bundle2 = UserList.this.getIntent().getExtras();
-                String username = userListAdapter.getItem(position).getUsername();
+                final String username = userListAdapter.getItem(position).getUsername();
                 i.putExtra("username", username);
                 //i.putExtras(bundle2);
                 startActivity(i);

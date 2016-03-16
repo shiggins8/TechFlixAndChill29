@@ -23,53 +23,53 @@ public class Rating {
         return movie;
     }
 
-    public void setMovie(BoxOfficeMovie movie) {
-        this.movie = movie;
+    public void setMovie(BoxOfficeMovie pMovie) {
+        this.movie = pMovie;
     }
 
     public float getNumericalRating() {
         return numericalRating;
     }
 
-    public void setNumericalRating(float numericalRating) {
-        this.numericalRating = numericalRating;
+    public void setNumericalRating(float pNumericalRating) {
+        this.numericalRating = pNumericalRating;
     }
 
     public String getCommentRating() {
         return commentRating;
     }
 
-    public void setCommentRating(String commentRating) {
-        this.commentRating = commentRating;
+    public void setCommentRating(String pCommentRating) {
+        this.commentRating = pCommentRating;
     }
 
     public String getMajorOfRater() {
         return majorOfRater;
     }
 
-    public void setMajorOfRater(String majorOfRater) {
-        this.majorOfRater = majorOfRater;
+    public void setMajorOfRater(String pMajorOfRater) {
+        this.majorOfRater = pMajorOfRater;
     }
 
     public String getUsernameOfRater() {
         return usernameOfRater;
     }
 
-    public void setUsernameOfRater(String usernameOfRater) {
-        this.usernameOfRater = usernameOfRater;
+    public void setUsernameOfRater(String pUsernameOfRater) {
+        this.usernameOfRater = pUsernameOfRater;
     }
 
     public Rating() {
         //empty constructor for Firebase purposes
     }
 
-    public Rating(BoxOfficeMovie movie, float numericalRating, String commentRating, String majorOfRater,
-                  String usernameOfRater) {
-        this.movie = movie;
-        this.numericalRating = numericalRating;
-        this.commentRating = commentRating;
-        this.majorOfRater = majorOfRater;
-        this.usernameOfRater = usernameOfRater;
+    public Rating(BoxOfficeMovie pMovie, float pNumericalRating, String pCommentRating, String pMajorOfRater,
+                  String pUsernameOfRater) {
+        this.movie = pMovie;
+        this.numericalRating = pNumericalRating;
+        this.commentRating = pCommentRating;
+        this.majorOfRater = pMajorOfRater;
+        this.usernameOfRater = pUsernameOfRater;
     }
 
 

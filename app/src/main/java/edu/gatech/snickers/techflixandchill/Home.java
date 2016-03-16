@@ -22,16 +22,14 @@ import android.widget.TextView;
  * @version 1.2
  */
 public class Home extends Activity{
-
-    Button logoutButton, viewProfileButton, searchMoviesBtn, newReleasesBtn, newOnDVDBtn,
-            viewMyRatingsBtn, getRecommendationsBtn;
-    TextView usernameTextView;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+        Button logoutButton, viewProfileButton, searchMoviesBtn, newReleasesBtn, newOnDVDBtn,
+                viewMyRatingsBtn, getRecommendationsBtn;
+        TextView usernameTextView;
 
         logoutButton = (Button) findViewById(R.id.logoutButton);
         viewProfileButton = (Button) findViewById(R.id.viewProfileButton);
@@ -46,11 +44,9 @@ public class Home extends Activity{
         final Bundle bundle;
         bundle = getIntent().getExtras();
         //Extract the data
-        String username = bundle.getString("USERNAME");
-        String password = bundle.getString("PASSWORD");
-        String theName = bundle.getString("NAME");
+        final String theName = bundle.getString("NAME");
 
-        String message = "Welcome: " + theName;
+        final String message = "Welcome: " + theName;
 
         usernameTextView.setText(message);
 
@@ -58,7 +54,7 @@ public class Home extends Activity{
             @Override
             public void onClick(View v) {
 
-                Intent i = new Intent(Home.this, UserProfile.class);
+                final Intent i = new Intent(Home.this, UserProfile.class);
                 //pass along bundled username and password
                 i.putExtras(bundle);
                 startActivity(i);
@@ -69,7 +65,7 @@ public class Home extends Activity{
             @Override
             public void onClick(View v) {
                 //return to the MainActivity
-                Intent i = new Intent(Home.this, MainActivity.class);
+                final Intent i = new Intent(Home.this, MainActivity.class);
                 startActivity(i);
             }
         });
@@ -78,7 +74,7 @@ public class Home extends Activity{
             @Override
             public void onClick(View v) {
                 //go to the page to search for movies and display results
-                Intent i = new Intent(Home.this, MovieSearchActivity.class);
+                final Intent i = new Intent(Home.this, MovieSearchActivity.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -88,7 +84,7 @@ public class Home extends Activity{
             @Override
             public void onClick(View v) {
                 //go to page to view and display movies newly released to theaters
-                Intent i = new Intent(Home.this, NewMoviesInTheatersActivity.class);
+                final Intent i = new Intent(Home.this, NewMoviesInTheatersActivity.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -98,7 +94,7 @@ public class Home extends Activity{
             @Override
             public void onClick(View v) {
                 //go to page to view and display movies newly released to DVD
-                Intent i = new Intent(Home.this, NewMoviesOnDvdActivity.class);
+                final Intent i = new Intent(Home.this, NewMoviesOnDvdActivity.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -108,7 +104,7 @@ public class Home extends Activity{
             @Override
             public void onClick(View v) {
                 //go to page to view and display movies newly released to DVD
-                Intent i = new Intent(Home.this, ViewMyRatingsActivity.class);
+                final Intent i = new Intent(Home.this, ViewMyRatingsActivity.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }
@@ -117,7 +113,7 @@ public class Home extends Activity{
         getRecommendationsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Home.this, GetRecommendationsActivity.class);
+                final Intent i = new Intent(Home.this, GetRecommendationsActivity.class);
                 i.putExtras(bundle);
                 startActivity(i);
             }

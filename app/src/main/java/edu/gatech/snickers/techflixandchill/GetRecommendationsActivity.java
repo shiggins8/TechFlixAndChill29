@@ -3,6 +3,7 @@ package edu.gatech.snickers.techflixandchill;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +22,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
+import java.util.List;
+
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -36,11 +39,10 @@ import cz.msebera.android.httpclient.Header;
  * @version 2.0
  */
 public class GetRecommendationsActivity extends Activity {
-    RottenTomatoesClient client;
+    private RottenTomatoesClient client;
     private ListView lvRecommendations;
     private BoxOfficeMoviesAdapter adapterMovies;
     private Spinner selectMajor;
-    private Button majorRecommendationsBtn;
     private TextView noMoviesMessage;
 
     public static final String MOVIE_DETAIL_KEY = "movie";
@@ -51,30 +53,28 @@ public class GetRecommendationsActivity extends Activity {
         setContentView(R.layout.activity_get_recommendations);
 
         lvRecommendations = (ListView) findViewById(R.id.lvRecommendations);
-        ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
+        final ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
         adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
         lvRecommendations.setAdapter(adapterMovies);
         noMoviesMessage = (TextView) findViewById(R.id.noMoviesTextView);
 
-        Bundle bundle = GetRecommendationsActivity.this.getIntent().getExtras();
-        String major = bundle.getString("MAJOR");
+        final Bundle bundle = GetRecommendationsActivity.this.getIntent().getExtras();
+        final String major = bundle.getString("MAJOR");
         selectMajor = (Spinner) findViewById(R.id.chooseMajorSpinner);
-        String[] items = getResources().getStringArray(R.array.majors_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        final String[] items = getResources().getStringArray(R.array.majors_array);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         //make sure that spinner initially starts on their original major selection
-        int i = adapter.getPosition(major);
-        System.out.println(i);
+        final int i = adapter.getPosition(major);
         selectMajor.setAdapter(adapter);
         selectMajor.setSelection(i, true);
 
-        majorRecommendationsBtn = (Button) findViewById(R.id.majorRecommendationsBtn);
+        final Button majorRecommendationsBtn= (Button) findViewById(R.id.majorRecommendationsBtn);
         majorRecommendationsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 noMoviesMessage.setText("");
                 lvRecommendations.clearAnimation();
-                String selectedMajor = selectMajor.getSelectedItem().toString();
-                System.out.println("selected major:" + selectedMajor);
+                final String selectedMajor = selectMajor.getSelectedItem().toString();
                 clearListView();
                 fetchRecommendationsByMajor(selectedMajor);
                 setupMovieSelectedListener();
@@ -100,24 +100,20 @@ public class GetRecommendationsActivity extends Activity {
     private void fetchRecommendationsByMajor(String major) {
         client = new RottenTomatoesClient();
         final String messageMajor = major;
-        Bundle bundle = GetRecommendationsActivity.this.getIntent().getExtras();
         //set up Firebase reference, pull all the top ratings from Firebase
         final Firebase majorRef = new Firebase("https://techflixandchill.firebaseio.com/ratingsByMajor/" + major);
         //gets the two movies with the highest ratings from that major
         //TODO handle case where repeates are put into the arraylist
-        Query queryRef = majorRef.orderByChild("numericalRating").limitToLast(2);
+        final Query queryRef = majorRef.orderByChild("numericalRating").limitToLast(2);
         //get the movie id's from these first two ratings
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            int movieID1;
+            private int movieID1;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getChildrenCount());
                 if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
-                    for (DataSnapshot rating : dataSnapshot.getChildren()) {
-                        Rating tempRating = rating.getValue(Rating.class);
+                    for (final DataSnapshot rating : dataSnapshot.getChildren()) {
+                        final Rating tempRating = rating.getValue(Rating.class);
                         movieID1 = tempRating.getMovie().getMovieID();
-                        System.out.println("movie title: " + tempRating.getMovie().getTitle());
-                        System.out.println("movie id: " + tempRating.getMovie().getMovieID());
                         client.getRecommendations(movieID1, new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
@@ -126,21 +122,19 @@ public class GetRecommendationsActivity extends Activity {
                                     // Get the movies json array
                                     items = responseBody.getJSONArray("movies");
                                     // Parse json array into array of model objects
-                                    ArrayList<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
+                                    final List<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
                                     // Load model objects into the adapter
-                                    for (BoxOfficeMovie movie : movies) {
+                                    for (final BoxOfficeMovie movie : movies) {
                                         adapterMovies.add(movie); // add movie through the adapter
                                     }
 //                                    System.out.println(adapterMovies.isEmpty() + ": is it empty?");
 //                                    adapterMovies.notifyDataSetChanged();
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    Log.d("JSON", "onSuccess: got movie, couldn't get recommends");
                                 }
                             }
                         });
                     }
-                    System.out.println(adapterMovies.isEmpty() + ": is it empty?");
-                    System.out.println(adapterMovies.getCount() + ": count");
                     adapterMovies.notifyDataSetChanged();
                 } else {
                     noMoviesMessage.setText("No data for " + messageMajor + ", sorry");
@@ -163,10 +157,10 @@ public class GetRecommendationsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
                 // Launch the detail view passing movie as an extra
-                Intent i = new Intent(GetRecommendationsActivity.this, BoxOfficeDetailActivity.class);
-                Bundle bundle2 = GetRecommendationsActivity.this.getIntent().getExtras();
+                final Intent i = new Intent(GetRecommendationsActivity.this, BoxOfficeDetailActivity.class);
+                final Bundle bundle2 = GetRecommendationsActivity.this.getIntent().getExtras();
                 i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
-                String title = adapterMovies.getItem(position).getTitle();
+                final String title = adapterMovies.getItem(position).getTitle();
                 i.putExtra("movieTitle", title);
                 i.putExtras(bundle2);
                 //finish();
