@@ -21,8 +21,14 @@ import java.util.List;
  * @version 1.0
  */
 public class RatingsAdapter extends ArrayAdapter<Rating> {
-    public RatingsAdapter(Context context, List<Rating> aMovies) {
-        super(context, 0, aMovies);
+    /**
+     * Constructor to make the Adapter, given a List of ratings and an Android app context.
+     *
+     * @param context Android application context of an activity
+     * @param aRatings List object containing Ratings objects
+     */
+    public RatingsAdapter(Context context, List<Rating> aRatings) {
+        super(context, 0, aRatings);
     }
 
     // Translates a particular `BoxOfficeMovie` given a position

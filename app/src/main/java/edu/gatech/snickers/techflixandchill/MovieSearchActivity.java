@@ -28,10 +28,23 @@ import cz.msebera.android.httpclient.Header;
  * @version 1.0
  */
 public class MovieSearchActivity extends Activity {
+    /**
+     * A list view that will display the movies in a vertical list, creating one row for each
+     * movie that needs to be placed in the list, depending on query.
+     */
     private ListView lvMovies;
+    /**
+     * Extension of an ArrayAdapter that populates the list view with movies matching the search
+     * criteria.
+     */
     private BoxOfficeMoviesAdapter adapterMovies;
+    /**
+     * Editable text field where the user can enter the title of a movie they want to search for.
+     */
     private EditText searchEDT;
-
+    /**
+     * JSON object key to retrieve JSONObject movies from the Rotten Tomatoes API call response.
+     */
     public static final String MOVIE_DETAIL_KEY = "movie";
 
     @Override
@@ -54,8 +67,10 @@ public class MovieSearchActivity extends Activity {
         });
     }
 
-    // Executes an API call to the box office endpoint, parses the results
-    // Converts them into an array of movie objects and adds them to the adapter
+    /**
+     * Executes an API call to the box office endpoint, parses the results. Converts them into an
+     * array of movie objects and adds them to the adapter.
+     */
     private void fetchMovieSearch() {
         final String movieName = searchEDT.getText().toString();
         //convert any blank spaces in the movie title entered by user into + signs, which
@@ -83,6 +98,10 @@ public class MovieSearchActivity extends Activity {
         });
     }
 
+    /**
+     * Enables the user to select an individual row in the list view, and then an activity will
+     * be started to view that movie, passing in information specific to the selected movie.
+     */
     public void setupMovieSelectedListener() {
         lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

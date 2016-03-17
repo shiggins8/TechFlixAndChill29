@@ -31,8 +31,18 @@ import com.firebase.client.ValueEventListener;
  * @version 2.0
  */
 public class MainActivity extends Activity {
-    private EditText enterpassword, username;
+    /**
+     * Editable text fields to allow a user to enter their username and password.
+     */
+    private EditText enterPassword, username;
+    /**
+     * Reference to the Firebase database for the app, needed to verify login credentials.
+     */
     private Firebase ref;
+    /**
+     * Boolean control for the checkbox to allow the user to opt to login as an admin if true,
+     * or login normally if false.
+     */
     private boolean checked;
 
     @Override
@@ -42,7 +52,7 @@ public class MainActivity extends Activity {
         final Button login = (Button) findViewById(R.id.login_btn);
         final Button registerr = (Button) findViewById(R.id.register_btn);
         username = (EditText) findViewById(R.id.edt_username);
-        enterpassword = (EditText) findViewById(R.id.password_edt);
+        enterPassword = (EditText) findViewById(R.id.password_edt);
         final TextView forgetpass = (TextView) findViewById(R.id.textView2);
         checked = false;
         final CheckBox loginAsAdmin = (CheckBox) findViewById(R.id.loginAsAdmin);
@@ -64,7 +74,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                final String enteredPassword = enterpassword.getText().toString();
+                final String enteredPassword = enterPassword.getText().toString();
                 final String enteredUsername = username.getText().toString();
                 //check to see if user actually exists, proceed if they do
                 checkUser(enteredUsername, enteredPassword, ref.child("users"));
@@ -123,6 +133,15 @@ public class MainActivity extends Activity {
         });
     };
 
+    /**
+     * Essential task in login logic. System checks if the entered login credentials match in Fire-
+     * base, then displays error messages if this isn't the case. If a valid user is found, calls
+     * the performLogin(...) method.
+     *
+     * @param enteredUsername username that user has typed into login screen
+     * @param password password that the user has typed into login screen
+     * @param fireRef Firebase reference specifically branching to the user
+     */
     public void checkUser(String enteredUsername, String password, Firebase fireRef) {
         final String userName = enteredUsername;
         final String passWord = password;
@@ -144,17 +163,23 @@ public class MainActivity extends Activity {
         });
     }
 
+    /**
+     * If user has forgotten their password, they can ask for their security hint, which will be
+     * displayed dependent upon them entering their valid username.
+     *
+     * @param enteredUsername the username the user entered into the login screen
+     * @param getpass a TextView that will display the password for the user to see
+     * @param fireRef specific Firebase reference to that user's branch in the database
+     */
     public void checkSecuHint(String enteredUsername, TextView getpass, Firebase fireRef) {
         final String userName = enteredUsername;
         final TextView getPass = getpass;
         fireRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-//                User user = snapshot.getValue(User.class);
                 if (snapshot.hasChild(userName)) {
                     final User temp = snapshot.child(userName).getValue(User.class);
                     getPass.setText(temp.getSecurityHint());
-                    //Toast.makeText(MainActivity.this, "User does exist", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "User does NOT exist", Toast.LENGTH_SHORT).show();
                 }
@@ -166,6 +191,14 @@ public class MainActivity extends Activity {
         });
     }
 
+    /**
+     * Login logic for the app. Checks for locks or blocks on the account, or if user is admin.
+     * Starts appropriate activity based upon those parameters, bundling essential user info
+     * and passing that into the new intent that will be used to start the app.
+     *
+     * @param userName username entered by the user in the login screen
+     * @param passWord password entered by the user in the login screen
+     */
     public void performLogin(String userName, String passWord) {
         final int passwordThreshold = 3;
         final String nullstring = "";

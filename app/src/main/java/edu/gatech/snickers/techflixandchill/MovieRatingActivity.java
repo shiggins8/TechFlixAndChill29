@@ -26,8 +26,18 @@ import com.firebase.client.ValueEventListener;
  * @version 1.0
  */
 public class MovieRatingActivity extends Activity {
+    /**
+     * TextView that allows the user to view/edit their text-based commentary on the movie.
+     */
     private TextView userWordsRatingET;
+    /**
+     * 5-star rating system that allows a user to rate a movie from 0 to 5, in 0.5 increments.
+     */
     private RatingBar movieRatingBar;
+    /**
+     * Reference to app's Firebase database, necessary to retrieve and persistently store the
+     * ratings for a given movie.
+     */
     private final Firebase ref = new Firebase("https://techflixandchill.firebaseio.com");
 
 

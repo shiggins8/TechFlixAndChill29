@@ -15,15 +15,27 @@ import com.loopj.android.http.RequestParams;
  * @version 1.0
  */
 public class RottenTomatoesClient {
+    /**
+     * The Rotten Tomatoes API Key needed to make API calls.
+     */
     private static final String API_KEY = "yedukp76ffytfuy24zsqk7f5";
+    /**
+     * Starter template for all Rotten Tomatoes API calls.
+     */
     private static final String API_BASE_URL = "http://api.rottentomatoes.com/api/public/v1.0/";
+    /**
+     * A client that allows the app to automate the calling of asynchronous API calls.
+     */
     private AsyncHttpClient client;
 
+    /**
+     * Base constructor to make a new RottenTomatoesClient, which is an asynchronous HTTP client.
+     */
     public RottenTomatoesClient() {
         this.client = new AsyncHttpClient();
     }
 
-    // http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=<key>
+
     public void getBoxOfficeMovies(JsonHttpResponseHandler handler) {
         final String url = getApiUrl("lists/movies/box_office.json");
         final RequestParams params = new RequestParams("apikey", API_KEY);
@@ -53,13 +65,15 @@ public class RottenTomatoesClient {
         final String url = getApiUrl("movies/" + movieId + "/similar.json?limit=5&apikey=" + API_KEY);
         final RequestParams params = new RequestParams();
         client.get(url, params, handler);
-
-        //http://api.rottentomatoes.com/api/public/v1.0/movies/10143/similar.json?limit=5&apikey=yedukp76ffytfuy24zsqk7f5
-        //?limit=5&apikey=yedukp76ffytfuy24zsqk7f5
-
-
     }
 
+    /**
+     * Generate and return the full API url to make the call given the piece of the url specific
+     * to that call + the base url.
+     *
+     * @param relativeUrl ending of url specific to individual API calls
+     * @return a string representing the full URL for the API call
+     */
     private String getApiUrl(String relativeUrl) {
         return API_BASE_URL + relativeUrl;
     }

@@ -29,8 +29,14 @@ import com.firebase.client.ValueEventListener;
  * @version 1.1
  */
 public class UserProfile extends Activity {
-
+    /**
+     * TextViews that are populated with the user details for a given user, obtained through a
+     * query to the Firebase database.
+     */
     private TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV, userProfileNameTV, userProfileMajorTV;
+    /**
+     * Firebase database references used to get the user details for a particular user.
+     */
     private Firebase ref;
 
     @Override

@@ -20,6 +20,12 @@ import java.util.List;
  * @version 1.0
  */
 class UserListAdapter extends ArrayAdapter<User> {
+    /**
+     * Constructor to make the Adapter, given a List of users and an Android app context.
+     *
+     * @param context Android application context of an activity
+     * @param userArrayList List object containing User objects
+     */
     public UserListAdapter(Context context, List<User> userArrayList) {
         super(context, R.layout.user_view, userArrayList);
     }

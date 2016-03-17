@@ -35,10 +35,25 @@ import com.firebase.client.ValueEventListener;
  *
  */
 public class Registration extends Activity{
-
+    /**
+     * Editable text fields that the user will use to enter all pertinent info relating to the
+     * registration process.
+     */
     private EditText password, repassword, securityhint, username, email, name;
+    /**
+     * Spinner object that will allow a user to select an official Georgia Tech major as their
+     * major.
+     */
     private Spinner majorSpinner;
+    /**
+     * Reference to the Firebase database, necessary for saving the info entered after a user has
+     * successfully registered.
+     */
     private Firebase ref;
+    /**
+     * Static variable that will be checked against in the code, prevents users from registering
+     * with any fields still at the default value of a null/empty string "".
+     */
     private static final String NULLSTRING = "";
 
     @Override

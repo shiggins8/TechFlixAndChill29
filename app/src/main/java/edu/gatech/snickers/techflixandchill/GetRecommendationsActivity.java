@@ -39,12 +39,33 @@ import cz.msebera.android.httpclient.Header;
  * @version 2.0
  */
 public class GetRecommendationsActivity extends Activity {
+    /**
+     * Client that allows an activity to asynchronously make API calls to Rotten Tomatoes API.
+     */
     private RottenTomatoesClient client;
+    /**
+     * A list view that will display the ratings in a vertical list, creating one row for each
+     * rating that needs to be placed in the list, depending on query.
+     */
     private ListView lvRecommendations;
+    /**
+     * Extension of an ArrayAdapter to automatically populate list view with rating objects.
+     */
     private BoxOfficeMoviesAdapter adapterMovies;
+    /**
+     * Spinner object that will allow a user to only select officially recognized majors at Georgia
+     * Tech.
+     */
     private Spinner selectMajor;
+    /**
+     * Text view to alert the user if no recommendations can be found for a specific major/movie.
+     */
     private TextView noMoviesMessage;
 
+    /**
+     * JSON identifier to find the movies for the JSONarray response generated from the Rotten
+     * Tomatoes API call.
+     */
     public static final String MOVIE_DETAIL_KEY = "movie";
 
     @Override
@@ -95,8 +116,12 @@ public class GetRecommendationsActivity extends Activity {
         noMoviesMessage.setText("");
     }
 
-    // Executes an API call to the box office endpoint, parses the results
-    // Converts them into an array of movie objects and adds them to the adapter
+    /**
+     * Executes an API call to the box office endpoint, parses the results. Converts them into an
+     * array of movie objects and adds them to the adapter.
+     *
+     * @param major the user will select a major, system uses this to return recommendations
+     */
     private void fetchRecommendationsByMajor(String major) {
         client = new RottenTomatoesClient();
         final String messageMajor = major;
@@ -108,6 +133,7 @@ public class GetRecommendationsActivity extends Activity {
         //get the movie id's from these first two ratings
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             private int movieID1;
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {

@@ -22,12 +22,18 @@ import com.squareup.picasso.Picasso;
  * @version 1.0
  */
 public class BoxOfficeDetailActivity extends Activity {
+    /**
+     * ImageView that will contain the movie poster image.
+     */
     private ImageView ivPosterImage;
-    private TextView tvTitle;
-    private TextView tvSynopsis;
-    private TextView tvCast;
-    private TextView tvAudienceScore;
-    private TextView tvCriticsScore;
+    /**
+     * TextViews that will be populated with the title, synopsis, cast, and scores for a given
+     * movie.
+     */
+    private TextView tvTitle, tvSynopsis, tvCast, tvAudienceScore, tvCriticsScore;
+    /**
+     * Button with functionality to take the user to a movie rating activity (screen).
+     */
     private Button rateBtn;
 
     @Override
@@ -95,7 +101,11 @@ public class BoxOfficeDetailActivity extends Activity {
         });
     }
 
-    // Populate the data for the movie
+    /**
+     * Populate the data for the given movie into the app UI.
+     *
+     * @param movie movie object that the app will display with detailed view
+     */
     public void loadMovie(BoxOfficeMovie movie) {
         // Populate data
         tvTitle.setText(movie.getTitle());

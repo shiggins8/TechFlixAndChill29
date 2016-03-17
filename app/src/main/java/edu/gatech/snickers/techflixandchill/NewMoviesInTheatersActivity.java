@@ -27,10 +27,23 @@ import cz.msebera.android.httpclient.Header;
  * @version 1.0
  */
 public class NewMoviesInTheatersActivity extends Activity {
+    /**
+     * Client that allows an activity to asynchronously make API calls to Rotten Tomatoes API.
+     */
     private RottenTomatoesClient client;
+    /**
+     * A list view that will display the movies in a vertical list, creating one row for each
+     * movie that needs to be placed in the list, depending on query.
+     */
     private ListView lvMovies;
+    /**
+     * Extension of an ArrayAdapter that populates the list view with movies matching the search
+     * criteria, namely those in the Box Office currently.
+     */
     private BoxOfficeMoviesAdapter adapterMovies;
-
+    /**
+     * JSON object key to retrieve JSONObject movies from the Rotten Tomatoes API call response.
+     */
     public static final String MOVIE_DETAIL_KEY = "movie";
 
     @Override
@@ -45,8 +58,10 @@ public class NewMoviesInTheatersActivity extends Activity {
         setupMovieSelectedListener();
     }
 
-    // Executes an API call to the box office endpoint, parses the results
-    // Converts them into an array of movie objects and adds them to the adapter
+    /**
+     * Executes an API call to the box office endpoint, parses the results. Converts them into an
+     * array of movie objects and adds them to the adapter.
+     */
     private void fetchNewInTheaters() {
         client = new RottenTomatoesClient();
         client.getNewInTheaterMovies(new JsonHttpResponseHandler() {
@@ -70,6 +85,10 @@ public class NewMoviesInTheatersActivity extends Activity {
         });
     }
 
+    /**
+     * Enables the user to select an individual row in the list view, and then an activity will
+     * be started to view that movie, passing in information specific to the selected movie.
+     */
     public void setupMovieSelectedListener() {
         lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

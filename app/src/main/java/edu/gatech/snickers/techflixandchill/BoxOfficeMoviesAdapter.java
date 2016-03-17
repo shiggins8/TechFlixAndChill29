@@ -21,6 +21,12 @@ import java.util.List;
  * @version 1.0
  */
 public class BoxOfficeMoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
+    /**
+     * Constructor to make the Adapter, given a List of movies and an Android app context.
+     *
+     * @param context Android application context of an activity
+     * @param aMovies List object containing BoxOfficeMovie objects
+     */
     public BoxOfficeMoviesAdapter(Context context, List<BoxOfficeMovie> aMovies) {
         super(context, 0, aMovies);
     }

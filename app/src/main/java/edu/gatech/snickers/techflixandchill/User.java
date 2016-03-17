@@ -8,18 +8,49 @@ package edu.gatech.snickers.techflixandchill;
  * in cases of more normal use within the app.
  *
  * @author Snickers
- * @Version 1.2
+ * @version 1.2
  */
 public class User {
+    /**
+     * Name of the user.
+     */
     private String name;
+    /**
+     * Username the user has selected.
+     */
     private String username;
+    /**
+     * Password the user has selected.
+     */
     private String password;
+    /**
+     * Email of the user.
+     */
     private String email;
+    /**
+     * Security hint that the user has chosen.
+     */
     private String securityHint;
+    /**
+     * Georgia Tech major of the student.
+     */
     private String major;
+    /**
+     * Boolean to determine admin status. True means they are an admin, false means they are not.
+     */
     private boolean admin;
+    /**
+     * An int counter that allows the system to check how many times the user has entered the
+     * incorrect password. After 3 incorrect attempts, a user will have their account locked.
+     */
     private int incorrectPasswordCounter;
+    /**
+     * Boolean to determine blocked status. True means blocked, false means active.
+     */
     private boolean blocked;
+    /**
+     * Boolean to determine locked status. True means locked, false means active.
+     */
     private boolean locked;
 
     public User() {

@@ -28,9 +28,18 @@ import java.util.List;
  * @version 1.0
  */
 public class UserList extends AppCompatActivity {
-
+    /**
+     * A list view that will display the users in a vertical list, creating one row for each
+     * user that needs to be placed in the list.
+     */
     private ListView userlist;
+    /**
+     * Extension of an ArrayAdapter that populates the list view with users.
+     */
     private UserListAdapter userListAdapter;
+    /**
+     * An ArrayList of users that will be filled based on the query to the Firebase database.
+     */
     private List<User> users = new ArrayList<User>();
 
 
@@ -82,6 +91,10 @@ public class UserList extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Enables the user to select an individual row in the list view, and then an activity will
+     * be started to view that movie, passing in information specific to the selected movie.
+     */
     public void setupUserSelectedListener() {
         userlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -18,8 +18,18 @@ import com.firebase.client.ValueEventListener;
 
 public class AdminViewsUser extends AppCompatActivity {
 
+    /**
+     * A reference to the Firebase database, used for querying the user data within the class.
+     */
     private Firebase ref;
+    /**
+     * TextViews that will be populated with the information from the User the Admin wishes to
+     * view.
+     */
     private TextView userProfileUsernameTV, userProfilePasswordTV, userProfileEmailTV, userProfileSecuHintTV, userProfileNameTV, userProfileMajorTV;
+    /**
+     * Switches that allow an admin to block, unblock, lock, or unlock a user.
+     */
     private Switch lock, block;
     //TODO add a save button so that the admin has to click it, it will close the activity and prevent weird back arrow functionality
 

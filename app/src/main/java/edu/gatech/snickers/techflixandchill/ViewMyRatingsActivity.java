@@ -16,12 +16,20 @@ import com.firebase.client.FirebaseException;
 import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 
-/**
- *
- */
 public class ViewMyRatingsActivity extends Activity {
+    /**
+     * A list view that will display the ratings in a vertical list, creating one row for each
+     * rating that needs to be placed in the list.
+     */
     private ListView lvRatings;
+    /**
+     * Extension of an ArrayAdapter that populates the list view with ratings of the movies.
+     */
     private RatingsAdapter adapterRatings;
+    /**
+     * Reference to the Firebase database, used to obtain the saved ratings of different users
+     * by all of the users of the app.
+     */
     private final Firebase ref = new Firebase("https://techflixandchill.firebaseio.com");
 
     @Override
@@ -44,32 +52,36 @@ public class ViewMyRatingsActivity extends Activity {
         });
     }
 
-    // Use Firebase to gather all of the ratings made by a particular user
-    // Converts them into an array of rating objects and adds them to the adapter
+    /**
+     * Use Firebase to gather all of the ratings made by a particular user. Converts them into an
+     * array of rating objects and adds them to the adapter.
+     */
     private void fetchUserRatings() {
         final Bundle bundle = ViewMyRatingsActivity.this.getIntent().getExtras();
         final String username = bundle.getString("USERNAME");
         try {
-            final Firebase userRatings = ref.child("ratingsByUser").child(username);
-            userRatings.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    final ArrayList<Rating> theRatings = new ArrayList<Rating>();
-                    for (final DataSnapshot child: dataSnapshot.getChildren()) {
-                        final Rating tempRating = child.getValue(Rating.class);
-                        theRatings.add(tempRating);
+            if (username != null) {
+                final Firebase userRatings = ref.child("ratingsByUser").child(username);
+                userRatings.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        final ArrayList<Rating> theRatings = new ArrayList<Rating>();
+                        for (final DataSnapshot child: dataSnapshot.getChildren()) {
+                            final Rating tempRating = child.getValue(Rating.class);
+                            theRatings.add(tempRating);
+                        }
+                        for (final Rating rating: theRatings) {
+                            adapterRatings.add(rating);
+                        }
+                        adapterRatings.notifyDataSetChanged();
                     }
-                    for (final Rating rating: theRatings) {
-                        adapterRatings.add(rating);
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
                     }
-                    adapterRatings.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-
-                }
-            });
+                });
+            }
         } catch (FirebaseException e) {
             Log.d("Firebase", "fetchUserRatings: error in fetchuserratings()");
         }
@@ -77,6 +89,10 @@ public class ViewMyRatingsActivity extends Activity {
 
     }
 
+    /**
+     * Enables the user to select an individual row in the list view, and then an activity will
+     * be started to view that movie, passing in information specific to the selected movie.
+     */
     public void setupMovieSelectedListener() {
         lvRatings.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

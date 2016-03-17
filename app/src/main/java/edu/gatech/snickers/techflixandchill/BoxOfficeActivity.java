@@ -28,10 +28,24 @@ import cz.msebera.android.httpclient.Header;
  * @version 1.0
  */
 public class BoxOfficeActivity extends Activity {
+    /**
+     * Client that allows an activity to asynchronously make API calls to Rotten Tomatoes API.
+     */
     private RottenTomatoesClient client;
+    /**
+     * A list view that will display the movies in a vertical list, creating one row for each
+     * movie that needs to be placed in the list, depending on query.
+     */
     private ListView lvMovies;
+    /**
+     * Implementation of ArrayAdapter that takes an array of movies and automatically populates
+     * the list view.
+     */
     private BoxOfficeMoviesAdapter adapterMovies;
 
+    /**
+     * Keyword for the JSON object to find the movie in the JSONarray that is returned.
+     */
     public static final String MOVIE_DETAIL_KEY = "movie";
 
     @Override
@@ -46,8 +60,10 @@ public class BoxOfficeActivity extends Activity {
         setupMovieSelectedListener();
     }
 
-    // Executes an API call to the box office endpoint, parses the results
-    // Converts them into an array of movie objects and adds them to the adapter
+    /**
+     * Executes an API call to the box office endpoint, parses the results, converts them into an
+     * array of movie objects and adds them to the adapter.
+     */
     private void fetchBoxOfficeMovies() {
         client = new RottenTomatoesClient();
         client.getBoxOfficeMovies(new JsonHttpResponseHandler() {
