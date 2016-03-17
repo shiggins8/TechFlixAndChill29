@@ -59,42 +59,92 @@ public class Rating {
         //empty constructor for Firebase purposes
     }
 
+    /**
+     * Get the BoxOfficeMovie object the rating is about.
+     *
+     * @return the BoxOfficeMovie object of the rating.
+     */
     public BoxOfficeMovie getMovie() {
         return movie;
     }
 
+    /**
+     * Set the BoxOfficeMovie object of the rating.
+     *
+     * @param pMovie BoxOfficeMovie that the rating pertains to
+     */
     public void setMovie(BoxOfficeMovie pMovie) {
         this.movie = pMovie;
     }
 
+    /**
+     * Get the numerical rating of the movie, as a float.
+     *
+     * @return float numerical rating of the movie
+     */
     public float getNumericalRating() {
         return numericalRating;
     }
 
+    /**
+     * Set numerical rating of a movie.
+     *
+     * @param pNumericalRating float numerical rating
+     */
     public void setNumericalRating(float pNumericalRating) {
         this.numericalRating = pNumericalRating;
     }
 
+    /**
+     * Get the text-based comment rating of a movie.
+     *
+     * @return String containing comment rating of a movie
+     */
     public String getCommentRating() {
         return commentRating;
     }
 
+    /**
+     * Set the comment rating of a particular movie.
+     *
+     * @param pCommentRating the String representing the comment rating
+     */
     public void setCommentRating(String pCommentRating) {
         this.commentRating = pCommentRating;
     }
 
+    /**
+     * Get the major of the user that made this particular rating.
+     *
+     * @return major of the user that made the rating
+     */
     public String getMajorOfRater() {
         return majorOfRater;
     }
 
+    /**
+     * Set the major of the user that created this rating.
+     *
+     * @param pMajorOfRater String representing major of the user
+     */
     public void setMajorOfRater(String pMajorOfRater) {
         this.majorOfRater = pMajorOfRater;
     }
 
+    /**
+     * Get the username of the user that created this rating.
+     *
+     * @return String representing the username of the user that made this rating
+     */
     public String getUsernameOfRater() {
         return usernameOfRater;
     }
 
+    /**
+     * Set the username of the user that made this rating.
+     *
+     * @param pUsernameOfRater String representing the username of the user that made the rating
+     */
     public void setUsernameOfRater(String pUsernameOfRater) {
         this.usernameOfRater = pUsernameOfRater;
     }

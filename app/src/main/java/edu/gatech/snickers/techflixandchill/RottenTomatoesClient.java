@@ -35,25 +35,45 @@ public class RottenTomatoesClient {
         this.client = new AsyncHttpClient();
     }
 
-
+    /**
+     * Method to query the Rotten Tomatoes API specifically for movies currently in the Box Office.
+     *
+     * @param handler a tool to process JSON response bodies from HTTP API calls
+     */
     public void getBoxOfficeMovies(JsonHttpResponseHandler handler) {
         final String url = getApiUrl("lists/movies/box_office.json");
         final RequestParams params = new RequestParams("apikey", API_KEY);
         client.get(url, params, handler);
     }
 
+    /**
+     * Method to query the Rotten Tomatoes API specifically for movies that are new on DVD.
+     *
+     * @param handler a tool to process JSON response bodies from HTTP API calls
+     */
     public void getNewOnDvdMovies(JsonHttpResponseHandler handler) {
         final String url = getApiUrl("lists/dvds/new_releases.json");
         final RequestParams params = new RequestParams("apikey", API_KEY);
         client.get(url, params, handler);
     }
 
+    /**
+     * Method to query the Rotten Tomatoes API for movies that are new in theaters.
+     *
+     * @param handler a tool to process JSON response bodies from HTTP API calls
+     */
     public void getNewInTheaterMovies(JsonHttpResponseHandler handler) {
         final String url = getApiUrl("lists/movies/in_theaters.json");
         final RequestParams params = new RequestParams("apikey", API_KEY);
         client.get(url, params, handler);
     }
 
+    /**
+     * Method to query the Rotten Tomatoes API for a specific movie title, and get those results.
+     *
+     * @param movieTitle the movie title that the user entered to search for
+     * @param handler a tool to process JSON response bodies from HTTP API calls
+     */
     public void getMovieSearch(String movieTitle, JsonHttpResponseHandler handler) {
         String url = getApiUrl("movies.json");
         url = url + "?q=" + movieTitle + "&page_limit=10&page=1&apikey=yedukp76ffytfuy24zsqk7f5";
@@ -61,6 +81,13 @@ public class RottenTomatoesClient {
         client.get(url, params, handler);
     }
 
+    /**
+     * Method to query the Rotten Tomatoes API for similar movies to a given movie, passed in with
+     * its numerical RT ID.
+     *
+     * @param movieId numerical Rotten Tomatoes ID of a movie, passed in as an API parameter
+     * @param handler a tool to process JSON response bodies from HTTP API calls
+     */
     public void getRecommendations(int movieId, JsonHttpResponseHandler handler) {
         final String url = getApiUrl("movies/" + movieId + "/similar.json?limit=5&apikey=" + API_KEY);
         final RequestParams params = new RequestParams();

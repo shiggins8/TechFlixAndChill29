@@ -10,11 +10,12 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * ArrayAdapter extension class that sets up the dynamic list view for the Ratings objects. As it
- * is currently coded, it will load one standard image into the ImageView. Will be updated in the
- * future to get the corresponding URL for thumbnail image based on movie that is being rated.
+ * ArrayAdapter extension class that sets up the dynamic list view for the User objects. It will
+ * automatically populate the list view rows with the user data, and it will assign an image to the
+ * user based on their status within the app system - one image for admin, normal active, blocked,
+ * and locked.
  *
- * Created 2/27/16.
+ * Created 3/12/16.
  *
  * @author Snickers
  * @version 1.0

@@ -9,6 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * Home screen for the admins of the application. Has specific functionality that only admins can
+ * access, mainly including viewing all of the users of the app in a list, providing them the
+ * ability to select users and make them admins, block or unblock them, or lock/unlock their
+ * accounts.
+ *
+ * Created on 3/12/16.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class AdminHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

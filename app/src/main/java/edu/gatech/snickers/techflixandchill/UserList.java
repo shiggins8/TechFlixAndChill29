@@ -18,14 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides the functionality for users to view movies recently released on DVD. Displays the
- * results in a list view, with selectable rows. Search calls are made using the Rotten Tomatoes
- * API.
+ * Provides the functionality for admins to be able to view a list of all of the users of the app.
+ * Utilizes a call to the Firebase database to obtain information for all of the users in the
+ * system and populates a list view accordingly.
  *
- * Created on 2/27/16.
+ * Created on 3/10/16.
  *
  * @author Snickers
- * @version 1.0
+ * @version 1.1
  */
 public class UserList extends AppCompatActivity {
     /**

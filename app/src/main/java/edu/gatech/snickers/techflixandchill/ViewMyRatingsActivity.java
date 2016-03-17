@@ -38,7 +38,7 @@ public class ViewMyRatingsActivity extends Activity {
         setContentView(R.layout.activity_view_my_ratings);
         final Button returnFromRatingsBtn = (Button) findViewById(R.id.returnFromRatingsBtn);
         lvRatings = (ListView) findViewById(R.id.lvRatings);
-        final ArrayList<Rating> aRatings = new ArrayList<Rating>();
+        final ArrayList<Rating> aRatings = new ArrayList<>();
         adapterRatings = new RatingsAdapter(this, aRatings);
         lvRatings.setAdapter(adapterRatings);
         fetchUserRatings();
@@ -65,7 +65,7 @@ public class ViewMyRatingsActivity extends Activity {
                 userRatings.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        final ArrayList<Rating> theRatings = new ArrayList<Rating>();
+                        final ArrayList<Rating> theRatings = new ArrayList<>();
                         for (final DataSnapshot child: dataSnapshot.getChildren()) {
                             final Rating tempRating = child.getValue(Rating.class);
                             theRatings.add(tempRating);

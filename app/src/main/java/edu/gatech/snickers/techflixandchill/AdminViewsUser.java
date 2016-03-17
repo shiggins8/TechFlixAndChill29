@@ -16,8 +16,16 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+/**
+ * The view that will be displayed when an admin selects a user. Implements functionality for an
+ * admin to be able to change the blocked, locked, and admin status of a user.
+ *
+ * Created 3/12/16.
+ *
+ * @author Snickers
+ * @version 1.0
+ */
 public class AdminViewsUser extends AppCompatActivity {
-
     /**
      * A reference to the Firebase database, used for querying the user data within the class.
      */
@@ -59,12 +67,18 @@ public class AdminViewsUser extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 final User user = snapshot.getValue(User.class);
-                userProfileNameTV.setText("Name: " + user.getName());
-                userProfileUsernameTV.setText("Username: " + user.getUsername());
-                userProfilePasswordTV.setText("Password: " + user.getPassword());
-                userProfileEmailTV.setText("Email: " + user.getEmail());
-                userProfileSecuHintTV.setText("Security Hint: " + user.getSecurityHint());
-                userProfileMajorTV.setText("Major: " + user.getMajor());
+                String nameString = "Name: " + user.getName();
+                userProfileNameTV.setText(nameString);
+                String usernameString = "Username: " + user.getUsername();
+                userProfileUsernameTV.setText(usernameString);
+                String passwordString = "Password: " + user.getPassword();
+                userProfilePasswordTV.setText(passwordString);
+                String emailString = "Email: " + user.getEmail();
+                userProfileEmailTV.setText(emailString);
+                String secuString = "Security Hint: " + user.getSecurityHint();
+                userProfileSecuHintTV.setText(secuString);
+                String majorString = "Major: " + user.getMajor();
+                userProfileMajorTV.setText(majorString);
                 if (user.isLocked() ) {
                     lock.setChecked(true);
                 } else {
