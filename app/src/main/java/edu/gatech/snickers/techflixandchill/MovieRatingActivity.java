@@ -46,6 +46,8 @@ public class MovieRatingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_rating);
         Firebase.setAndroidContext(this);
+        // allows for 4% increase in scoring algorithm
+        final int ratingAdjuster = 25;
         final Bundle bundle = getIntent().getExtras();
         final String currentUser = bundle.getString("USERNAME");
         final String title = bundle.getString("movieTitle");
@@ -115,9 +117,9 @@ public class MovieRatingActivity extends Activity {
                             final DataSnapshot previousRating = snapshot.child("numericalRating");
                             final double prevRating = (double) previousRating.getValue();
                             float workingRating = (float) prevRating;
-                            workingRating = workingRating * 25;
+                            workingRating = workingRating * ratingAdjuster;
                             workingRating = workingRating + movieRating;
-                            workingRating = workingRating / 26;
+                            workingRating = workingRating / ratingAdjuster;
                             final Rating updatedMajorRating = new Rating(movie, workingRating, userWordsRating, major, username);
                             addToMajorRef.setValue(updatedMajorRating);
                         } else {

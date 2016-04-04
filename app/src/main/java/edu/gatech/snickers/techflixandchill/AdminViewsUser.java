@@ -67,17 +67,17 @@ public class AdminViewsUser extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 final User user = snapshot.getValue(User.class);
-                String nameString = "Name: " + user.getName();
+                final String nameString = "Name: " + user.getName();
                 userProfileNameTV.setText(nameString);
-                String usernameString = "Username: " + user.getUsername();
+                final String usernameString = "Username: " + user.getUsername();
                 userProfileUsernameTV.setText(usernameString);
-                String passwordString = "Password: " + user.getPassword();
+                final String passwordString = "Password: " + user.getPassword();
                 userProfilePasswordTV.setText(passwordString);
-                String emailString = "Email: " + user.getEmail();
+                final String emailString = "Email: " + user.getEmail();
                 userProfileEmailTV.setText(emailString);
-                String secuString = "Security Hint: " + user.getSecurityHint();
+                final String secuString = "Security Hint: " + user.getSecurityHint();
                 userProfileSecuHintTV.setText(secuString);
-                String majorString = "Major: " + user.getMajor();
+                final String majorString = "Major: " + user.getMajor();
                 userProfileMajorTV.setText(majorString);
                 if (user.isLocked() ) {
                     lock.setChecked(true);
