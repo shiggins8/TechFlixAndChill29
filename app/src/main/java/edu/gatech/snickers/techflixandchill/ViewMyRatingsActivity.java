@@ -56,7 +56,7 @@ public class ViewMyRatingsActivity extends Activity {
      * Use Firebase to gather all of the ratings made by a particular user. Converts them into an
      * array of rating objects and adds them to the adapter.
      */
-    private void fetchUserRatings() {
+    public void fetchUserRatings() {
         final Bundle bundle = ViewMyRatingsActivity.this.getIntent().getExtras();
         final String username = bundle.getString("USERNAME");
         try {

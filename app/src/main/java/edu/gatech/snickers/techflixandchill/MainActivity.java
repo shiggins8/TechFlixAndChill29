@@ -1,5 +1,6 @@
 package edu.gatech.snickers.techflixandchill;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -44,6 +45,11 @@ public class MainActivity extends Activity {
      * or login normally if false.
      */
     private boolean checked;
+
+    /**
+     * Simple int for generating and testing JUnit tests.
+     */
+    private int testReturn = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,10 +154,8 @@ public class MainActivity extends Activity {
         fireRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-//                User user = snapshot.getValue(User.class);
                 if (snapshot.hasChild(userName)) {
                     performLogin(userName, passWord);
-                    //Toast.makeText(MainActivity.this, "User does exist", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(MainActivity.this, "User does NOT exist", Toast.LENGTH_SHORT).show();
                 }
@@ -266,7 +270,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
+                Log.d("firebase", "onCancelled: called within MainActivity");
             }
         });
     }

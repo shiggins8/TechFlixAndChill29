@@ -4,6 +4,10 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     defaultConfig {
         applicationId "edu.gatech.snickers.techflixandchill"
         minSdkVersion 21
@@ -37,6 +41,9 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
     compile 'com.google.android.gms:play-services-identity:7.3.0'
     compile 'com.firebase:firebase-client-android:2.2.3+'
+    compile 'org.hamcrest:hamcrest-junit:2.0.0.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:1.9.5"
 }

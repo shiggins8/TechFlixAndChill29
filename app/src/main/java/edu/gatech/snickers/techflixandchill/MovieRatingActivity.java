@@ -132,13 +132,6 @@ public class MovieRatingActivity extends Activity {
                     public void onCancelled(FirebaseError firebaseError) {
                     }
                 });
-
-//Note: i had to go through some debugging to get the rating to save and close and then go home fine
-                //leave this code here for now, just in case
-//                Bundle returnBundle = MovieRatingActivity.this.getIntent().getExtras();
-//                Intent i = new Intent(MovieRatingActivity.this, Home.class);
-//                i.putExtras(returnBundle);
-//                startActivity(i);
                 finish();
             }
         });
