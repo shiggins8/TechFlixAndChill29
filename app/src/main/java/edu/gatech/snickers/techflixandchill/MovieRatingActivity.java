@@ -40,6 +40,10 @@ public class MovieRatingActivity extends Activity {
      */
     private final Firebase ref = new Firebase("https://techflixandchill.firebaseio.com");
 
+    private static final int ratingAdjuster = 4;
+
+    private static final int minCommentAdjuster = 10;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,6 @@ public class MovieRatingActivity extends Activity {
         setContentView(R.layout.activity_movie_rating);
         Firebase.setAndroidContext(this);
         // allows for 4% increase in scoring algorithm
-        final int ratingAdjuster = 25;
         final Bundle bundle = getIntent().getExtras();
         final String currentUser = bundle.getString("USERNAME");
         final String title = bundle.getString("movieTitle");
@@ -115,11 +118,8 @@ public class MovieRatingActivity extends Activity {
                         if (snapshot.exists()) {
                             //deal with the program needing to adjust rating for major
                             final DataSnapshot previousRating = snapshot.child("numericalRating");
-                            final double prevRating = (double) previousRating.getValue();
-                            float workingRating = (float) prevRating;
-                            workingRating = workingRating * ratingAdjuster;
-                            workingRating = workingRating + movieRating;
-                            workingRating = workingRating / ratingAdjuster;
+                            float prevRating = (float) previousRating.getValue();
+                            float workingRating = calculateNewRating(prevRating, movieRating, userWordsRating);
                             final Rating updatedMajorRating = new Rating(movie, workingRating, userWordsRating, major, username);
                             addToMajorRef.setValue(updatedMajorRating);
                         } else {
@@ -137,4 +137,22 @@ public class MovieRatingActivity extends Activity {
         });
     }
 
+    public static float calculateNewRating(float prevRating, float movieRating, String words) {
+        if (words == null) {
+            throw new IllegalArgumentException("Input comment cannot be null");
+        }
+
+        if (Math.abs(prevRating - movieRating) < 0.1 || Math.abs(movieRating) < 0.1) {
+            return prevRating;
+        } else {
+            if (words.length() < minCommentAdjuster) {
+                return ((prevRating * (minCommentAdjuster - words.length())
+                        * ratingAdjuster) + movieRating) / (((minCommentAdjuster - words.length())
+                        * ratingAdjuster) + 1);
+
+            } else {
+                return ((prevRating * ratingAdjuster) + movieRating) / (ratingAdjuster + 1);
+            }
+        }
+    }
 }
