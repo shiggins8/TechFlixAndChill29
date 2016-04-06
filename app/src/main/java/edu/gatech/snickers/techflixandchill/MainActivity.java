@@ -18,6 +18,7 @@ import android.os.Bundle;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.FirebaseException;
 import com.firebase.client.ValueEventListener;
 
 /**
@@ -45,11 +46,6 @@ public class MainActivity extends Activity {
      * or login normally if false.
      */
     private boolean checked;
-
-    /**
-     * Simple int for generating and testing JUnit tests.
-     */
-    private int testReturn = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +172,13 @@ public class MainActivity extends Activity {
      * @param fireRef specific Firebase reference to that user's branch in the database
      */
     public void checkSecuHint(String enteredUsername, TextView getpass, Firebase fireRef) {
+        if (enteredUsername == null) {
+            throw new IllegalArgumentException("Invalid username entered");
+        } else if (getpass == null) {
+            throw new IllegalArgumentException("Invalid textview, can't be null");
+        } else if (fireRef == null) {
+            throw new FirebaseException("Can't have a null Firebase reference");
+        }
         final String userName = enteredUsername;
         final TextView getPass = getpass;
         fireRef.addListenerForSingleValueEvent(new ValueEventListener() {
