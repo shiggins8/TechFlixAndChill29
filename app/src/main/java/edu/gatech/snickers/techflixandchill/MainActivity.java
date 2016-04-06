@@ -147,6 +147,7 @@ public class MainActivity extends Activity {
     public void checkUser(String enteredUsername, String password, Firebase fireRef) {
         final String userName = enteredUsername;
         final String passWord = password;
+        boolean check;
         fireRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
