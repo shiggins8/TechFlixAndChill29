@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
@@ -46,16 +47,27 @@ public class NewMoviesInTheatersActivity extends Activity {
      */
     public static final String MOVIE_DETAIL_KEY = "movie";
 
+    private Button findTheaterBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_box_office);
+        setContentView(R.layout.activity_new_movies_in_theaters);
         lvMovies = (ListView) findViewById(R.id.lvMovies);
         final ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
         adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
         lvMovies.setAdapter(adapterMovies);
         fetchNewInTheaters();
         setupMovieSelectedListener();
+        findTheaterBtn = (Button) findViewById(R.id.findTheatersBtn);
+
+        findTheaterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent i = new Intent(NewMoviesInTheatersActivity.this, DisplayTheaters.class);
+                startActivity(i);
+            }
+        });
     }
 
     /**
