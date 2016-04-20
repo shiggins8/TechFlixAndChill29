@@ -40,11 +40,12 @@ import javax.mail.internet.MimeMessage;
  *
  * Main activity of our application. Allows users to choose between logging in and registering an
  * account with the app. If the user has forgotten their password, there is a link they can select
- * that will provide them with their security hint.Provides functionality and logic for entering
+ * that will provide allow them to enter their username, and then the app will send an email to
+ * their account email containing their email.Provides functionality and logic for entering
  * the app. Registered user data is stored in a Firebase database online, using JSON structure.
  *
  * @author Snickers
- * @version 2.0
+ * @version 3.0
  */
 public class MainActivity extends Activity {
     /**
@@ -67,6 +68,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         final Button login = (Button) findViewById(R.id.login_btn);
         final Button registerr = (Button) findViewById(R.id.register_btn);
+        final Button contactAdminBtn = (Button) findViewById(R.id.contactAdminBtn);
         username = (EditText) findViewById(R.id.edt_username);
         enterPassword = (EditText) findViewById(R.id.password_edt);
         final TextView forgetpass = (TextView) findViewById(R.id.textView2);
@@ -116,7 +118,7 @@ public class MainActivity extends Activity {
                 dialog.show();
 
                 final EditText security = (EditText) dialog.findViewById(R.id.securityhint_edt);
-                final TextView getpass=(TextView)dialog.findViewById(R.id.textView3);
+                final TextView getpass = (TextView) dialog.findViewById(R.id.textView3);
 
                 final Button ok = (Button) dialog.findViewById(R.id.getpassword_btn);
                 final Button cancel = (Button) dialog.findViewById(R.id.cancel_btn);
@@ -127,7 +129,7 @@ public class MainActivity extends Activity {
 
                         final String userName = security.getText().toString();
                         final String nullstring = "";
-                        if(userName.equals(nullstring)) {
+                        if (userName.equals(nullstring)) {
                             Toast.makeText(getApplicationContext(), "Please enter your username", Toast.LENGTH_SHORT).show();
                         } else {
                             checkSecuHint(userName, ref.child("users"), dialog);
@@ -145,6 +147,48 @@ public class MainActivity extends Activity {
                 });
 
                 dialog.show();
+            }
+        });
+
+        contactAdminBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(MainActivity.this);
+                dialog.getWindow();
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.contact_admin);
+                dialog.show();
+
+                final EditText usernameOfMessage = (EditText) dialog.findViewById(R.id.username_info_edt);
+                final EditText messageOfUser = (EditText) dialog.findViewById(R.id.messageToAdminEDT);
+
+                final Button sendMessageBtn = (Button) dialog.findViewById(R.id.sendMessageBtn);
+                final Button cancelMessageBtn = (Button) dialog.findViewById(R.id.cancel_btn);
+
+                sendMessageBtn.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String theUsername = usernameOfMessage.getText().toString();
+                        final String usersMessage = messageOfUser.getText().toString();
+                        final String nullstring = "";
+                        if (theUsername.equals(nullstring)) {
+                            Toast.makeText(getApplicationContext(), "Please enter your username", Toast.LENGTH_SHORT).show();
+                        } else if (usersMessage.equals(nullstring)) {
+                            Toast.makeText(getApplicationContext(), "Please enter a non-blank message", Toast.LENGTH_SHORT).show();
+                        } else {
+                            sendMail("techflixandchill@gmail.com", theUsername, usersMessage);
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+                cancelMessageBtn.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
     };
@@ -292,6 +336,14 @@ public class MainActivity extends Activity {
         });
     }
 
+    /**
+     * Method that will utilize the Gmail server to email a user their password, provided they
+     * have entered the correct email.
+     *
+     * @param email recipient of the email
+     * @param subject what the email will say as the subject line
+     * @param messageBody what the body of the email will say
+     */
     private void sendMail(String email, String subject, String messageBody) {
         Session session = createSessionObject();
 
@@ -307,6 +359,18 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     * Create an email message that will be sent via the open gmail session from the method
+     * createSessionObject().
+     *
+     * @param email the email of the recipient
+     * @param subject subject of the email
+     * @param messageBody body of the email
+     * @param session open and pre-authenticated gmail session
+     * @return a Message object that should be sent
+     * @throws MessagingException if there is an error in the message
+     * @throws UnsupportedEncodingException if there is an error in the encoding
+     */
     private Message createMessage(String email, String subject, String messageBody, Session session) throws MessagingException, UnsupportedEncodingException {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress("techflixandchill@gmail.com", "Techflix"));
@@ -316,6 +380,11 @@ public class MainActivity extends Activity {
         return message;
     }
 
+    /**
+     * Uses port 587 to authenticate a Gmail login for the Techflixandchill@gmail.com account.
+     *
+     * @return an open gmail session
+     */
     private Session createSessionObject() {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -330,6 +399,10 @@ public class MainActivity extends Activity {
         });
     }
 
+    /**
+     * Private inner class to send mail, takes care of the pre, post operations as well as
+     * provides a progress dialog and error handling upon invalid email, faulty authentication, etc.
+     */
     private class SendMailTask extends AsyncTask<Message, Void, Void> {
         private ProgressDialog progressDialog;
 

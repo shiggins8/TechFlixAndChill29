@@ -128,4 +128,17 @@
         android:layout_below="@+id/relativeLayout"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:id="@+id/contactAdminBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_round_corner_button"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Contact Admin"
+        android:textStyle="italic"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/loginAsAdmin"
+        android:layout_alignEnd="@+id/loginAsAdmin" />
+
 </RelativeLayout>
