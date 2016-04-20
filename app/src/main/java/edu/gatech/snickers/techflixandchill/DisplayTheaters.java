@@ -74,7 +74,7 @@ public class DisplayTheaters extends Activity {
                 }
             }
             ArrayList<Theater> newTheatArray = new ArrayList<Theater>();
-            Theater amc = new Theater("AMC", "123 The Place", "Atlanta", "770-932-9269");
+            Theater amc = new Theater("AMC", "123 The Place", "Atlanta", "770-932-7367");
             Theater carmkike = new Theater("Carmike", "123 Ridic", "Atlanta", "654-984-8473");
             newTheatArray.add(amc);
             newTheatArray.add(carmkike);
