@@ -3,6 +3,7 @@ package edu.gatech.snickers.techflixandchill;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,10 +40,6 @@ public class MovieRatingActivity extends Activity {
      * ratings for a given movie.
      */
     private final Firebase ref = new Firebase("https://techflixandchill.firebaseio.com");
-
-    private static final int ratingAdjuster = 4;
-
-    private static final int minCommentAdjuster = 10;
 
 
     @Override
@@ -116,12 +113,11 @@ public class MovieRatingActivity extends Activity {
                     public void onDataChange(DataSnapshot snapshot) {
                         final Firebase addToMajorRef = theMajorRateRef.child(title);
                         if (snapshot.exists()) {
+                            Log.d("thing", "onDataChange: thing");
                             //deal with the program needing to adjust rating for major
-                            final DataSnapshot previousRating = snapshot.child("numericalRating");
-                            float prevRating = (float) previousRating.getValue();
-                            float workingRating = calculateNewRating(prevRating, movieRating, userWordsRating);
-                            final Rating updatedMajorRating = new Rating(movie, workingRating, userWordsRating, major, username);
-                            addToMajorRef.setValue(updatedMajorRating);
+                            //float workingRating = calculateNewRating(prevRating, movieRating, userWordsRating);
+                            //final Rating updatedMajorRating = new Rating(movie, workingRating, userWordsRating, major, username);
+                            //addToMajorRef.setValue(updatedMajorRating);
                         } else {
                             addToMajorRef.setValue(theRating);
 
@@ -135,24 +131,5 @@ public class MovieRatingActivity extends Activity {
                 finish();
             }
         });
-    }
-
-    public static float calculateNewRating(float prevRating, float movieRating, String words) {
-        if (words == null) {
-            throw new IllegalArgumentException("Input comment cannot be null");
-        }
-
-        if (Math.abs(prevRating - movieRating) < 0.1 || Math.abs(movieRating) < 0.1) {
-            return prevRating;
-        } else {
-            if (words.length() < minCommentAdjuster) {
-                return ((prevRating * (minCommentAdjuster - words.length())
-                        * ratingAdjuster) + movieRating) / (((minCommentAdjuster - words.length())
-                        * ratingAdjuster) + 1);
-
-            } else {
-                return ((prevRating * ratingAdjuster) + movieRating) / (ratingAdjuster + 1);
-            }
-        }
     }
 }

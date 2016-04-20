@@ -69,33 +69,6 @@ public class UserList extends AppCompatActivity {
         });
     }
 
-    /**
-     * Function that is used as a helper method for generating the list views within the Admin
-     * app. Allows the system to quickly and efficiently generate the length of the ListView that
-     * it will create and populate, including recycled views.
-     *
-     * @param list the raw-data form of the list of users in the app
-     * @return the modified or amended ArrayList that utilizes correct sizing for ListView
-     */
-    public List<User> manageUserInfo(List<User> list) {
-        if (list == null) {
-            throw new IllegalArgumentException("Cannot use a nul list");
-        } else {
-            final int length = list.size();
-            if (length == 0) { // prevents the app from trying to populate 0 rows
-                return null;
-            } else if (length == 1) {
-                return (ArrayList<User>)list;
-            } else if (length == 2) {
-                final ArrayList<User> modList = new ArrayList<>();
-                modList.add(0,list.get(0));
-                return modList;
-            } else {
-                return (ArrayList<User>)list;
-            }
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
