@@ -137,6 +137,15 @@ public class MovieRatingActivity extends Activity {
         });
     }
 
+    /**
+     * Helper to calculate the new Rating based on an adjustment factor, based on the length
+     * of the rating, to give greater weight to ratings with more thought put into them.
+     *
+     * @param prevRating original rating
+     * @param movieRating new user's rating
+     * @param words the string containing the person's comment rating
+     * @return a float representing the adjusted rating
+     */
     public static float calculateNewRating(float prevRating, float movieRating, String words) {
         if (words == null) {
             throw new IllegalArgumentException("Input comment cannot be null");
