@@ -1,7 +1,11 @@
 package edu.gatech.snickers.techflixandchill;
 
 /**
- * Created by Scottie on 3/13/16.
+ * Theater object that will be displayed by the application when users request to find movie
+ * theaters nearby.
+ *
+ * @version 1.1
+ * @author Snickers
  */
 public class Theater {
     private String name;

@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/securityhint_edt"
                 android:layout_marginTop="15dp"
-                android:text="Your password hint is:" />
+                android:text="Clicking 'Get Password' below will send an email containing your password to the email associated with your account:" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -68,7 +68,7 @@
                 android:paddingRight="20dp"
                 android:paddingBottom="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="Get Hint" />
+                android:text="Get Password" />
 
             <Button
                 android:id="@+id/cancel_btn"

@@ -1,5 +1,7 @@
 package edu.gatech.snickers.techflixandchill;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +22,18 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.FirebaseException;
 import com.firebase.client.ValueEventListener;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  * Created on 2/12/16.
@@ -116,7 +130,7 @@ public class MainActivity extends Activity {
                         if(userName.equals(nullstring)) {
                             Toast.makeText(getApplicationContext(), "Please enter your username", Toast.LENGTH_SHORT).show();
                         } else {
-                            checkSecuHint(userName, getpass, ref.child("users"));
+                            checkSecuHint(userName, ref.child("users"), dialog);
                         }
                     }
                 });
@@ -134,6 +148,38 @@ public class MainActivity extends Activity {
             }
         });
     };
+
+    /**
+     * If user has forgotten their password, they can ask for their security hint, which will be
+     * displayed dependent upon them entering their valid username.
+     *
+     * @param enteredUsername the username the user entered into the login screen
+     * @param fireRef specific Firebase reference to that user's branch in the database
+     * @param dialog the dialog opened up in the home screen that will need to be dismissed
+     */
+    public void checkSecuHint(String enteredUsername, Firebase fireRef, final Dialog dialog) {
+        if (enteredUsername == null) {
+            throw new IllegalArgumentException("Invalid username entered");
+        } else if (fireRef == null) {
+            throw new FirebaseException("Can't have a null Firebase reference");
+        }
+        final String userName = enteredUsername;
+        fireRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.hasChild(userName)) {
+                    final User temp = snapshot.child(userName).getValue(User.class);
+                    sendMail(temp.getEmail(), "Your Techflix and Chill Password:", temp.getPassword());
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(MainActivity.this, "User does NOT exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError arg0) {
+            }
+        });
+    }
 
     /**
      * Essential task in login logic. System checks if the entered login credentials match in Fire-
@@ -164,40 +210,7 @@ public class MainActivity extends Activity {
         });
     }
 
-    /**
-     * If user has forgotten their password, they can ask for their security hint, which will be
-     * displayed dependent upon them entering their valid username.
-     *
-     * @param enteredUsername the username the user entered into the login screen
-     * @param getpass a TextView that will display the password for the user to see
-     * @param fireRef specific Firebase reference to that user's branch in the database
-     */
-    public void checkSecuHint(String enteredUsername, TextView getpass, Firebase fireRef) {
-        if (enteredUsername == null) {
-            throw new IllegalArgumentException("Invalid username entered");
-        } else if (getpass == null) {
-            throw new IllegalArgumentException("Invalid textview, can't be null");
-        } else if (fireRef == null) {
-            throw new FirebaseException("Can't have a null Firebase reference");
-        }
-        final String userName = enteredUsername;
-        final TextView getPass = getpass;
-        fireRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(userName)) {
-                    final User temp = snapshot.child(userName).getValue(User.class);
-                    getPass.setText(temp.getSecurityHint());
-                } else {
-                    Toast.makeText(MainActivity.this, "User does NOT exist", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onCancelled(FirebaseError arg0) {
-            }
-        });
-    }
 
     /**
      * Login logic for the app. Checks for locks or blocks on the account, or if user is admin.
@@ -277,5 +290,69 @@ public class MainActivity extends Activity {
                 Log.d("firebase", "onCancelled: called within MainActivity");
             }
         });
+    }
+
+    private void sendMail(String email, String subject, String messageBody) {
+        Session session = createSessionObject();
+
+        try {
+            Message message = createMessage(email, subject, messageBody, session);
+            new SendMailTask().execute(message);
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Message createMessage(String email, String subject, String messageBody, Session session) throws MessagingException, UnsupportedEncodingException {
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress("techflixandchill@gmail.com", "Techflix"));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(email, email));
+        message.setSubject(subject);
+        message.setText(messageBody);
+        return message;
+    }
+
+    private Session createSessionObject() {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        return Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("techflixandchill@gmail.com", "techflix");
+            }
+        });
+    }
+
+    private class SendMailTask extends AsyncTask<Message, Void, Void> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(MainActivity.this, "Please wait", "Sending mail", true, false);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressDialog.dismiss();
+        }
+
+        @Override
+        protected Void doInBackground(Message... messages) {
+            try {
+                Transport.send(messages[0]);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }

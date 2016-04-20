@@ -18,11 +18,11 @@ import java.util.Map;
 
 
 /**
- * Activity to display a list view of restaurants populated with restaurants from a particular
- * city. Utilizes the factual API, and an ArrayAdapter to fill the list view.
+ * Activity to display a list view of theaters populated with theaters that are located within a
+ * 5000 meter radius circle surrounding Georgia Tech.
  *
  * @version 1.1
- * @author Scottie
+ * @author Snickers
  */
 public class DisplayTheaters extends Activity {
     protected Factual factual = new Factual("G4OnAN8FsVdfxkVmOYLaeoIliKQpA3x1M6Yk0s0n",
@@ -39,8 +39,6 @@ public class DisplayTheaters extends Activity {
         adapterTheaters = new TheaterAdapter(this, aRestaurant);
         lvTheaters.setAdapter(adapterTheaters);
         TheaterRetrievalTask task = new TheaterRetrievalTask();
-//        Bundle bundle = getIntent().getExtras();
-//        String cityName = bundle.getString("CITY");
         Query query = new Query()
                 .within(new Circle(33.776994, -84.400105, 5000))
                 .limit(40);
@@ -88,6 +86,5 @@ public class DisplayTheaters extends Activity {
             }
             adapterTheaters.notifyDataSetChanged();
         }
-
     }
 }

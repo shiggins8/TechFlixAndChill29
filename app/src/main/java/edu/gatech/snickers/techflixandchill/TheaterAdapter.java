@@ -35,11 +35,13 @@ public class TheaterAdapter extends ArrayAdapter<Theater> {
         // Lookup views within item layout
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
         TextView tvAddress = (TextView) convertView.findViewById(R.id.tvAddress);
+        TextView tvTelnumber = (TextView) convertView.findViewById(R.id.tvTelnumber);
 //        TextView tvType = (TextView) convertView.findViewById(R.id.tvType);
-        TextView tvRating = (TextView) convertView.findViewById(R.id.tvRating);
+        //TextView tvRating = (TextView) convertView.findViewById(R.id.tvRating);
         // Populate the data into the template view using the data object
         tvName.setText(theater.getName());
         tvAddress.setText(theater.getAddress());
+        tvTelnumber.setText(theater.getTelNumber());
 
         // Return the completed view to render on screen
         return convertView;

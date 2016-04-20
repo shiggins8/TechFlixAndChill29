@@ -47,7 +47,7 @@ public class NewMoviesInTheatersActivity extends Activity {
      */
     public static final String MOVIE_DETAIL_KEY = "movie";
 
-    private Button findTheaterBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,8 @@ public class NewMoviesInTheatersActivity extends Activity {
         lvMovies.setAdapter(adapterMovies);
         fetchNewInTheaters();
         setupMovieSelectedListener();
+
+        Button findTheaterBtn;
         findTheaterBtn = (Button) findViewById(R.id.findTheatersBtn);
 
         findTheaterBtn.setOnClickListener(new View.OnClickListener() {

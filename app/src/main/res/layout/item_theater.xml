@@ -34,10 +34,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/tvRating"
+            android:id="@+id/tvTelnumber"
             android:layout_below="@id/tvAddress"
             android:textColor="#000"
-            android:hint="6 stars"
+            android:hint="404-867-5309"
             android:textSize="12sp"/>
 
     </RelativeLayout>
