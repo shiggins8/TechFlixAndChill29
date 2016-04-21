@@ -12,17 +12,19 @@ public class Theater {
     private String address;
     private String locality;
     private String telNumber;
+    private String distance;
 
     public Theater() {
         //empty constructor
     }
 
 
-    public Theater(String name, String address, String locality, String telNumber) {
+    public Theater(String name, String address, String locality, String telNumber, String distance) {
         this.name = name;
         this.address = address;
         this.locality = locality;
         this.telNumber = telNumber;
+        this.distance = distance;
     }
 
     public String getName() {
@@ -55,6 +57,14 @@ public class Theater {
 
     public void setTelNumber(String telNumber) {
         this.telNumber = telNumber;
+    }
+    
+    public String getDistance() {
+        return distance;
+    }
+    
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 
 }
