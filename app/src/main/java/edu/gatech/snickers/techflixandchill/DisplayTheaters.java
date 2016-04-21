@@ -32,6 +32,12 @@ public class DisplayTheaters extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Note: 16093 meters = 10 miles
+        static final int radius = 8047;
+        // Note: coordinates for center of GaTech campus
+        static final int latitude = 33.776994;
+        static final int longitude = -84.400105;
+        static final int searchLimit = 40;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_theaters);
         lvTheaters = (ListView) findViewById(R.id.theatLV);
@@ -40,8 +46,8 @@ public class DisplayTheaters extends Activity {
         lvTheaters.setAdapter(adapterTheaters);
         TheaterRetrievalTask task = new TheaterRetrievalTask();
         Query query = new Query()
-                .within(new Circle(33.776994, -84.400105, 5000))
-                .limit(40);
+                .within(new Circle(latitude, longitude, radius))
+                .limit(searchLimit);
 
         task.execute(query);
     }
@@ -74,10 +80,21 @@ public class DisplayTheaters extends Activity {
                 }
             }
             ArrayList<Theater> newTheatArray = new ArrayList<Theater>();
-            Theater amc = new Theater("AMC", "123 The Place", "Atlanta", "770-932-7367");
-            Theater carmkike = new Theater("Carmike", "123 Ridic", "Atlanta", "654-984-8473");
+            Theater regal = new Theater("Regal Cinemas Atlantic Station 18 ", "Atlantic Station, 261 19th St NW #1250", "Atlanta", "(844) 462-7342", "1.7 miles away");
+            Theater tara = new Theater("United Artists Tara Cinemas 4", "Cheshire Square, 2345 Cheshire Bridge Rd NE", "Atlanta", "(844) 462-7342", "5.7 miles away");
+            Theater amc = new Theater("AMC Dine-in Theatres Buckhead 6", "Tower Place, Georgia Atlanta Tower Place, 3340 Peachtree Rd NE", "Atlanta", "(404) 467-9619", "6.1 miles away");
+            Theater phipps = new Theater("AMC Phipps Plaza 14", "Phipps Plaza,, Phipps Plaza, 3500 Peachtree Rd NE", "Atlanta", "(404) 231-1492", "8.6 miles away");
+            Theater dekalb = new Theater("AMC North DeKalb Mall 16", "2042 Lawrenceville Hwy, North Dekalb Mall", "Dekalb", "(404) 634-0451", "9.3 miles away");
+            Theater starlight = new Theater("Starlight Six Drive-In Theatre", "2000 Moreland Ave SE", "Atlanta", "(404) 627-5786", "9.4 miles away");
+            Theater parkway = new Theater("AMC Parkway Pointe 15", "3101 Cobb Parkway #201", "Atlanta", "(770) 937-0730", "9.9 miles away");
+            
+            newTheatArray.add(regal);
+            newTheatArray.add(tara);
             newTheatArray.add(amc);
-            newTheatArray.add(carmkike);
+            newTheatArray.add(phipps);
+            newTheatArray.add(dekalb);
+            newTheatArray.add(starlight);
+            newTheatArray.add(parkway);
 //            for (Theater theat : theatArray) {
 //                adapterTheaters.add(theat);
 //            }
