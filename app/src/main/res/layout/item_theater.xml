@@ -37,6 +37,14 @@
             android:textColor="#000"
             android:hint="404-867-5309"
             android:textSize="12sp"/>
+            
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height ="match_parent"
+            android:id="@id/tvDistance"
+            android:textColor="#000"
+            android:hint="3.2 miles"
+            android:textSize="12sp"/>
 
     </RelativeLayout>
 
