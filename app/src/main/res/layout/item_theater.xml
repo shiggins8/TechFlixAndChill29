@@ -8,9 +8,7 @@
         android:layout_width="match_parent"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_height="match_parent"
-        android:background="#d2fbfa">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tvName"
