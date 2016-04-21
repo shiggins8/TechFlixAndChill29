@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * mentioned in the email request for this app. Utilizes a restaurant object to find requisite data.
  *
  * @author Scottie
- * @version 1.0
+ * @version 1.1
  */
 public class TheaterAdapter extends ArrayAdapter<Theater> {
     public TheaterAdapter(Context context, ArrayList<Theater> aTheaters) {
@@ -36,12 +36,13 @@ public class TheaterAdapter extends ArrayAdapter<Theater> {
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
         TextView tvAddress = (TextView) convertView.findViewById(R.id.tvAddress);
         TextView tvTelnumber = (TextView) convertView.findViewById(R.id.tvTelnumber);
-//        TextView tvType = (TextView) convertView.findViewById(R.id.tvType);
-        //TextView tvRating = (TextView) convertView.findViewById(R.id.tvRating);
+        TextView tvDistance = (TextView) convertView.findViewById(R.id.tvDistance);
+        
         // Populate the data into the template view using the data object
         tvName.setText(theater.getName());
         tvAddress.setText(theater.getAddress());
         tvTelnumber.setText(theater.getTelNumber());
+        tvDistance.setText(theater.getDistance());
 
         // Return the completed view to render on screen
         return convertView;
