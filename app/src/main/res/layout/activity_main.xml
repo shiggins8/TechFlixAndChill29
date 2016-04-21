@@ -135,10 +135,10 @@
         android:background="@drawable/background_round_corner_button"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Contact Admin"
+        android:text="Contact Administrator"
         android:textStyle="italic"
         android:layout_marginTop="49dp"
         android:layout_below="@+id/loginAsAdmin"
-        android:layout_alignEnd="@+id/loginAsAdmin" />
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
