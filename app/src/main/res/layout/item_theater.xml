@@ -41,8 +41,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height ="match_parent"
-            android:id="@id/tvDistance"
+            android:id="@+id/tvDistance"
             android:textColor="#000"
+            android:layout_below="@id/tvTelnumber"
             android:hint="3.2 miles"
             android:textSize="12sp"/>
 

@@ -33,11 +33,11 @@ public class DisplayTheaters extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Note: 16093 meters = 10 miles
-        static final int radius = 8047;
+        final int radius = 8047;
         // Note: coordinates for center of GaTech campus
-        static final int latitude = 33.776994;
-        static final int longitude = -84.400105;
-        static final int searchLimit = 40;
+        final double latitude = 33.776994;
+        final double longitude = -84.400105;
+        final int searchLimit = 40;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_theaters);
         lvTheaters = (ListView) findViewById(R.id.theatLV);
@@ -75,7 +75,7 @@ public class DisplayTheaters extends Activity {
                     String address = (String) theater.get("address");
                     String phone = (String) theater.get("tel");
                     String locality = (String) theater.get("locality");
-                    Theater newTheat = new Theater(name, address, phone, locality);
+                    Theater newTheat = new Theater(name, address, phone, locality, "x miles away");
                     theatArray.add(newTheat);
                 }
             }
